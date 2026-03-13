@@ -1,9 +1,9 @@
-# Investment Requirements Document
+# Investment Requirements Document - Version 3.0
 
-**Version:** 2.0 (Refined)  
+**Version:** 3.0 (Complete with All Metrics)  
 **Date:** 2026-03-13  
 **Author:** ThommCroft  
-**Framework:** Warren Buffett & Charlie Munger Value Investing Principles
+**Framework:** Warren Buffett & Charlie Munger Value Investing Principles + Complete Spreadsheet Metrics
 
 ---
 
@@ -11,23 +11,25 @@
 
 1. [Executive Summary](#executive-summary)
 2. [Investment Philosophy](#investment-philosophy)
-3. [Screening Criteria by Category](#screening-criteria-by-category)
-4. [Priority Classification](#priority-classification)
-5. [Metrics Mapping (Spreadsheet to Implementation)](#metrics-mapping)
-6. [Data Requirements](#data-requirements)
-7. [Implementation Notes](#implementation-notes)
+3. [Complete Metrics Reference](#complete-metrics-reference)
+4. [Screening Criteria by Category](#screening-criteria-by-category)
+5. [Priority Classification](#priority-classification)
+6. [Implementation Notes](#implementation-notes)
+7. [Data Sources](#data-sources)
 
 ---
 
 ## Executive Summary
 
-This document defines **strict, quantifiable criteria** for identifying high-quality value stocks based on Warren Buffett and Charlie Munger's proven investment principles. The screener will evaluate companies across **all industries** using a multi-stage filtering approach:
+This document defines **strict, quantifiable criteria** for identifying high-quality value stocks based on Warren Buffett and Charlie Munger's proven investment principles, combined with **all metrics from the spreadsheet analysis tool**. The screener evaluates companies across **all industries** using a multi-stage filtering approach:
 
-- **Stage 1 (MUST HAVE)**: Financial Strength - Hard filters that eliminate weak businesses
+- **Stage 1 (MUST HAVE)**: Financial Strength - Hard filters eliminating weak businesses
 - **Stage 2 (SHOULD HAVE)**: Quality Assessment - Deep analysis of business quality and earnings
 - **Stage 3 (SHOULD HAVE)**: Valuation & Management - Identifies opportunities with safety margin
 
 **Target Universe**: All US-listed equities with market cap > $300M
+
+**Total Metrics Tracked**: 40+ quantitative and qualitative factors
 
 ---
 
@@ -38,50 +40,123 @@ This document defines **strict, quantifiable criteria** for identifying high-qua
 #### 1. Circle of Competence & Business Understandability
 - **Principle**: Only invest in businesses you can understand
 - **Application**: Avoid complex financial structures, derivatives, and opaque business models
-- **Metric**: Business Model Simplicity Score (qualitative assessment)
+- **Metrics**: Business Model Simplicity (qualitative), Market Position, Industry Classification
+- **Why It Matters**: Buffett and Munger only invest in companies whose business models they can fully comprehend. Complex businesses with hard-to-understand economics are avoided, as they're prone to hidden risks and surprises.
+- **Implementation**: Screen for companies with straightforward operations, transparent financial statements, and clear revenue models
 
 #### 2. Durable Competitive Advantage (Economic Moat)
-- **Principle**: Sustainable competitive advantages create pricing power
+- **Principle**: Sustainable competitive advantages create pricing power and protect market share
 - **Types of Moats**:
-  - Brand strength (e.g., Coca-Cola, Apple)
-  - Switching costs (e.g., enterprise software)
-  - Network effects (e.g., payment processors)
-  - Cost advantages (e.g., Costco, Walmart)
-- **Application**: Favor companies with identifiable, sustainable moats
-- **Metrics**: Market position, brand strength, recurring revenue %, margin stability
+  - **Brand Strength** (e.g., Coca-Cola, Apple) - Customers choose the brand despite alternatives
+  - **Switching Costs** (e.g., Intuit, Salesforce, Microsoft) - High cost for customers to switch
+  - **Network Effects** (e.g., Mastercard, Visa) - More valuable as more people use it
+  - **Cost Advantages** (e.g., Costco, Walmart) - Sustainable lower cost structure
+- **Why It Matters**: A moat allows a company to maintain pricing power and defend market share against competition, leading to predictable long-term profits
+- **Metrics**: Market Position, Recurring Revenue %, Margin Stability, Customer Concentration
+- **Implementation**: Look for companies that have maintained or expanded market share over 10+ years despite competition
 
 #### 3. Financial Fortress (Balance Sheet Strength)
-- **Principle**: Strong balance sheets survive downturns and create optionality
+- **Principle**: Strong balance sheets survive downturns and create optionality for opportunities
 - **Requirements**:
-  - Low debt levels (D/E < 0.50)
-  - Positive free cash flow
-  - Adequate liquidity
-- **Metrics**: Debt-to-Equity, Current Ratio, FCF > 0
+  - Low debt levels (D/E < 0.50) - Financial flexibility
+  - Positive free cash flow - Real cash available to shareholders
+  - Adequate liquidity (Current Ratio 1.5-2.5x) - Can meet obligations
+- **Why It Matters**: Financial strength protects companies during economic downturns and allows them to invest in growth or acquisitions when competitors struggle
+- **Metrics**: Debt-to-Equity, D/E Trend, Current Ratio, Interest Coverage, Total Equity Trend
+- **Implementation**: Reject companies with weak balance sheets; favor those with declining debt and strong liquidity
 
 #### 4. Consistent, Growing Earnings
-- **Principle**: Real earnings (cash flow) matter more than accounting earnings
+- **Principle**: Real earnings (cash flow) matter more than accounting earnings; consistency is key
 - **Requirements**:
-  - Consistent profitability (low volatility)
+  - Consistent profitability over 10+ years (low volatility)
   - Growing earnings over time
-  - High-quality earnings (FCF > Net Income)
-- **Metrics**: ROE stability, margin consistency, FCF conversion ratio
+  - High-quality earnings (FCF > Net Income indicates minimal accounting tricks)
+- **Why It Matters**: Companies with erratic earnings are unpredictable and risky. Buffett wants to see companies that reliably generate more earnings year after year
+- **Metrics**: ROE Stability, Margin Consistency, FCF Conversion Ratio, OCF/FCF Growth
+- **Implementation**: Track 10-year trends; reject companies with erratic earnings or declining profitability
 
 #### 5. Management Quality
-- **Principle**: Competent management aligned with shareholders
+- **Principle**: Competent management aligned with shareholders is crucial; you're investing in people
 - **Requirements**:
   - Significant insider ownership (skin in the game)
-  - Honest, transparent communication
-  - Conservative accounting practices
-  - Smart capital allocation
-- **Metrics**: Management ownership %, goodwill levels, one-time charge frequency
+  - Honest, transparent communication with shareholders
+  - Conservative accounting practices (no aggressive or creative accounting)
+  - Smart capital allocation (reinvestment, buybacks, dividends)
+- **Why It Matters**: Management drives all business decisions. Poor management can destroy even good businesses. Insider ownership aligns management incentives with shareholder value
+- **Metrics**: Management Insider Ownership %, Goodwill Levels, One-Time Charges Frequency, Accounting Quality
+- **Red Flags**: CEO with minimal ownership, frequent restatements, aggressive accounting, high goodwill impairments
+- **Implementation**: Research management background; look for long tenure and strong track records
 
 #### 6. Margin of Safety
-- **Principle**: Buy at significant discount to intrinsic value
+- **Principle**: Buy at significant discount to intrinsic value; provides protection against error
 - **Requirements**:
-  - Reasonable valuation multiples
-  - Earnings yield > risk-free rate
-  - 25-50% margin of safety preferred
-- **Metrics**: P/E ratio, P/B ratio, earnings yield, discount to intrinsic value
+  - Reasonable valuation multiples (P/E, P/B below market)
+  - Earnings yield > risk-free rate (better than Treasury bonds)
+  - 25-50% margin of safety is ideal
+- **Why It Matters**: Even great businesses can be bad investments if overpaid. A margin of safety protects against errors in judgment and provides upside potential
+- **Metrics**: P/E Ratio, P/B Ratio, P/S Ratio, PEG Ratio, Earnings Yield, Discount to Intrinsic Value
+- **Implementation**: Calculate intrinsic value; only buy when price is significantly below fair value
+
+---
+
+## Complete Metrics Reference
+
+### Quick Lookup - All 40+ Metrics by Category
+
+| Metric | Threshold | Period | Priority | Category |
+|--------|-----------|--------|----------|----------|
+| Return on Equity (ROE) | > 15% | 10Y avg | **MUST** | Return on Capital |
+| ROE Trend | Stable/Growing | 10Y | **MUST** | Return on Capital |
+| Return on Assets (ROA) | > 10% | 10Y avg | SHOULD | Return on Capital |
+| Return on Invested Capital (ROIC) | > 15% | 10Y avg | SHOULD | Return on Capital |
+| Debt-to-Equity Ratio | < 0.50 | Current | **MUST** | Financial Strength |
+| D/E Trend | Stable/Declining | 10Y | **MUST** | Financial Strength |
+| Liabilities-to-Equity | < 0.75 | Current | SHOULD | Financial Strength |
+| Current Ratio | 1.5-2.5x | Current | **MUST** | Financial Strength |
+| Interest Coverage Ratio | > 5.0x | Latest FY | SHOULD | Financial Strength |
+| Total Equity Trend | Growing/Stable | 10Y | SHOULD | Financial Strength |
+| Net Profit Margin | > 10% | 10Y avg | **MUST** | Profitability |
+| Net Margin Trend | Stable/Growing | 10Y | **MUST** | Profitability |
+| Operating Margin | > 10% | 10Y avg | **MUST** | Profitability |
+| Operating Margin Trend | Stable/Growing | 10Y | **MUST** | Profitability |
+| Gross Profit Margin | > 30% | 10Y avg | SHOULD | Profitability |
+| Margin Stability (CV) | < 15% | 10Y | **MUST** | Profitability |
+| Depreciation Margin | Monitor | 10Y | SHOULD | Profitability |
+| Interest Expense Margin | Monitor | 10Y | SHOULD | Profitability |
+| Operating Cash Flow | Positive | Each year (10Y) | **MUST** | Cash Flow |
+| OCF Growth | > 0% | 10Y CAGR | **MUST** | Cash Flow |
+| Free Cash Flow | Positive | Each year (10Y) | **MUST** | Cash Flow |
+| FCF Growth | > 0% | 10Y CAGR | **MUST** | Cash Flow |
+| FCF-to-Net-Income Ratio | > 70% | 10Y avg | SHOULD | Cash Flow |
+| OCF Stability (CV) | < 20% | 10Y | SHOULD | Cash Flow |
+| Revenue Growth (CAGR) | 4-8% | 10Y CAGR | SHOULD | Growth |
+| Revenue Growth Stability | < 20% CV | 10Y | SHOULD | Growth |
+| EPS Growth | > Revenue Growth | 10Y CAGR | SHOULD | Growth |
+| EPS Growth Stability | Low volatility | 10Y | SHOULD | Growth |
+| CapEx as % Revenue | < 5-10% | 10Y avg | SHOULD | Capital Efficiency |
+| CapEx as % OCF | < 50% | 10Y avg | SHOULD | Capital Efficiency |
+| Retained Earnings Trend | Growing/Stable | 10Y | SHOULD | Reinvestment |
+| P/E Ratio | < 25x (15-20x ideal) | Current | SHOULD | Valuation |
+| P/B Ratio | < 3.0x (< 2.0x ideal) | Current | SHOULD | Valuation |
+| P/S Ratio | < 2.5x | Current | SHOULD | Valuation |
+| PEG Ratio | < 1.5x | Current | SHOULD | Valuation |
+| Earnings Yield | > 10Y Treasury + 4% | Current | SHOULD | Valuation |
+| Dividend Yield | 2-4% (if applicable) | Current | SHOULD | Valuation |
+| Payout Ratio | 30-60% (if applicable) | Latest | SHOULD | Valuation |
+| Management Insider Ownership | > 5% | Current | SHOULD | Management |
+| Goodwill Level | < 20% of assets | Current | SHOULD | Management |
+| Goodwill Impairments | Minimal/Declining | 10Y history | SHOULD | Management |
+| One-Time Charges | < 1 per 3 years | 10Y history | SHOULD | Management |
+| Accounting Quality | Conservative | Qualitative | SHOULD | Management |
+| Management Tenure | 5+ years | Current | NICE | Management |
+| Economic Moat | Identifiable | Qualitative | SHOULD | Competitive Advantage |
+| Market Position | Leader or #2-3 | Qualitative | SHOULD | Competitive Advantage |
+| Recurring Revenue % | > 50% (where applicable) | Business Model | SHOULD | Competitive Advantage |
+| Brand Strength | Recognized/Valued | Qualitative | NICE | Competitive Advantage |
+| Customer Concentration | No customer > 20% | Current | SHOULD | Competitive Advantage |
+| Industry Cyclicality | Non-cyclical | Qualitative | SHOULD | Competitive Advantage |
+| Business Model Simplicity | Easy to understand | Qualitative | **MUST** | Competitive Advantage |
+| Market Capitalization | > $300M | Current | SHOULD | Size/Liquidity |
 
 ---
 
@@ -121,6 +196,7 @@ Low debt and strong liquidity provide financial flexibility and reduce risk.
 | **Total Liabilities-to-Equity** | < 0.75 | Current | **SHOULD HAVE** | Total obligation assessment |
 | **Current Ratio** | 1.5 - 2.5x | Current | **MUST HAVE** | Can meet short-term obligations comfortably |
 | **Interest Coverage Ratio** | > 5.0x | Latest fiscal year | **SHOULD HAVE** | Can easily service debt (EBIT ÷ Interest Expense) |
+| **Total Equity Trend** | Growing or stable | Last 10 years | **SHOULD HAVE** | Strengthening balance sheet |
 
 **Implementation Notes:**
 - D/E = Total Debt ÷ Total Equity
@@ -148,6 +224,8 @@ Profit margins reveal pricing power, competitive position, and operational effic
 | **Operating Margin Trend** | Stable or growing | Last 10 years | **MUST HAVE** | Shows operational improvement or deterioration |
 | **Gross Profit Margin** | > 30% | 10-year average | **SHOULD HAVE** | Indicates pricing power (lower for capital-intensive) |
 | **Margin Stability** | Coefficient of Variation < 15% | Last 10 years | **MUST HAVE** | Predictable, consistent business |
+| **Depreciation Margin** | Monitor trend | Last 10 years | **SHOULD HAVE** | Indicates capital intensity of business |
+| **Interest Expense Margin** | Monitor trend | Last 10 years | **SHOULD HAVE** | Track debt burden trend |
 
 **Implementation Notes:**
 - Net Margin = Net Income ÷ Revenue
@@ -232,6 +310,8 @@ Price matters. Buffett won't buy even good companies at expensive valuations.
 | **Price-to-Sales (P/S) Ratio** | < 2.5x | Current market | **SHOULD HAVE** | Conservative valuation |
 | **PEG Ratio** | < 1.5x | Current market | **SHOULD HAVE** | Growth-adjusted valuation (P/E ÷ Growth Rate %) |
 | **Earnings Yield** | > (10-Year Treasury + 4-5%) | Current market | **SHOULD HAVE** | Better return than risk-free alternative |
+| **Dividend Yield** | 2-4% (if applicable) | Current market | **SHOULD HAVE** | Income return to shareholders |
+| **Payout Ratio** | 30-60% (if applicable) | Latest FY | **SHOULD HAVE** | Sustainable dividend policy |
 | **Discount to Intrinsic Value** | 25-50% margin of safety | Intrinsic value calc | **NICE TO HAVE** | Safety buffer for error in judgment |
 
 **Implementation Notes:**
@@ -294,31 +374,16 @@ Economic moats separate great businesses from commodities.
 | **Brand Strength** | Recognized and valued | Qualitative | **NICE TO HAVE** | Customer loyalty, pricing power |
 | **Customer Concentration** | No single customer > 20% | 10-K disclosure | **SHOULD HAVE** | Reduces business risk |
 | **Industry Cyclicality** | Non-cyclical preferred | Industry analysis | **SHOULD HAVE** | Stable through economic cycles |
+| **Business Model Simplicity** | Easy to understand | Qualitative | **MUST HAVE** | Within circle of competence |
 
 **Types of Moats (Buffett Framework):**
 
-1. **Brand Moat** (Examples: Coca-Cola, Apple, Nike)
-   - Strong brand = pricing power
-   - Indicator: Margins stable despite competition
-
-2. **Switching Costs Moat** (Examples: Intuit, Salesforce, Microsoft)
-   - High cost to switch suppliers
-   - Indicator: Customer retention > 95%, high NPS
-
-3. **Network Effects Moat** (Examples: Mastercard, Visa, Marketplace platforms)
-   - Value increases with more users
-   - Indicator: Growing user base, improving unit economics
-
-4. **Cost Advantage Moat** (Examples: Costco, Walmart, LVMH)
-   - Lower cost structure = sustainable pricing power
-   - Indicator: Lower margins but market dominance, stable ROIC
-
-**Implementation Notes:**
-- Research company history, competitive position, industry structure
-- Analyze 5-year stock price relative to peers (moat = outperformance)
-- Review investor presentations, analyst reports
-- Compare customer retention rates, NPS vs. peers
-- Assess threat of disruption (e.g., retail vs. e-commerce)
+| Moat Type | Examples | Indicator | How to Identify |
+|-----------|----------|-----------|-----------------|
+| **Brand Moat** | Coca-Cola, Apple, Nike | Margins stable despite competition | Brand recognition without heavy advertising |
+| **Switching Costs** | Intuit, Salesforce, Microsoft | Customer retention > 95%, high NPS | High cost to switch suppliers |
+| **Network Effects** | Mastercard, Visa, Facebook | Growing user base, improving unit economics | Value increases with more users |
+| **Cost Advantage** | Costco, Walmart, LVMH | Market dominance despite lower margins | Sustainable lower cost structure |
 
 **Red Flags (Weak/No Moat):**
 - ❌ Easily replicated business model
@@ -334,3 +399,22 @@ Economic moats separate great businesses from commodities.
 ### MUST HAVE (Deal Breakers)
 
 ALL of these must be satisfied or company is rejected immediately:
+
+| Metric | Threshold | Notes |
+|--------|-----------|-------|
+| **ROE** | > 15% (10-year average) | Core quality metric |
+| **ROE Trend** | Stable or growing | Quality must not be declining |
+| **Net Margin** | > 10% | High-quality earnings |
+| **Operating Margin** | > 10% | Core business profitability |
+| **Margin Stability** | CV < 15% | Predictable and consistent |
+| **Debt-to-Equity** | < 0.50 | Financial strength |
+| **D/E Trend** | Declining or stable | Not increasing leverage |
+| **Current Ratio** | 1.5 - 2.5x | Can meet obligations |
+| **Operating Cash Flow** | Positive (every year) | Real cash from operations |
+| **OCF Growth** | > 0% (10-year CAGR) | Sustainable cash generation |
+| **Free Cash Flow** | Positive (every year) | Cash available to shareholders |
+| **FCF Growth** | > 0% (10-year CAGR) | Growing cash for shareholders |
+| **Revenue Growth** | > 0% (10-year average) | Business not declining |
+| **Business Model Simplicity** | Easy to understand | Within circle of competence |
+
+**Stage 1 Screening Logic:**
