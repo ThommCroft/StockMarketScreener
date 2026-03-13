@@ -1,47 +1,24 @@
-# Investment Requirements
+# Investment Requirements - Version 2.0
 
-## Introduction
-This document outlines the comprehensive investment requirements, merging the wisdom of Buffett and Munger with user-defined metrics. The goal is to provide a framework for identifying promising investment opportunities.
+## MUST HAVE Criteria
+1. **Strong Financials**: The company must have strong and consistent earnings, preferably with a strong balance sheet demonstrating low debt levels.
+2. **Competitive Advantage**: The business should possess a durable competitive advantage or an economic moat that sets it apart from competitors.
+3. **Integrity and Management Quality**: Management must have a reputation for integrity and a track record of sound decision-making.
+4. **Clear Business Model**: The company should operate in a clearly defined industry with a straightforward business model that is easy to understand.
 
-## Buffett/Munger Criteria
+## SHOULD HAVE Criteria
+1. **Growth Potential**: The business should show potential for long-term growth and profitability in its industry.
+2. **Dividends**: A history of paying consistent dividends can signal financial health and commitment to returning capital to shareholders.
+3. **Market Position**: The company should be a recognized leader or have a strong position in its market.
 
-1. **Business Understandability**  
-   - Invest only in companies whose business model is easily understandable.
+## NICE TO HAVE Criteria
+1. **Innovative Products/Services**: Businesses that offer innovative and relevant products/services are often more resilient and adaptable.
+2. **Sustainability Initiatives**: Companies that are taking steps toward sustainability may be better poised for future regulations and market shifts.
+3. **Global Presence**: A presence in international markets can provide growth opportunities and mitigate risks associated with domestic markets.
 
-2. **Consistent Earnings**  
-   - Look for companies that show a history of consistent and growing earnings.
+## Principles from Buffett/Munger
+- **Circle of Competence**: Invest in what you understand. The criteria outlined help ensure the investor remains within their circle of competence.
+- **Margin of Safety**: Essential for protecting investments, emphasizing the MUST HAVE criteria ensures companies are significantly undervalued relative to their intrinsic value.
+- **Quality Management**: Munger emphasizes the need for integrity and intelligence in management, lining up with the MUST HAVE criteria regarding management quality.
 
-3. **Strong Competitive Advantage**  
-   - Identify companies with a durable competitive advantage, often referred to as a "moat."
-
-4. **Quality Management**  
-   - Assess the quality, integrity, and competence of management.
-
-5. **Valuation**  
-   - Ensure the company’s stock is available at a price that provides a sufficient margin of safety.
-
-6. **Long-Term Perspective**  
-   - Invest with a long-term perspective and avoid short-term market fluctuations.
-
-## User's Metrics
-
-1. **Return on Equity (ROE)**  
-   - Require a minimum ROE of 15%.
-
-2. **Debt-to-Equity Ratio**  
-   - A maximum debt-to-equity ratio of 0.5 to ensure financial stability.
-
-3. **Dividend Yield**  
-   - Look for stocks with a minimum dividend yield of 3% as a sign of financial health.
-
-4. **P/E Ratio**  
-   - A target P/E ratio of below 20, favoring undervalued stocks.
-
-5. **Market Capitalization**  
-   - Focus on companies with a market cap above $1 billion to reduce volatility.
-
-6. **Industry Position**  
-   - Priority on companies that rank in the top 3 of their industry segment.
-
-## Conclusion
-By integrating both the Buffett/Munger criteria and the specific user metrics, this investment framework aims to identify robust, financially sound investments that align with proven investment philosophies.
+This comprehensive refined version 2.0 captures a detailed overview of essential investment criteria that align with the investment philosophies of Warren Buffett and Charlie Munger, making it a valuable resource for investors.
