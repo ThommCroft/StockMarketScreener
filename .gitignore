@@ -1,0 +1,39 @@
+# Visual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Builds
+[Dd]ebug/**
+[Rr]elease/**
+[Aa]ssets/**
+[Bb]in/**
+[Oo]bj/**
+
+# Visual Studio Extensions
+.vscode/**
+.vs/**
+*.vs/**
+
+# Rider
+.idea/**
+
+# Rider or Visual Studio Code files
+*.sln.iml
+
+# User-specific files
+*.sublime-workspace
+*.sublime-project
+
+# Publish Directory
+publish/**
+
+# Logs
+*.log
+*.ncrunchspace
+*.ncrunchproject
+
+# Miscellaneous
+npm-debug.log* 
+yarn-error.log*
