@@ -1146,6 +1146,8 @@ This architecture is successful when:
 - Minimal operational overhead
 
 ✅ **Performance**
+- First run: 40-50 minutes (full data fetch from APIs)
+- Subsequent runs: Could be faster with caching
 - 500+ companies screened in < 5 minutes
 - Data reconciliation handles API rate limits
 - Stock price updates complete quickly
