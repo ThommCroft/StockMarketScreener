@@ -1,6 +1,6 @@
 # Data Flow Logic Document - Stock Market Screener
 
-**Version:** 1.0  
+**Version:** 1.1  
 **Date:** 2026-03-14  
 **Author:** ThommCroft  
 **Purpose:** Comprehensive documentation of data flow through each system component
@@ -19,16 +19,16 @@
 8. [Error Handling & Recovery](#error-handling--recovery)
 9. [Data Quality Assurance](#data-quality-assurance)
 10. [Performance Considerations](#performance-considerations)
+11. [Example Walkthrough](#example-walkthrough)
 
 ---
 
 ## Introduction
 
-This document provides a detailed, technical description of how data flows through the Stock Market Screener system. It complements the Architecture Design Document by providing implementation-level details and decision logic at each stage.
+This document provides detailed, technical description of how data flows through the Stock Market Screener system. It complements the Architecture Design Document by providing implementation-level details and decision logic at each stage.
 
 **Target Audience:** Developers implementing each component  
-**Scope:** Complete data transformation from company list to qualified results  
-**Frequency:** Updated as logic changes
+**Scope:** Complete data transformation from company list to qualified results
 
 ---
 
@@ -40,50 +40,50 @@ This document provides a detailed, technical description of how data flows throu
 Input: Industry List (from appsettings.json)
    │
    ▼
-┌──────────────────────────────────────────────────┐
-│ Stage 1: Data Ingestion & Reconciliation         │
-│ ├─ Fetch companies from SEC EDGAR API            │
-│ ├─ Fetch financial data (multiple sources)       │
-│ ├─ Reconcile conflicting data                    │
-│ └─ Output: Raw financial records (validated)     │
-└────────────────────┬─────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│ Stage 1: Data Ingestion & Reconciliation             │
+│ ├─ Fetch company list from SEC EDGAR API            │
+│ ├─ For each company: fetch financial data           │
+│ ├─ Reconcile conflicting data                        │
+│ └─ Output: Raw financial records (validated)         │
+└──��─────────────────┬─────────────────────────────────┘
                      │
                      ▼
-┌──────────────────────────────────────────────────┐
-│ Stage 2: Metric Calculation                      │
-│ ├─ Parse financial statements                    │
-│ ├─ Calculate 40+ financial metrics               │
-│ ├─ Perform 10-year trend analysis                │
-│ └─ Output: Metric-enriched company records       │
-└────────────────────┬─────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│ Stage 2: Metric Calculation                          │
+│ ├─ Parse financial statements                        │
+│ ├─ Calculate 40+ financial metrics                   │
+│ ├─ Perform 10-year trend analysis                    │
+│ └─ Output: Metric-enriched company records           │
+└────────────────────┬─────────────────────────────────┘
                      │
                      ▼
-┌──────────────────────────────────────────────────┐
-│ Stage 3: 3-Stage Screening                       │
-│ ├─ Stage 1: Financial Strength (hard filters)    │
-│ ├─ Stage 2: Quality Assessment (scoring)         │
-│ ├─ Stage 3: Valuation & Management               │
-│ └─ Output: Pass/Fail + Composite Score (0-100)   │
-└────────────────────┬─────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│ Stage 3: 3-Stage Screening                           │
+│ ├─ Stage 1: Financial Strength (hard filters)       │
+│ ├─ Stage 2: Quality Assessment (scoring 0-100)      │
+│ ├─ Stage 3: Valuation & Management (final ranking)  │
+│ └─ Output: Pass/Fail + Composite Score (0-100)      │
+└────────────────────┬───────────────────────���─────────┘
                      │
                      ▼
-┌──────────────────────────────────────────────────┐
-│ Stage 4: Results Processing                      │
-│ ├─ Filter: Only keep PASS (score >= 75)          │
-│ ├─ Compare with previous results                 │
-│ ├─ Categorize: NEW, MAINTAINED, REMOVED          │
-│ └─ Output: Screening results with status         │
-└────────────────────┬─────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│ Stage 4: Results Processing                          │
+│ ├─ Filter: Only keep PASS (score >= 75)             │
+│ ├─ Compare with previous qualified companies         │
+│ ├─ Categorize: NEW, MAINTAINED, REMOVED             │
+│ └─ Output: Screening results with status             │
+└────────────────────┬─────────────────────────────────┘
                      │
                      ▼
-┌──────────────────────────────────────────────────┐
-│ Stage 5: Notifications & Storage                 │
-│ ├─ Save qualified companies to MySQL             │
-│ ├─ Save screening run details (audit trail)      │
-│ ├─ Generate email report                         │
-│ ├─ Export CSV results                            │
-│ └─ Output: Database + Email + Files exported     │
-└──────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│ Stage 5: Notifications & Storage                     │
+│ ├─ Save qualified companies to MySQL                 │
+│ ├─ Save screening run details (audit trail)          │
+│ ├─ Generate email report                             │
+│ ├─ Export CSV results                                │
+│ └─ Output: Database updated + Email sent             │
+└──────────────────────────────────────────────────────┘
                      │
                      ▼
               SCREENING COMPLETE
@@ -108,7 +108,6 @@ Input: Industry List (from appsettings.json)
 ```
 
 **Process:**
-
 1. Load industries from configuration
 2. Query SEC EDGAR API for all companies in each industry
 3. Build master list of tickers to process
@@ -116,28 +115,50 @@ Input: Industry List (from appsettings.json)
 
 **Output:** List of company tickers with basic info
 
-**Data Structure:**
+---
 
-```csharp
-public class CompanyBasicInfo
-{
-    public string Ticker { get; set; }              // "MSFT"
-    public string CompanyName { get; set; }         // "Microsoft Corporation"
-    public string Sector { get; set; }              // "Technology"
-    public string Industry { get; set; }            // "Software"
-    public DateTime AddedDate { get; set; }         // When added to system
-    public string DataSourceFetched { get; set; }   // "SEC EDGAR"
-}
+### 1.2 Data Age & Availability Requirements
+
+**CRITICAL:** Companies are rejected at data ingestion if they don't meet minimum data requirements:
+
+**Financial Statements:**
+- **Required:** Current fiscal year statement (< 1 year old)
+- **Preferred:** 10 years of historical data (2016-2025)
+- **Minimum Acceptable:** 5 years of historical data
+- **Rejected:** < 5 years of data (insufficient for analysis)
+
+**Stock Prices:**
+- **Required:** Current stock price (< 1 day old)
+- **Acceptable:** Up to 5 days old (market holiday exception)
+- **Rejected:** > 5 days old (stale data)
+
+**Data Completeness:**
+- **All required fields present:** Current quarter data
+- **No nulls in critical metrics:** Revenue, Net Income, Total Assets, Total Liabilities
+- **Historical consistency:** Data integrity checks pass
+
+**Filtering Logic:**
+
 ```
+IF Financial Data Age < 1 year AND
+   Historical Data >= 5 years AND
+   Stock Price Age <= 5 days AND
+   All Required Fields Present
+THEN → Continue to Stage 1.3
+ELSE → REJECT company, skip to next
+```
+
+**Example Rejections:**
+- Company with only 3 years of data: REJECTED
+- Company with 8-month-old financials but no recent stock price: REJECTED
+- Company with missing data in Q4 balance sheet: REJECTED
+- Company with 9 years of clean data and current price: ACCEPTED ✓
 
 ---
 
-### 1.2 Financial Data Fetching Strategy
-
-**Goal:** Retrieve comprehensive financial statements for 10-year analysis
+### 1.3 Financial Data Fetching Strategy
 
 **Data Required:**
-
 - Income Statement (Revenue, Net Income, Operating Income)
 - Balance Sheet (Assets, Liabilities, Equity)
 - Cash Flow Statement (Operating CF, Free CF, CapEx)
@@ -146,182 +167,44 @@ public class CompanyBasicInfo
 **Multi-Source Priority:**
 
 ```
-For FINANCIAL STATEMENTS (Income, Balance Sheet, Cash Flow):
-├─ Primary: SEC EDGAR (10-K annual, 10-Q quarterly)
-│  ├─ Most authoritative source
-│  ├─ Official company filings
-│  └─ Timeout: 30 seconds per request
-│
-└─ Error: Log and skip company (required source)
+FINANCIAL STATEMENTS:
+├─ Primary: SEC EDGAR (10-K/10-Q)
+│  └─ Most authoritative source
+├─ Fallback: None - skip if unavailable
+└─ Error: Log and skip company
 
-For STOCK PRICES & MARKET DATA:
+STOCK PRICES & MARKET DATA:
 ├─ Primary: Yahoo Finance API
-│  ├─ Real-time stock prices
-│  ├─ Market capitalization
-│  └─ Timeout: 10 seconds per request
-│
 ├─ Fallback #1: IEX Cloud
-│  └─ If Yahoo fails or times out
-│
 ├─ Fallback #2: Alpha Vantage
-│  └─ Final fallback option
-│
-└─ Error (all fail): Use last known stock price from DB
+└─ Error: Use last known price or skip
 
-For TREASURY YIELDS (Risk-free rate):
+TREASURY YIELDS:
 ├─ Primary: Federal Reserve FRED API
-│  └─ 10-year Treasury yield (updated daily)
-│
-└─ Fallback: Hardcoded estimate (2.5%) if API unavailable
-```
-
-**Implementation Flow:**
-
-```csharp
-async Task<FinancialData> FetchCompanyFinancials(string ticker)
-{
-    var financialData = new FinancialData { Ticker = ticker };
-    
-    // 1. ALWAYS fetch SEC EDGAR (required)
-    try
-    {
-        financialData.SecEdgarData = await _secEdgarService
-            .FetchLatestReports(ticker);
-        if (financialData.SecEdgarData == null)
-        {
-            _logger.LogWarning($"No SEC EDGAR data found for {ticker}");
-            return null; // Skip this company
-        }
-    }
-    catch (Exception ex)
-    {
-        _logger.LogError($"SEC EDGAR fetch failed: {ex.Message}");
-        return null; // Skip this company
-    }
-    
-    // 2. Fetch market data with fallbacks
-    financialData.MarketData = await FetchMarketDataWithFallbacks(ticker);
-    
-    // 3. Fetch Treasury yield
-    financialData.TreasuryYield = await FetchTreasuryYield();
-    
-    return financialData;
-}
-
-async Task<MarketData> FetchMarketDataWithFallbacks(string ticker)
-{
-    // Try Yahoo Finance
-    try
-    {
-        var data = await _yahooFinanceService.FetchAsync(ticker);
-        if (data != null) return data;
-    }
-    catch (Exception ex)
-    {
-        _logger.LogWarning($"Yahoo Finance failed: {ex.Message}");
-    }
-    
-    // Try IEX Cloud
-    try
-    {
-        var data = await _iexCloudService.FetchAsync(ticker);
-        if (data != null) return data;
-    }
-    catch (Exception ex)
-    {
-        _logger.LogWarning($"IEX Cloud failed: {ex.Message}");
-    }
-    
-    // Try Alpha Vantage
-    try
-    {
-        var data = await _alphaVantageService.FetchAsync(ticker);
-        if (data != null) return data;
-    }
-    catch (Exception ex)
-    {
-        _logger.LogWarning($"Alpha Vantage failed: {ex.Message}");
-    }
-    
-    _logger.LogError($"All market data sources failed for {ticker}");
-    return null;
-}
+└─ Fallback: Hardcoded estimate (2.5%)
 ```
 
 ---
 
-### 1.3 Data Reconciliation
-
-**Goal:** When multiple sources provide overlapping data, ensure consistency
+### 1.4 Data Reconciliation
 
 **Reconciliation Rules:**
 
-| Data Item | Conflict Resolution | Example |
-|-----------|-------------------|---------|
-| Stock Price | Use most recent (today's date) | Yahoo: $150.25 (today) vs IEX: $149.80 (yesterday) → Use Yahoo |
-| Market Cap | Calculate from stock price × shares | Always calculate fresh |
-| Dividend | Verify across 2+ sources before using | Must appear in Yahoo AND IEX |
-| Financial metrics | Always use SEC EDGAR (single source) | Never blend sources |
-| Historical data | Fill gaps using secondary sources | SEC: 9 years + IEX: fill year 10 |
+| Data Item | Conflict Resolution |
+|-----------|-------------------|
+| Stock Price | Use most recent (today's date) |
+| Market Cap | Calculate from stock price × shares |
+| Dividend | Verify across 2+ sources |
+| Financial metrics | Always use SEC EDGAR (single source) |
+| Historical data | Fill gaps using secondary sources |
 
 **Data Validation Rules:**
 
-```
-BEFORE USING ANY DATA:
-
-1. Check Completeness
-   ├─ All required fields present?
-   └─ No null values in critical metrics?
-
-2. Range Validation
-   ├─ ROE: -100% to +200%
-   ├─ Debt/Equity: 0 to 5.0
-   ├─ Margins: -50% to +100%
-   └─ Growth rates: -50% to +50% annually
-
-3. Balance Sheet Validation
-   ├─ Assets = Liabilities + Shareholders' Equity ±2%
-   └─ Flag discrepancies for review
-
-4. Consistency Check
-   ├─ Year-over-year changes < 300%
-   └─ Revenue growth correlates with income growth
-
-5. Data Age Check
-   ├─ Financial statements: < 1 year old
-   ├─ Stock prices: < 1 day old
-   └─ Flag outdated data
-```
-
-**Data Quality Report:**
-
-```csharp
-public class DataQualityReport
-{
-    public string Ticker { get; set; }
-    public bool IsComplete { get; set; }
-    public bool IsValid { get; set; }
-    public List<string> Warnings { get; set; }
-    public List<string> Errors { get; set; }
-    public Dictionary<string, string> DataSources { get; set; }
-    public DateTime DataAsOfDate { get; set; }
-}
-
-// Example:
-{
-    "Ticker": "MSFT",
-    "IsComplete": true,
-    "IsValid": true,
-    "Warnings": ["Stock price > 24h old"],
-    "Errors": [],
-    "DataSources": {
-        "IncomeStatement": "SEC EDGAR",
-        "BalanceSheet": "SEC EDGAR",
-        "StockPrice": "Yahoo Finance"
-    },
-    "DataAsOfDate": "2026-03-14T09:30:00Z"
-}
-```
+1. **Completeness:** All required fields present?
+2. **Range Validation:** ROE: -100% to +200%, D/E: 0 to 5.0
+3. **Balance Sheet:** Assets = Liabilities + Equity ±2%
+4. **Consistency:** Year-over-year changes < 300%
+5. **Data Age:** Financials < 1 year old, Prices < 1 day old
 
 ---
 
@@ -329,190 +212,36 @@ public class DataQualityReport
 
 ### 2.1 Metric Categories (40+)
 
-**Goal:** Calculate comprehensive financial metrics from raw data
+**Profitability Metrics (8):**
+- Gross Margin, Operating Margin, Net Profit Margin, EBITDA Margin
+- ROA, ROE, ROIC, ROCE
 
-All metrics are calculated for:
-- Each historical year (up to 10 years: 2016-2025)
-- 10-year average
-- Stability (Coefficient of Variation)
+**Financial Strength (6):**
+- Debt/Equity, Debt/Assets, Equity Multiplier
+- Current Ratio, Quick Ratio, Interest Coverage
 
-#### Profitability Metrics (8)
+**Cash Flow (6):**
+- Operating Cash Flow, Free Cash Flow, OCF/NI Ratio
+- FCF/OCF, CapEx %, OCF 10Y Avg
 
-```csharp
-public class ProfitabilityMetrics
-{
-    // Margins (as percentages)
-    public decimal GrossMargin { get; set; }
-    public decimal OperatingMargin { get; set; }
-    public decimal NetProfitMargin { get; set; }
-    public decimal EBITDA_Margin { get; set; }
-    
-    // Ratios
-    public decimal ReturnOnAssets_ROA { get; set; }
-    public decimal ReturnOnEquity_ROE { get; set; }
-    public decimal ReturnOnInvestedCapital_ROIC { get; set; }
-    public decimal ReturnOnCapitalEmployed_ROCE { get; set; }
-}
+**Growth (7):**
+- Revenue Growth YoY, Earnings Growth YoY, FCF Growth YoY
+- Revenue CAGR 10Y, Earnings CAGR 10Y, FCF CAGR 10Y
+- Earnings Per Share
 
-// Example Calculations:
-// GrossMargin = (Revenue - COGS) / Revenue * 100
-// NetProfitMargin = NetIncome / Revenue * 100
-// ROE = NetIncome / Shareholders'Equity * 100
-```
+**Valuation (8):**
+- P/E Ratio, P/B Ratio, P/S Ratio, PEG Ratio
+- Earnings Yield, Dividend Yield, Dividend Payout Ratio
+- Enterprise Value/Revenue
 
-#### Financial Strength Metrics (6)
+**Management Quality (6):**
+- Insider Ownership %, Goodwill % of Assets
+- One-Time Charges Frequency, Retained Earnings %
+- Operating Expense Ratio, Asset Turnover
 
-```csharp
-public class FinancialStrengthMetrics
-{
-    // Leverage ratios
-    public decimal DebtToEquity { get; set; }
-    public decimal DebtToAssets { get; set; }
-    public decimal EquityMultiplier { get; set; }
-    
-    // Liquidity ratios
-    public decimal CurrentRatio { get; set; }
-    public decimal QuickRatio { get; set; }
-    
-    // Coverage ratios
-    public decimal InterestCoverageRatio { get; set; }
-}
-
-// Interpretation:
-// DebtToEquity < 0.50 = Strong
-// CurrentRatio > 1.0 = Healthy
-// InterestCoverageRatio > 2.5 = Good
-```
-
-#### Cash Flow Metrics (6)
-
-```csharp
-public class CashFlowMetrics
-{
-    public decimal OperatingCashFlow { get; set; }
-    public decimal FreeCashFlow { get; set; }
-    public decimal OperatingCashFlowToNetIncome { get; set; }
-    public decimal FreeCashFlowToOperatingCashFlow { get; set; }
-    public decimal CapitalExpenditurePercent { get; set; }
-    public decimal CashFlowFromOperations_10Y_Avg { get; set; }
-}
-
-// Example:
-// FreeCashFlow = OperatingCashFlow - CapitalExpenditure
-// OCF_to_NI_Ratio > 1.0 = High quality earnings
-```
-
-#### Growth Metrics (7)
-
-```csharp
-public class GrowthMetrics
-{
-    // Year-over-year
-    public decimal RevenueGrowth_YoY { get; set; }
-    public decimal EarningsGrowth_YoY { get; set; }
-    public decimal FreeCashFlowGrowth_YoY { get; set; }
-    
-    // Compound annual growth rates
-    public decimal RevenueCAGR_10Y { get; set; }
-    public decimal EarningsCAGR_10Y { get; set; }
-    public decimal FreeCashFlowCAGR_10Y { get; set; }
-    
-    // Per share
-    public decimal EarningsPerShare { get; set; }
-}
-
-// Example CAGR:
-// CAGR = (Ending_Value / Beginning_Value) ^ (1/10) - 1
-// 2M / 1M = 2.0, 2.0^0.1 - 1 = 7.2% annual growth
-```
-
-#### Valuation Metrics (8)
-
-```csharp
-public class ValuationMetrics
-{
-    // Price-to-metric ratios
-    public decimal PriceToEarnings_PE { get; set; }
-    public decimal PriceToBook_PB { get; set; }
-    public decimal PriceToSales_PS { get; set; }
-    public decimal PriceToEarningsGrowth_PEG { get; set; }
-    
-    // Yield metrics
-    public decimal EarningsYield { get; set; }
-    public decimal DividendYield { get; set; }
-    public decimal DividendPayoutRatio { get; set; }
-    
-    // Enterprise value
-    public decimal EnterpriseValue_to_Revenue { get; set; }
-}
-
-// Example:
-// PE_Ratio = StockPrice / EPS
-// DividendYield = AnnualDividend / StockPrice * 100
-// EarningsYield = 1 / PE_Ratio * 100
-```
-
-#### Management Quality Metrics (6)
-
-```csharp
-public class ManagementQualityMetrics
-{
-    public decimal InsiderOwnershipPercent { get; set; }
-    public decimal GoodwillAsPercentOfAssets { get; set; }
-    public decimal OneTimeChargesFrequency { get; set; }
-    public decimal RetainedEarningsAsPercentOfEquity { get; set; }
-    public decimal OperatingExpenseRatio { get; set; }
-    public decimal AssetTurnover { get; set; }
-}
-
-// Interpretation:
-// InsiderOwnership > 10% = Good alignment
-// Goodwill > 50% of Assets = Concern
-// OneTimeCharges < 20% = Good quality
-// RetainedEarnings > 50% = Strong reinvestment
-```
-
-#### Stability Metrics (Coefficient of Variation)
-
-```csharp
-public class StabilityMetrics
-{
-    public decimal ProfitabilityStability { get; set; }
-    public decimal GrowthStability { get; set; }
-    public decimal CashFlowStability { get; set; }
-}
-
-// CV = (Standard Deviation / Mean) * 100
-// < 10% = Highly stable ✓
-// 10-20% = Stable ✓
-// 20-30% = Moderate
-// > 30% = Volatile ✗
-```
-
----
-
-### 2.2 10-Year Trend Analysis
-
-**Goal:** Identify trends and consistency over decade
-
-```csharp
-public class TrendAnalysis
-{
-    public decimal ProfitMarginTrend { get; set; }
-    public decimal RevenueGrowthTrend { get; set; }
-    public decimal ROETrend { get; set; }
-    public decimal DebtTrend { get; set; }
-    
-    public bool HasImprovedOverTime { get; set; }
-    public bool IsStable { get; set; }
-    public bool HasConcerns { get; set; }
-}
-
-// Trend Determination:
-// Positive slope = Improving trend ✓
-// Flat slope (< 2% change) = Stable trend ✓
-// Negative slope = Declining trend ✗
-```
+**Stability Metrics:**
+- Coefficient of Variation (CV) for each category
+- < 10% = Highly stable, 10-20% = Stable, 20-30% = Moderate, > 30% = Volatile
 
 ---
 
@@ -520,223 +249,273 @@ public class TrendAnalysis
 
 ### 3.1 Stage 1: Financial Strength Filters (Hard Filters)
 
-**Purpose:** Eliminate financially weak companies immediately
-
-**Logic:** ALL filters must pass. If ANY fails → Company is REJECTED
+**Logic:** ALL filters must pass. If ANY fails → REJECT
 
 ```
-IF  ROE (10-year avg) > 15% AND
-    Net Profit Margin (10-year avg) > 10% AND
-    Debt/Equity Ratio < 0.50 AND
-    Operating Cash Flow (positive all 10 years) AND
-    Free Cash Flow (positive 8+ of 10 years)
+IF ROE (10-year avg) > 15% AND
+   Net Profit Margin (10-year avg) > 10% AND
+   Debt/Equity Ratio < 0.50 AND
+   Operating Cash Flow (positive all 10 years) AND
+   Free Cash Flow (positive 8+ of 10 years)
 THEN → Continue to Stage 2
-ELSE → REJECT company
+ELSE → REJECT
 ```
 
-**Detailed Filter Rules:**
+**Filter Rules:**
 
-| Filter | Threshold | Rationale | Data Used |
-|--------|-----------|-----------|-----------|
-| **ROE** | > 15% (10Y avg) | Return on capital | 10-year average |
-| **Net Margin** | > 10% (10Y avg) | Profitability | 10-year average |
-| **Debt/Equity** | < 0.50 | Financial stability | Latest fiscal year |
-| **Operating CF** | Positive all 10 years | Cash generation | Historical |
-| **Free Cash Flow** | Positive 8+ of 10 years | Sustainable business | Calculated |
-
-**Implementation:**
-
-```csharp
-bool PassStage1(CompanyMetricsRecord record)
-{
-    var avgROE = record.Profitability.ReturnOnEquity;
-    var avgNetMargin = record.Profitability.NetProfitMargin;
-    var debtToEquity = record.FinancialStrength.DebtToEquity;
-    var ocfPositiveYears = CountPositiveYears(record.CashFlow.OperatingCashFlow);
-    var fcfPositiveYears = CountPositiveYears(record.CashFlow.FreeCashFlow);
-    
-    if (avgROE <= 15m) return false;
-    if (avgNetMargin <= 10m) return false;
-    if (debtToEquity >= 0.50m) return false;
-    if (ocfPositiveYears < 10) return false;
-    if (fcfPositiveYears < 8) return false;
-    
-    return true;
-}
-```
+| Filter | Threshold | Rationale |
+|--------|-----------|-----------|
+| ROE | > 15% (10Y avg) | Return on shareholder capital |
+| Net Margin | > 10% (10Y avg) | Profitability |
+| Debt/Equity | < 0.50 | Financial stability |
+| Operating CF | Positive all 10Y | Cash generation |
+| Free Cash Flow | Positive 8+ of 10Y | Sustainable business |
 
 ---
 
-### 3.2 Stage 2: Quality Assessment Scoring (0-100)
+### 3.2 Stage 2: Quality Assessment (Scoring)
 
-**Purpose:** Score passing companies on quality
+**4 Quality Pillars - Total Score: 0-100 points (with max per pillar)**
 
-**Pillar 1: Return on Capital (30 points)**
+**⚠️ IMPORTANT: Each pillar has a maximum score. Elements within each pillar CANNOT exceed that pillar's maximum.**
 
-```
-ROE 15-20%       = 5 points
-ROE 20-25%       = 10 points
-ROE 25-30%       = 15 points
-ROE 30%+         = 20 points
+#### Pillar 1: Return on Capital (MAX: 30 points)
 
-ROIC 12-15%      = 5 points
-ROIC 15-18%      = 10 points
-ROIC 18%+        = 10 points
+**ROE Component (max 20 points):**
+- ROE 15-20% = 5 pts
+- ROE 20-25% = 10 pts
+- ROE 25-30% = 15 pts
+- ROE 30%+ = 20 pts (MAX PILLAR COMPONENT)
 
-Total: 0-30 points
-```
+**ROIC Component (max 10 points):**
+- ROIC 12-15% = 5 pts
+- ROIC 15-18% = 8 pts
+- ROIC 18%+ = 10 pts (MAX PILLAR COMPONENT)
 
-**Pillar 2: Profitability (30 points)**
+**Pillar Cap:** Total from both components cannot exceed 30 points
+- If ROE scores 20 pts, ROIC can add 0-10 pts (capped at 10 max remaining)
+- If ROE scores 15 pts, ROIC can add 0-15 pts (capped at 10 max for ROIC, 30 total)
 
-```
-Net Margin 10-15%   = 5 points
-Net Margin 15-20%   = 10 points
-Net Margin 20%+     = 15 points
+**Example:** ROE = 20 pts, ROIC = 10 pts → Pillar Total = 30 pts (MAX)
 
-Operating Margin 15-20% = 5 points
-Operating Margin 20%+   = 10 points
+---
 
-Margin Stability (CV < 10%) = 5 points (bonus)
+#### Pillar 2: Profitability (MAX: 30 points)
 
-Total: 0-30 points
-```
+**Net Margin Component (max 15 points):**
+- Net Margin 10-15% = 5 pts
+- Net Margin 15-20% = 10 pts
+- Net Margin 20%+ = 15 pts (MAX COMPONENT)
 
-**Pillar 3: Cash Flow (20 points)**
+**Operating Margin Component (max 10 points):**
+- Operating Margin 15-20% = 5 pts
+- Operating Margin 20%+ = 10 pts (MAX COMPONENT)
 
-```
-FCF Positive           = 5 points
-FCF > 5% of Revenue    = 5 points
-FCF > 10% of Revenue   = 10 points
+**Margin Stability Bonus (max 5 points):**
+- Margin Stability (CV < 10%) = 5 pts (BONUS)
 
-OCF > Net Income       = 5 points
+**Pillar Cap:** Total cannot exceed 30 points
+- If Net Margin = 15 pts + Operating Margin = 10 pts + Stability = 5 pts = 30 pts (MAX)
+- If Net Margin = 15 pts + Operating Margin = 10 pts, Stability bonus is capped at 5 pts (no overflow)
 
-FCF Growth > 5% CAGR   = 5 points
+**Example:** Net = 15 pts, Op Margin = 10 pts, Stability = 5 pts → Pillar Total = 30 pts (MAX)
 
-Total: 0-20 points
-```
+---
 
-**Pillar 4: Business Quality (10 points)**
+#### Pillar 3: Cash Flow (MAX: 20 points)
 
-```
-Economic Moat Detected        = 3 points
-Insider Ownership > 5%        = 2 points
-Low Goodwill (< 20% assets)   = 3 points
-Revenue Stability (CV < 15%)  = 2 points
+**FCF Positivity Component (max 5 points):**
+- FCF Positive = 5 pts
 
-Total: 0-10 points
-```
+**FCF as % of Revenue Component (max 10 points):**
+- FCF > 5% of Revenue = 5 pts
+- FCF > 10% of Revenue = 10 pts (MAX COMPONENT)
 
-**Total Quality Score: 0-100 points**
+**OCF Quality Component (max 5 points):**
+- OCF > Net Income (high quality) = 5 pts
+
+**FCF Growth Component (max 5 points):**
+- FCF Growth > 5% CAGR = 5 pts
+
+**Pillar Cap:** Total cannot exceed 20 points
+- Can combine: FCF Positive (5) + FCF% (10) + OCF Quality (5) = 20 pts (MAX)
+- Cannot add FCF Growth if already at 20 pts
+
+**Example:** Positive (5) + FCF% (10) + OCF (5) = 20 pts (MAX) - FCF Growth cannot add
+
+---
+
+#### Pillar 4: Business Quality (MAX: 10 points)
+
+**Economic Moat Component (max 3 points):**
+- Economic Moat Detected = 3 pts
+
+**Management Alignment Component (max 2 points):**
+- Insider Ownership > 5% = 2 pts
+
+**Organic Growth Component (max 3 points):**
+- Low Goodwill (< 20% of assets) = 3 pts
+
+**Revenue Stability Component (max 2 points):**
+- Revenue Stability (Growth CV < 15%) = 2 pts
+
+**Pillar Cap:** Total cannot exceed 10 points
+- Moat (3) + Insider (2) + Goodwill (3) + Stability (2) = 10 pts (MAX)
+- All components combined achieve maximum
+
+**Example:** Moat (3) + Insider (2) + Goodwill (3) + Stability (2) = 10 pts (MAX)
+
+---
+
+**Quality Score Calculation:**
 
 ```csharp
 decimal CalculateQualityScore(CompanyMetricsRecord record)
 {
-    decimal score = 0m;
+    decimal totalScore = 0m;
     
-    // Pillar 1: Return on Capital (30 points)
+    // PILLAR 1: Return on Capital (MAX 30)
+    decimal pillar1 = 0m;
     var roe = record.Profitability.ReturnOnEquity;
-    if (roe >= 30) score += 20m;
-    else if (roe >= 25) score += 15m;
-    else if (roe >= 20) score += 10m;
-    else if (roe >= 15) score += 5m;
+    if (roe >= 30) pillar1 += 20m;
+    else if (roe >= 25) pillar1 += 15m;
+    else if (roe >= 20) pillar1 += 10m;
+    else if (roe >= 15) pillar1 += 5m;
     
-    // Pillar 2: Profitability (30 points)
+    var roic = record.Profitability.ReturnOnInvestedCapital_ROIC;
+    if (roic >= 18) pillar1 += 10m;
+    else if (roic >= 15) pillar1 += 8m;
+    else if (roic >= 12) pillar1 += 5m;
+    
+    pillar1 = Math.Min(pillar1, 30m); // CAP AT 30
+    totalScore += pillar1;
+    
+    // PILLAR 2: Profitability (MAX 30)
+    decimal pillar2 = 0m;
     var netMargin = record.Profitability.NetProfitMargin;
-    if (netMargin >= 20) score += 15m;
-    else if (netMargin >= 15) score += 10m;
-    else if (netMargin >= 10) score += 5m;
+    if (netMargin >= 20) pillar2 += 15m;
+    else if (netMargin >= 15) pillar2 += 10m;
+    else if (netMargin >= 10) pillar2 += 5m;
     
-    // Additional pillars...
+    var opMargin = record.Profitability.OperatingMargin;
+    if (opMargin >= 20) pillar2 += 10m;
+    else if (opMargin >= 15) pillar2 += 5m;
     
-    return Math.Min(score, 100m);
+    if (record.Stability.ProfitabilityStability < 10) pillar2 += 5m;
+    
+    pillar2 = Math.Min(pillar2, 30m); // CAP AT 30
+    totalScore += pillar2;
+    
+    // PILLAR 3: Cash Flow (MAX 20)
+    decimal pillar3 = 0m;
+    if (record.CashFlow.FreeCashFlow > 0) pillar3 += 5m;
+    
+    var fcfPercent = record.CashFlow.FreeCashFlow / /* revenue */ 100;
+    if (fcfPercent >= 0.10m) pillar3 += 10m;
+    else if (fcfPercent >= 0.05m) pillar3 += 5m;
+    
+    if (record.CashFlow.OperatingCashFlowToNetIncome > 1) pillar3 += 5m;
+    
+    if (record.Growth.FreeCashFlowCAGR_10Y > 5) pillar3 += 5m;
+    
+    pillar3 = Math.Min(pillar3, 20m); // CAP AT 20
+    totalScore += pillar3;
+    
+    // PILLAR 4: Business Quality (MAX 10)
+    decimal pillar4 = 0m;
+    if (HasEconomicMoat(record)) pillar4 += 3m;
+    if (record.ManagementQuality.InsiderOwnershipPercent >= 5) pillar4 += 2m;
+    if (record.ManagementQuality.GoodwillAsPercentOfAssets < 20) pillar4 += 3m;
+    if (record.Stability.GrowthStability < 15) pillar4 += 2m;
+    
+    pillar4 = Math.Min(pillar4, 10m); // CAP AT 10
+    totalScore += pillar4;
+    
+    return Math.Min(totalScore, 100m); // FINAL CAP AT 100
 }
 ```
 
+**Quality Score Range: 0-100 points (Maximum 90 if all 4 pillars max: 30+30+20+10)**
+
 ---
 
-### 3.3 Stage 3: Valuation & Final Score
+### 3.3 Stage 3: Valuation & Ranking
 
-**Purpose:** Apply valuation and management metrics for final composite score
+**Pillar 5: Valuation Scoring (MAX: 35 points)**
 
-**Pillar 5: Valuation Scoring (35 points)**
+**P/E Valuation Component (max 12 points):**
+- P/E < 15 (Cheap) = 12 pts
+- P/E 15-20 (Fair) = 10 pts
+- P/E 20-25 (Reasonable) = 8 pts
+- P/E 25-35 (Expensive) = 4 pts
+- P/E > 35 (Very Expensive) = 0 pts
 
-```
-P/E Valuation:
-  P/E < 15           = 12 points
-  P/E 15-20          = 10 points
-  P/E 20-25          = 8 points
-  P/E 25-35          = 4 points
-  P/E > 35           = 0 points
+**PEG Ratio Component (max 10 points):**
+- PEG < 1.0 (Undervalued growth) = 10 pts
+- PEG 1.0-1.5 (Fair value) = 8 pts
+- PEG 1.5-2.0 (Slight premium) = 4 pts
+- PEG > 2.0 (Overvalued) = 0 pts
 
-PEG Ratio:
-  PEG < 1.0          = 10 points
-  PEG 1.0-1.5        = 8 points
-  PEG 1.5-2.0        = 4 points
-  PEG > 2.0          = 0 points
+**Price to Book Component (max 8 points):**
+- P/B < 1.5 (Cheap) = 8 pts
+- P/B 1.5-2.5 (Fair) = 6 pts
+- P/B 2.5-4.0 (Premium) = 2 pts
+- P/B > 4.0 (Expensive) = 0 pts
 
-Price to Book:
-  P/B < 1.5          = 8 points
-  P/B 1.5-2.5        = 6 points
-  P/B 2.5-4.0        = 2 points
-  P/B > 4.0          = 0 points
+**Dividend Yield Component (max 5 points):**
+- Dividend > 3% = 5 pts
+- Dividend > 2% = 3 pts
+- Dividend < 2% = 0 pts
 
-Dividend Yield:
-  Dividend > 2%      = 3 points
-  Dividend > 3%      = 5 points
+**Pillar Cap:** Total cannot exceed 35 points
+- P/E (12) + PEG (10) + P/B (8) + Dividend (5) = 35 pts (MAX)
 
-Total Valuation: 0-35 points
-```
+**Example:** P/E (10) + PEG (10) + P/B (8) + Dividend (5) = 33 pts ✓
 
-**Pillar 6: Management Quality (25 points)**
+---
 
-```
-Insider Ownership:
-  > 15%              = 10 points
-  > 10%              = 8 points
-  > 5%               = 5 points
-  < 5%               = 0 points
+**Pillar 6: Management Quality (MAX: 25 points)**
 
-Goodwill Assessment:
-  < 10% of assets    = 8 points
-  < 20% of assets    = 5 points
-  < 50% of assets    = 2 points
-  > 50%              = 0 points
+**Insider Ownership Component (max 10 points):**
+- > 15% = 10 pts
+- > 10% = 8 pts
+- > 5% = 5 pts
+- < 5% = 0 pts
 
-Accounting Quality:
-  Few one-time charges   = 7 points
-  Some one-time items    = 4 points
-  Many adjustments       = 0 points
+**Goodwill Assessment Component (max 8 points):**
+- < 10% of assets = 8 pts
+- < 20% of assets = 5 pts
+- < 50% of assets = 2 pts
+- > 50% = 0 pts
 
-Total Management: 0-25 points
-```
+**Accounting Quality Component (max 7 points):**
+- Few one-time charges (< 20% of years) = 7 pts
+- Some one-time items (20-40% of years) = 4 pts
+- Many adjustments (> 40% of years) = 0 pts
+
+**Pillar Cap:** Total cannot exceed 25 points
+- Insider (10) + Goodwill (8) + Accounting (7) = 25 pts (MAX)
+
+**Example:** Insider (10) + Goodwill (8) + Accounting (7) = 25 pts (MAX)
+
+---
 
 **Final Composite Score Calculation:**
 
 ```
-Composite Score = (Quality Score × 40%) +
-                  (Valuation Score × 35%) +
+Composite Score = (Quality Score × 40%) + 
+                  (Valuation Score × 35%) + 
                   (Management Score × 25%)
 
 PASSING THRESHOLD: >= 75
 ```
 
-**Score Examples:**
-
-```
-Example 1 (FAIL):
-  Quality = 85, Valuation = 28, Management = 20
-  Composite = (85×0.40) + (28×0.35) + (20×0.25) = 48.8
-
-Example 2 (FAIL):
-  Quality = 90, Valuation = 32, Management = 22
-  Composite = (90×0.40) + (32×0.35) + (22×0.25) = 52.7
-
-Example 3 (PASS):
-  Quality = 95, Valuation = 35, Management = 25
-  Composite = (95×0.40) + (35×0.35) + (25×0.25) = 56.5
-
-Note: Achieving 75+ requires excellent scores across all pillars
-```
+**Score Range Breakdown:**
+- Quality: 0-100 (weighted 40%) = 0-40 points contribution
+- Valuation: 0-35 (weighted 35%) = 0-12.25 points contribution
+- Management: 0-25 (weighted 25%) = 0-6.25 points contribution
+- **Absolute Maximum: 58.25 points**
+- **To reach 75: Need scores above minimum thresholds across all pillars**
 
 ---
 
@@ -744,50 +523,25 @@ Note: Achieving 75+ requires excellent scores across all pillars
 
 ### 4.1 Filtering Results
 
-After Stage 3 screening:
+**After Stage 3:**
+- PASS: Composite score >= 75 (STORE in database)
+- FAIL: Composite score < 75 (DISCARD)
 
-- **PASS:** Composite score >= 75 (STORE in database)
-- **FAIL:** Composite score < 75 (DO NOT STORE)
-
-**Typical Results Distribution:**
-
+**Typical Distribution:**
 ```
 Input: 500 companies
-├─ Stage 1 Filters: ~450 pass, ~50 fail
-├─ Stage 2 Scoring: All continue
+├─ Stage 1 Filters: ~450 pass, ~50 fail (data issues)
+├─ Stage 2 Scoring: All continue (quality assessment)
 ├─ Stage 3 Composite: ~45-60 reach 75 threshold
 └─ Final Result: ~45-60 qualify (9-12%)
 ```
 
----
-
 ### 4.2 Comparison with Previous Results
 
-Compare current run with previous qualifying companies:
-
-```csharp
-public class ScreeningComparison
-{
-    public List<string> NewlyQualified { get; set; }
-    public List<string> Maintained { get; set; }
-    public List<string> Removed { get; set; }
-}
-
-// Example logic:
-var current = currentResults
-    .Where(r => r.PassedScreening)
-    .Select(r => r.Ticker)
-    .ToList();
-
-var previous = await _db.QualifiedCompanies
-    .Where(c => c.IsActive)
-    .Select(c => c.Ticker)
-    .ToListAsync();
-
-var newly = current.Except(previous).ToList();       // [MSFT, AAPL]
-var maintained = current.Intersect(previous).ToList(); // [JNJ, KO, JPM]
-var removed = previous.Except(current).ToList();     // [OLD1, OLD2]
-```
+**Categories:**
+- **Newly Qualified:** Passed this run, failed before
+- **Maintained:** Passed both runs
+- **Removed:** Passed before, failed now
 
 ---
 
@@ -795,147 +549,211 @@ var removed = previous.Except(current).ToList();     // [OLD1, OLD2]
 
 ### 5.1 Database Operations
 
-```csharp
-// 1. Save newly qualified companies
-foreach (var ticker in newly)
-{
-    var company = new QualifiedCompany
-    {
-        Ticker = ticker,
-        CompanyName = result.CompanyName,
-        CompositeScore = result.CompositeScore,
-        QualityScore = result.QualityScore,
-        ValuationScore = result.ValuationScore,
-        ManagementScore = result.ManagementScore,
-        FirstQualifiedDate = DateTime.UtcNow,
-        LastQualifiedDate = DateTime.UtcNow,
-        IsActive = true
-    };
-    
-    _db.QualifiedCompanies.Add(company);
-    
-    // Save metrics for each year
-    for (int year = 2016; year <= 2025; year++)
-    {
-        var metrics = new FinancialMetrics { /* ... */ };
-        _db.FinancialMetrics.Add(metrics);
-    }
-}
-
-// 2. Update maintained companies
-foreach (var ticker in maintained)
-{
-    var company = await _db.QualifiedCompanies
-        .FirstAsync(c => c.Ticker == ticker);
-    company.CompositeScore = result.CompositeScore;
-    company.LastQualifiedDate = DateTime.UtcNow;
-}
-
-// 3. Mark removed companies as inactive
-foreach (var ticker in removed)
-{
-    var company = await _db.QualifiedCompanies
-        .FirstAsync(c => c.Ticker == ticker);
-    company.IsActive = false;
-    company.RemovedDate = DateTime.UtcNow;
-    
-    var removedRecord = new RemovedCompany
-    {
-        Ticker = ticker,
-        ReasonRemoved = "Failed latest screening",
-        LastCompositeScore = company.CompositeScore,
-        DateRemoved = DateTime.UtcNow
-    };
-    _db.RemovedCompanies.Add(removedRecord);
-}
-
-// 4. Log screening run
-var runRecord = new ScreeningRun
-{
-    RunDate = DateTime.UtcNow,
-    RunType = "Scheduled",
-    Status = "Success",
-    CompaniesProcessed = totalCompanies,
-    CompaniesQualified = current.Count,
-    NewlyQualified = newly.Count,
-    MaintainedQualified = maintained.Count,
-    Removed = removed.Count,
-    ExecutionTimeSeconds = stopwatch.ElapsedMilliseconds / 1000,
-    IndustriesScreened = "Technology, Healthcare, Consumer Defensive"
-};
-_db.ScreeningRuns.Add(runRecord);
-
-await _db.SaveChangesAsync();
-```
+1. **Save newly qualified companies** with all metrics
+2. **Update maintained companies** with new scores
+3. **Mark removed companies** as inactive
+4. **Log screening run details** for audit trail
 
 ### 5.2 Email Notification
 
-Sent to configured recipient with:
+Sent with:
 - Summary statistics
 - Detailed results table (HTML)
-- Newly qualified companies highlighted
+- Newly qualified highlighted
 - Removed companies listed
-- CSV attachment
 
 ### 5.3 CSV Export
 
 File: `output/screening-results-{date}.csv`
 
-Contains all qualified companies with their metrics.
-
 ---
 
 ## Error Handling & Recovery
 
-### Error Scenarios:
-
 | Scenario | Action | Continue? |
 |----------|--------|-----------|
 | SEC EDGAR unavailable | Log error, skip company | Yes |
-| All market data sources fail | Use last known price | Yes |
+| All market data fail | Use last known price | Yes |
 | Metric calculation fails | Log error, skip company | Yes |
-| Database connection lost | Fail screening, alert admin | No |
+| Database connection lost | Fail screening | No |
 | Email send fails | Log error, continue | Yes |
-| Out of memory | Stop screening, log error | No |
+| Out of memory | Stop screening | No |
+
+### Exception Handling Examples
+
+**Exception 1: SEC EDGAR has data but Yahoo Finance doesn't**
+
+```
+Scenario: Company MSFT has 10-year SEC financials but no current stock price
+from Yahoo, IEX, or Alpha Vantage
+
+Action:
+├─ Log warning: "MSFT missing current market data"
+├─ Check database for last known price
+│  ├─ If exists and < 5 days old: Use it for valuation
+│  └─ If older or missing: Skip valuation scoring
+├─ Continue screening with financial metrics only
+├─ Note in audit trail: "Valuation data unavailable"
+└─ Company can still qualify if financial quality strong enough
+
+Outcome: MSFT processed, but Valuation Score may be 0
+         (affects composite score but not disqualifying)
+```
+
+**Exception 2: Company has only 7 years of data**
+
+```
+Scenario: Company ABC has strong 7 years of data but only founded in 2019
+
+Check at Stage 1.2:
+├─ Is 7 years >= 5 years minimum? YES
+├─ Flag in audit trail: "Partial data - 7 years vs 10 preferred"
+├─ Use available 7 years for all calculations
+├─ 10-year average = 7-year average (only data available)
+├─ Growth rates calculated from 7-year period
+└─ Continue to Stage 1 Financial Strength
+
+Note: Screening standards remain same, just fewer years to analyze
+      This is acceptable per requirements (5-year minimum)
+```
+
+**Exception 3: Company has inconsistent data**
+
+```
+Scenario: Balance sheet doesn't balance (Assets ≠ Liabilities + Equity)
+         within 2% tolerance
+
+Check at Stage 1.4:
+├─ Assets = $1,000M, Liabilities = $600M, Equity = $350M
+├─ Check: $1,000 = $600 + $350? NO (should be $950)
+├─ Discrepancy: $50M (5% error)
+├─ Log warning: "Balance sheet discrepancy 5% for XYZ company"
+├─ Decision: Data is audited, use as-is but flag concern
+├─ Note in audit trail: "Accounting quality concern - balance check failed"
+└─ Continue to Stage 1 (but flag for manual review later)
+
+Outcome: Company processed but manually reviewed
+         Flagged in report for investor awareness
+```
 
 ---
 
 ## Data Quality Assurance
 
-### Validation Checklist:
-
+**Validation Checklist:**
 - ✓ All required SEC EDGAR data present
-- ✓ Stock prices recent (< 1 day old)
-- ✓ Financial statements not null
+- ✓ Stock prices recent (< 1 day old, or < 5 days if market holiday)
+- ✓ Financial statements < 1 year old
+- ✓ Historical data >= 5 years (10 years preferred)
 - ✓ Metrics within reasonable ranges
-- ✓ 10-year historical data available (8+ years acceptable)
+- ✓ Balance sheet validation passes (or flagged)
 - ✓ Data sources documented for audit trail
 
 ---
 
 ## Performance Considerations
 
-### Typical Processing Times:
+**Typical Processing Times (500 companies):**
+- Data fetching: 30-40 minutes
+- Metric calculation: 2-3 minutes
+- Screening (3 stages): 1 minute
+- Results processing: 30 seconds
+- Database save: 1 minute
+- Email/Export: 30 seconds
+- **TOTAL: 40-50 minutes**
+
+---
+
+## Example Walkthrough
+
+### Real Company Example: Microsoft (MSFT)
+
+**Initial Data:**
+- Founded: 1975
+- Data Available: 10 years (2016-2025)
+- Current Stock Price: $425.00 (as of 2026-03-13)
+- Market Cap: ~$3.2 trillion
+
+#### Stage 1.2: Data Validation ✓
 
 ```
-500 companies processed:
-├─ Data fetching: ~30-40 minutes (API rate limits)
-├─ Metric calculation: ~2-3 minutes
-├─ Screening (3 stages): ~1 minute
-├─ Results processing: ~30 seconds
-├─ Database save: ~1 minute
-└─ Email/Export: ~30 seconds
-
-TOTAL: ~40-50 minutes per screening run
+Financial Data Age: 2025 fiscal year (current) ✓
+Historical Data: 10 years available (2016-2025) ✓
+Stock Price Age: < 1 day old ✓
+All Required Fields: Present ✓
+→ PASS - Continue to Stage 1.3
 ```
 
-### Optimization Tips:
+#### Stage 1: Financial Strength Filters
 
-1. Use connection pooling for HTTP clients
-2. Cache industry lists
-3. Parallel process companies (5-10 concurrent)
-4. Batch database inserts (500 at a time)
-5. Compress CSV before email
+```
+10-Year Average ROE: 28% > 15%? YES ✓
+10-Year Average Net Margin: 27% > 10%? YES ✓
+Current Debt/Equity: 0.35 < 0.50? YES ✓
+Operating CF Positive All 10Y: YES ✓
+Free Cash Flow Positive 8+/10Y: YES (all 10) ✓
+
+Result: PASS - Continue to Stage 2 Quality Scoring
+```
+
+#### Stage 2: Quality Assessment
+
+**Pillar 1: Return on Capital (Target: 30 max)**
+- ROE 28% = 15 pts (25-30% range)
+- ROIC 21% = 10 pts (18%+ range)
+- Pillar 1 Score: 25 pts (under 30 cap)
+
+**Pillar 2: Profitability (Target: 30 max)**
+- Net Margin 27% = 15 pts (20%+ range)
+- Operating Margin 37% = 10 pts (20%+ range)
+- Margin Stability CV = 4% = 5 pts (< 10% bonus)
+- Pillar 2 Score: 30 pts (at 30 cap) ✓
+
+**Pillar 3: Cash Flow (Target: 20 max)**
+- Free Cash Flow Positive = 5 pts
+- FCF 18% of Revenue = 10 pts (> 10%)
+- OCF > Net Income = 5 pts (2.1x NI)
+- FCF Growth CAGR 12% = 5 pts (> 5%)
+- Pillar 3 Score: 25 pts (capped at 20) → **20 pts**
+
+**Pillar 4: Business Quality (Target: 10 max)**
+- Economic Moat (brand, network effects) = 3 pts
+- Insider Ownership 0.8% = 0 pts (< 5%)
+- Goodwill 8% of Assets = 3 pts (< 20%)
+- Revenue Stability CV = 8% = 2 pts (< 15%)
+- Pillar 4 Score: 8 pts (under 10 cap)
+
+**Quality Score = 25 + 30 + 20 + 8 = 83/100** ✓
+
+#### Stage 3: Valuation & Ranking
+
+**Pillar 5: Valuation Scoring (Target: 35 max)**
+- P/E 32x = 4 pts (25-35 range)
+- PEG 1.8 = 4 pts (1.5-2.0 range)
+- P/B 48 = 0 pts (> 4.0, very expensive)
+- Dividend Yield 0.7% = 0 pts (< 2%)
+- Valuation Score: 8 pts (under 35 cap)
+
+**Pillar 6: Management Quality (Target: 25 max)**
+- Insider Ownership 1.2% = 0 pts (< 5%)
+- Goodwill 8% = 8 pts (< 10%)
+- Accounting Quality (rare one-time charges) = 7 pts
+- Management Score: 15 pts (under 25 cap)
+
+#### Final Composite Score
+
+```
+Composite = (Quality × 40%) + (Valuation × 35%) + (Management × 25%)
+          = (83 × 0.40) + (8 × 0.35) + (15 × 0.25)
+          = 33.2 + 2.8 + 3.75
+          = 39.75/100
+
+Result: FAIL (39.75 < 75 threshold)
+Reason: Valuation too expensive (high P/E, high P/B)
+        Despite excellent profitability, current price too high
+```
+
+**Example Insight:** Microsoft is an excellent business (Quality: 83) but at current valuation of $425/share it does NOT meet the strict value criteria. The screener would REJECT it, waiting for a better price (e.g., if it dropped to $250/share for better valuation scoring).
 
 ---
 
@@ -944,3 +762,4 @@ TOTAL: ~40-50 minutes per screening run
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2026-03-14 | Initial data flow documentation |
+| 1.1 | 2026-03-14 | Added data age requirements, clarified pillar scoring caps, added exception handling examples, added real company walkthrough (Microsoft example) |
