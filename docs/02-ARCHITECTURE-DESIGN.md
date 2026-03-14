@@ -178,7 +178,7 @@ StockMarketScreener.Console
 | **Logging** | Serilog | Structured logging, file + console |
 | **Email** | MailKit | SMTP integration, HTML support |
 | **Configuration** | appsettings.json | Secrets, environment-specific config |
-| **Testing** | xUnit + Moq | Industry standard for .NET |
+| **Testing** | NUnit + Moq | Industry standard for .NET |
 
 ### External APIs & Data Sources
 
@@ -934,7 +934,7 @@ RECIPIENT_EMAIL = your-email@gmail.com
 
 ### Unit Tests
 
-**Testing Framework:** xUnit + Moq
+**Testing Framework:** NUnit + Moq
 
 **Test Coverage:**
 
@@ -963,7 +963,7 @@ RECIPIENT_EMAIL = your-email@gmail.com
 
 ### Integration Tests
 
-**Testing Framework:** xUnit + Testcontainers (MySQL in Docker)
+**Testing Framework:** NUnit + Testcontainers (MySQL in Docker)
 
 **Test Data:**
 - 10 well-known companies with real historical data
