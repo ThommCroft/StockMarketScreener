@@ -608,8 +608,8 @@ To add custom industries:
 │  │  ├─ ROE > 15%?
 │  │  ├─ Net Margin > 10%?
 │  │  ├─ D/E < 0.50?
-│  │  ├─ Operating Cash Flow positive?
-│  │  ├─ Free Cash Flow positive?
+│  │  ├─ Operating Cash Flow positive (all 10 years)?
+│  │  ├─ Free Cash Flow positive (all 10 years)?
 │  │  └─ IF ANY FAIL → SKIP company (not stored)
 │  │
 │  ├─ Stage 2: Quality Assessment (Scoring)
