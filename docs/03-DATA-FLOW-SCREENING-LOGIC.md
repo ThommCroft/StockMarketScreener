@@ -1,6 +1,6 @@
 # Data Flow Logic Document - Stock Market Screener
 
-**Version:** 1.1  
+**Version:** 1.2 (Updated with Market Cap Filter & FCF Correction)  
 **Date:** 2026-03-14  
 **Author:** ThommCroft  
 **Purpose:** Comprehensive documentation of data flow through each system component
@@ -11,15 +11,16 @@
 
 1. [Introduction](#introduction)
 2. [Data Flow Overview](#data-flow-overview)
-3. [Stage 1: Data Ingestion & Reconciliation](#stage-1-data-ingestion--reconciliation)
-4. [Stage 2: Metric Calculation](#stage-2-metric-calculation)
-5. [Stage 3: Screening Logic](#stage-3-screening-logic)
-6. [Stage 4: Results Processing](#stage-4-results-processing)
-7. [Stage 5: Notifications & Storage](#stage-5-notifications--storage)
-8. [Error Handling & Recovery](#error-handling--recovery)
-9. [Data Quality Assurance](#data-quality-assurance)
-10. [Performance Considerations](#performance-considerations)
-11. [Example Walkthrough](#example-walkthrough)
+3. [Stage 0: Company Pre-Filtering](#stage-0-company-pre-filtering)
+4. [Stage 1: Data Ingestion & Reconciliation](#stage-1-data-ingestion--reconciliation)
+5. [Stage 2: Metric Calculation](#stage-2-metric-calculation)
+6. [Stage 3: Screening Logic](#stage-3-screening-logic)
+7. [Stage 4: Results Processing](#stage-4-results-processing)
+8. [Stage 5: Notifications & Storage](#stage-5-notifications--storage)
+9. [Error Handling & Recovery](#error-handling--recovery)
+10. [Data Quality Assurance](#data-quality-assurance)
+11. [Performance Considerations](#performance-considerations)
+12. [Example Walkthrough](#example-walkthrough)
 
 ---
 
@@ -28,7 +29,8 @@
 This document provides detailed, technical description of how data flows through the Stock Market Screener system. It complements the Architecture Design Document by providing implementation-level details and decision logic at each stage.
 
 **Target Audience:** Developers implementing each component  
-**Scope:** Complete data transformation from company list to qualified results
+**Scope:** Complete data transformation from company list to qualified results  
+**Investment Alignment:** All criteria from Investment Requirements v3.0 implemented
 
 ---
 
@@ -40,54 +42,92 @@ This document provides detailed, technical description of how data flows through
 Input: Industry List (from appsettings.json)
    │
    ▼
-┌──────────────────────────────────────────────────────┐
-│ Stage 1: Data Ingestion & Reconciliation             │
-│ ├─ Fetch company list from SEC EDGAR API            │
-│ ├─ For each company: fetch financial data           │
-│ ├─ Reconcile conflicting data                        │
-│ └─ Output: Raw financial records (validated)         │
-└──��─────────────────┬─────────────────────────────────┘
-                     │
-                     ▼
-┌──────────────────────────────────────────────────────┐
-│ Stage 2: Metric Calculation                          │
-│ ├─ Parse financial statements                        │
-│ ├─ Calculate 40+ financial metrics                   │
-│ ├─ Perform 10-year trend analysis                    │
-│ └─ Output: Metric-enriched company records           │
-└────────────────────┬─────────────────────────────────┘
-                     │
-                     ▼
-┌──────────────────────────────────────────────────────┐
-│ Stage 3: 3-Stage Screening                           │
-│ ├─ Stage 1: Financial Strength (hard filters)       │
-│ ├─ Stage 2: Quality Assessment (scoring 0-100)      │
-│ ├─ Stage 3: Valuation & Management (final ranking)  │
-│ └─ Output: Pass/Fail + Composite Score (0-100)      │
-└────────────────────┬───────────────────────���─────────┘
-                     │
-                     ▼
-┌──────────────────────────────────────────────────────┐
-│ Stage 4: Results Processing                          │
-│ ├─ Filter: Only keep PASS (score >= 75)             │
-│ ├─ Compare with previous qualified companies         │
-│ ├─ Categorize: NEW, MAINTAINED, REMOVED             │
-│ └─ Output: Screening results with status             │
-└────────────────────┬─────────────────────────────────┘
-                     │
-                     ▼
-┌──────────────────────────────────────────────────────┐
-│ Stage 5: Notifications & Storage                     │
-│ ├─ Save qualified companies to MySQL                 │
-│ ├─ Save screening run details (audit trail)          │
-│ ├─ Generate email report                             │
-│ ├─ Export CSV results                                │
-│ └─ Output: Database updated + Email sent             │
-└──────────────────────────────────────────────────────┘
-                     │
-                     ▼
-              SCREENING COMPLETE
+┌──────────────────────────────────────────────────────────────┐
+│ Stage 0: Company Pre-Filtering                               │
+│ ├─ Market Cap > $300M? (ensure liquidity)                   │
+│ └─ Output: Only liquid, institutional-quality companies      │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────────────────────┐
+│ Stage 1: Data Ingestion & Reconciliation                     │
+│ ├─ Fetch financial data from SEC EDGAR                       │
+│ ├─ Fetch stock prices from multiple sources                  │
+│ ├─ Validate data quality & age requirements                  │
+│ └─ Output: Reconciled financial records (validated)          │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────────────────────┐
+│ Stage 2: Metric Calculation                                  │
+│ ├─ Parse financial statements                                │
+│ ├─ Calculate 40+ financial metrics                           │
+│ ├─ Perform 10-year trend analysis                            │
+│ └─ Output: Metric-enriched company records                   │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────────────────────┐
+│ Stage 3: 3-Stage Screening                                   │
+│ ├─ Stage 1: Financial Strength (hard filters)               │
+│ ├─ Stage 2: Quality Assessment (scoring 0-100)              │
+│ ├─ Stage 3: Valuation & Management (final ranking)          │
+│ └─ Output: Pass/Fail + Composite Score (0-100)              │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────────────────────┐
+│ Stage 4: Results Processing                                  │
+│ ├─ Filter: Only keep PASS (score >= 75)                     │
+│ ├─ Compare with previous qualified companies                 │
+│ ├─ Categorize: NEW, MAINTAINED, REMOVED                     │
+│ └─ Output: Screening results with status                     │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────────────────────┐
+│ Stage 5: Notifications & Storage                             │
+│ ├─ Save qualified companies to MySQL                         │
+│ ├─ Save screening run details (audit trail)                  │
+│ ├─ Generate email report                                     │
+│ ├─ Export CSV results                                        │
+│ └─ Output: Database updated + Email sent                     │
+└──────────────────────────────────────────────────────────────┘
+                 │
+                 ▼
+          SCREENING COMPLETE
 ```
+
+---
+
+## Stage 0: Company Pre-Filtering
+
+### 0.1 Market Capitalization Filter
+
+**Purpose:** Ensure only liquid, institutional-quality companies are screened
+
+**Filter Logic:**
+```
+IF Market Cap > $300M
+THEN → Continue to Stage 1
+ELSE → REJECT company, skip to next
+```
+
+**Why $300M Threshold?**
+- Institutional investors typically require minimum $300M+ market cap
+- Companies below threshold may have low liquidity
+- Prevents screening micro-cap/penny stocks
+- Aligns with professional investment standards
+- Basis: Investment Requirements v3.0 SHOULD HAVE criteria
+
+**Example Rejections:**
+- Company with strong fundamentals but $150M market cap: REJECTED
+- Company with $325M market cap: ACCEPTED ✓
+
+**Performance Impact:**
+- Executes BEFORE data fetching (saves API calls)
+- Typically eliminates 10-15% of companies upfront
+- Result: Fewer API calls = faster overall screening
 
 ---
 
@@ -111,9 +151,10 @@ Input: Industry List (from appsettings.json)
 1. Load industries from configuration
 2. Query SEC EDGAR API for all companies in each industry
 3. Build master list of tickers to process
-4. Typically results in 500-1000 companies
+4. Apply market cap pre-filter (> $300M)
+5. Typically results in 400-500 companies (after filtering)
 
-**Output:** List of company tickers with basic info
+**Output:** List of company tickers with basic info (passing market cap check)
 
 ---
 
@@ -140,11 +181,12 @@ Input: Industry List (from appsettings.json)
 **Filtering Logic:**
 
 ```
-IF Financial Data Age < 1 year AND
+IF Market Cap > $300M AND
+   Financial Data Age < 1 year AND
    Historical Data >= 5 years AND
    Stock Price Age <= 5 days AND
    All Required Fields Present
-THEN → Continue to Stage 1.3
+THEN → Continue to Stage 2 Metric Calculation
 ELSE → REJECT company, skip to next
 ```
 
@@ -152,6 +194,7 @@ ELSE → REJECT company, skip to next
 - Company with only 3 years of data: REJECTED
 - Company with 8-month-old financials but no recent stock price: REJECTED
 - Company with missing data in Q4 balance sheet: REJECTED
+- Company with strong financials but market cap $150M: REJECTED
 - Company with 9 years of clean data and current price: ACCEPTED ✓
 
 ---
@@ -256,7 +299,7 @@ IF ROE (10-year avg) > 15% AND
    Net Profit Margin (10-year avg) > 10% AND
    Debt/Equity Ratio < 0.50 AND
    Operating Cash Flow (positive all 10 years) AND
-   Free Cash Flow (positive 8+ of 10 years)
+   Free Cash Flow (positive all 10 years)
 THEN → Continue to Stage 2
 ELSE → REJECT
 ```
@@ -269,7 +312,9 @@ ELSE → REJECT
 | Net Margin | > 10% (10Y avg) | Profitability |
 | Debt/Equity | < 0.50 | Financial stability |
 | Operating CF | Positive all 10Y | Cash generation |
-| Free Cash Flow | Positive 8+ of 10Y | Sustainable business |
+| Free Cash Flow | Positive all 10Y | Sustainable business (every year required) |
+
+**Updated Note:** FCF requirement now matches Investment Requirements v3.0 (MUST HAVE = all 10 years, not 8+)
 
 ---
 
@@ -530,10 +575,11 @@ PASSING THRESHOLD: >= 75
 **Typical Distribution:**
 ```
 Input: 500 companies
-├─ Stage 1 Filters: ~450 pass, ~50 fail (data issues)
+├─ Stage 0 Market Cap Filter: ~400-450 pass, ~50-100 fail (too small)
+├─ Stage 1 Filters: ~350-400 pass, ~50-100 fail (poor financials)
 ├─ Stage 2 Scoring: All continue (quality assessment)
 ├─ Stage 3 Composite: ~45-60 reach 75 threshold
-└─ Final Result: ~45-60 qualify (9-12%)
+└─ Final Result: ~45-60 qualify (9-12% of original list)
 ```
 
 ### 4.2 Comparison with Previous Results
@@ -572,6 +618,7 @@ File: `output/screening-results-{date}.csv`
 
 | Scenario | Action | Continue? |
 |----------|--------|-----------|
+| Market cap data unavailable | Use last known market cap, continue | Yes |
 | SEC EDGAR unavailable | Log error, skip company | Yes |
 | All market data fail | Use last known price | Yes |
 | Metric calculation fails | Log error, skip company | Yes |
@@ -581,7 +628,22 @@ File: `output/screening-results-{date}.csv`
 
 ### Exception Handling Examples
 
-**Exception 1: SEC EDGAR has data but Yahoo Finance doesn't**
+**Exception 1: Market cap data unavailable**
+
+```
+Scenario: Company has strong fundamentals but no current market cap data
+
+Action:
+├─ Try to fetch from Yahoo Finance
+├─ Try fallback sources (IEX, Alpha Vantage)
+├─ If all fail, use last known market cap
+├─ If no history, skip company (cannot verify > $300M)
+└─ Log warning: "MSFT market cap using cached data from 3 days ago"
+
+Outcome: Company either passes pre-filter or skipped if cannot verify
+```
+
+**Exception 2: SEC EDGAR has data but Yahoo Finance doesn't**
 
 ```
 Scenario: Company MSFT has 10-year SEC financials but no current stock price
@@ -600,7 +662,7 @@ Outcome: MSFT processed, but Valuation Score may be 0
          (affects composite score but not disqualifying)
 ```
 
-**Exception 2: Company has only 7 years of data**
+**Exception 3: Company has only 7 years of data**
 
 ```
 Scenario: Company ABC has strong 7 years of data but only founded in 2019
@@ -617,30 +679,12 @@ Note: Screening standards remain same, just fewer years to analyze
       This is acceptable per requirements (5-year minimum)
 ```
 
-**Exception 3: Company has inconsistent data**
-
-```
-Scenario: Balance sheet doesn't balance (Assets ≠ Liabilities + Equity)
-         within 2% tolerance
-
-Check at Stage 1.4:
-├─ Assets = $1,000M, Liabilities = $600M, Equity = $350M
-├─ Check: $1,000 = $600 + $350? NO (should be $950)
-├─ Discrepancy: $50M (5% error)
-├─ Log warning: "Balance sheet discrepancy 5% for XYZ company"
-├─ Decision: Data is audited, use as-is but flag concern
-├─ Note in audit trail: "Accounting quality concern - balance check failed"
-└─ Continue to Stage 1 (but flag for manual review later)
-
-Outcome: Company processed but manually reviewed
-         Flagged in report for investor awareness
-```
-
 ---
 
 ## Data Quality Assurance
 
 **Validation Checklist:**
+- ✓ Market cap > $300M verified
 - ✓ All required SEC EDGAR data present
 - ✓ Stock prices recent (< 1 day old, or < 5 days if market holiday)
 - ✓ Financial statements < 1 year old
@@ -654,6 +698,7 @@ Outcome: Company processed but manually reviewed
 ## Performance Considerations
 
 **Typical Processing Times (500 companies):**
+- Stage 0 Market Cap Pre-filtering: < 1 minute
 - Data fetching: 30-40 minutes
 - Metric calculation: 2-3 minutes
 - Screening (3 stages): 1 minute
@@ -661,6 +706,11 @@ Outcome: Company processed but manually reviewed
 - Database save: 1 minute
 - Email/Export: 30 seconds
 - **TOTAL: 40-50 minutes**
+
+**Performance Optimization:**
+- Market cap pre-filter eliminates unnecessary API calls
+- Parallel processing (5-10 concurrent) could reduce to 15-25 min
+- Caching reduces subsequent run times to 5-10 minutes
 
 ---
 
@@ -671,8 +721,15 @@ Outcome: Company processed but manually reviewed
 **Initial Data:**
 - Founded: 1975
 - Data Available: 10 years (2016-2025)
-- Current Stock Price: $425.00 (as of 2026-03-13)
+- Current Stock Price: $425.00 (as of 2026-03-14)
 - Market Cap: ~$3.2 trillion
+
+#### Stage 0: Market Cap Check ✓
+
+```
+Market Cap: $3.2 trillion > $300M? YES ✓
+→ PASS - Continue to Stage 1
+```
 
 #### Stage 1.2: Data Validation ✓
 
@@ -681,17 +738,17 @@ Financial Data Age: 2025 fiscal year (current) ✓
 Historical Data: 10 years available (2016-2025) ✓
 Stock Price Age: < 1 day old ✓
 All Required Fields: Present ✓
-→ PASS - Continue to Stage 1.3
+→ PASS - Continue to Stage 2 Metric Calculation
 ```
 
-#### Stage 1: Financial Strength Filters
+#### Stage 1: Financial Strength Filters ✓
 
 ```
 10-Year Average ROE: 28% > 15%? YES ✓
 10-Year Average Net Margin: 27% > 10%? YES ✓
 Current Debt/Equity: 0.35 < 0.50? YES ✓
 Operating CF Positive All 10Y: YES ✓
-Free Cash Flow Positive 8+/10Y: YES (all 10) ✓
+Free Cash Flow Positive All 10Y: YES ✓
 
 Result: PASS - Continue to Stage 2 Quality Scoring
 ```
@@ -763,3 +820,4 @@ Reason: Valuation too expensive (high P/E, high P/B)
 |---------|------|---------|
 | 1.0 | 2026-03-14 | Initial data flow documentation |
 | 1.1 | 2026-03-14 | Added data age requirements, clarified pillar scoring caps, added exception handling examples, added real company walkthrough (Microsoft example) |
+| 1.2 | 2026-03-14 | **UPDATED** - Added Stage 0 Market Cap Pre-filtering (> $300M), Corrected FCF requirement from "8+ of 10 years" to "ALL 10 YEARS", Updated filtering logic to include market cap check, Updated typical distribution to reflect market cap filtering impact, Investment Requirements v3.0 fully aligned |
