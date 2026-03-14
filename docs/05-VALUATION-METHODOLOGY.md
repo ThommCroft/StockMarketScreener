@@ -3813,3 +3813,1707 @@ Code
 **Key insight:** Munger's approach is more about business judgment than mathematical precision. He'd rather own a 50-year business at 20x earnings than a mediocre business at 8x earnings.
 
 ---
+## **Section 13: Output Formats**
+
+### **13.1 Email Report Format**
+
+The email report is your PRIMARY output for investment decision-making.
+
+#### **Email Structure**
+
+TO: [Your Email] SUBJECT: Stock Market Screener Results - [Date] | [# Qualified] Companies
+
+📊 STOCK MARKET SCREENER RESULTS Screening Date: [Date] Analysis Period: [Quarter/Year] Status: ✅ COMPLETE
+
+EXECUTIVE SUMMARY
+Screening Overview:
+
+Companies Analyzed: 487
+Passed Market Cap Filter (>$300M): 425
+Passed Data Validation: 412
+Passed Financial Strength Filters (Stage 1): 318
+Passed Financial Analysis (Stage 3): 52 companies
+Complete Valuation Analysis: 52 companies
+Key Statistics:
+
+Average Financial Quality Score: 81.3/100
+Average Margin of Safety: 18.7%
+Consensus Average Fair Value: $287.50
+Consensus Average Current Price: $235.80
+Distribution Across Groups:
+
+GROUP 1 (Slam Dunks): 3 companies
+GROUP 2 (Strong Buys): 8 companies
+GROUP 3 (Fair Value): 15 companies
+GROUP 4 (Overvalued): 18 companies
+GROUP 5 (Not Qualified): 8 companies
+Comparison with Prior Run ([Prior Date]):
+
+Newly Qualified: 5 companies
+Maintained Qualification: 45 companies
+Removed from Prior List: 7 companies
+🎯 GROUP 1: SLAM DUNK BUYS (3 Companies)
+Criteria: Quality Score 80+, Margin of Safety 30%+
+
+These are the best opportunities - exceptional businesses at attractive prices.
+
+1. [TICKER] - [Company Name]
+Snapshot:
+
+Current Price: $XXX.XX
+Market Cap: $XXB
+Sector: [Sector]
+Quality Score: 87/100 ⭐⭐⭐⭐
+Financial Quality Highlights:
+
+Return on Equity: 22.5%
+Net Profit Margin: 15.2%
+Operating Margin: 18.3%
+Debt-to-Equity: 0.35
+Free Cash Flow: Positive (10/10 years) ✅
+Margin Stability: 8.2% (CV < 15%) ✅
+Valuation Summary:
+
+DCF Method:
+
+Fair Value: $XXX per share
+Sensitivity Range: $X - $X
+Base Case Growth: 7.2% annually
+DDM Method: [or N/A if non-dividend]
+
+Fair Value: $XXX per share
+Dividend Growth: 5.8% historical
+Payout Ratio: 35% (sustainable)
+Multiples Method:
+
+P/E Fair Value: $XXX (vs peer avg XX.X)
+P/B Fair Value: $XXX
+P/S Fair Value: $XXX
+Average Multiples Value: $XXX
+Buffett Valuation:
+
+Owner's Earnings: $X.XXB normalized
+Quality Multiple: 26x
+Fair Value: $XXX per share
+Earnings Yield: 4.2% (vs required 7.1%)
+Assessment: ACCEPTABLE (moderate margin)
+Munger Valuation:
+
+Business Quality Score: 8.5/10
+Moat Strength: 9/10 (Strong switching costs, brand)
+Management Quality: 8/10
+Fair Value: $XXX per share
+Five Stock Test: YES ✅ (would own forever)
+Consensus Fair Value: $XXX per share
+
+Conservative Estimate: $XXX (Buffett)
+Base Case: $XXX (Weighted)
+Optimistic Estimate: $XXX (DCF)
+Margin of Safety Analysis:
+
+Code
+Fair Value (Consensus): $XXX
+Current Price: $XXX
+Current Margin: +XX.X% ✅
+
+Target Buy Prices:
+├─ 20% Safety Margin: $XXX/share (BELOW current ✅)
+├─ 30% Safety Margin: $XXX/share (BELOW current ✅)
+├─ 40% Safety Margin: $XXX/share (BELOW current ✅)
+└─ 50% Safety Margin: $XXX/share (BELOW current ✅)
+Valuation Grade: A+ (Slam Dunk Buy)
+
+Buffett Assessment: 🟢 BUY
+
+Intrinsic value significantly exceeds current price
+Margin of safety adequate (>25%)
+Owner's Earnings method supports purchase
+Munger Assessment: 🟢 BUY
+
+Exceptional business quality (8.5/10)
+Would include in 5-stock permanent portfolio
+Passes all quality tests, fair valuation
+Consensus Recommendation: 🟢 STRONG BUY
+
+Both Buffett and Munger recommend purchase
+Build meaningful position at current price
+Highest priority for capital allocation
+Investment Thesis:
+
+[Company] is an exceptional business with a durable competitive advantage built through [moat type: brand/switching costs/network effects]. The company has demonstrated consistent earnings growth of [X%] annually over the past decade, with ROE of [X%] and margins stable at [X%]. Management quality is exceptional, with significant insider ownership and proven capital allocation discipline. At $XXX/share, the stock offers a [X%] margin of safety to consensus fair value of $XXX, providing excellent risk/reward. Both Buffett and Munger frameworks strongly support ownership. Recommend STRONG BUY.
+
+2. [TICKER] - [Company Name]
+[Same detailed format as above]
+
+3. [TICKER] - [Company Name]
+[Same detailed format as above]
+
+✅ GROUP 2: STRONG BUYS (8 Companies)
+Criteria: Quality Score 75-80, Margin of Safety 20-30%
+
+Good to excellent businesses with fair valuations and adequate margins.
+
+[Same detailed format for each company, but slightly condensed]
+
+🟡 GROUP 3: FAIR VALUE (15 Companies)
+Criteria: Quality Score 82+, Margin of Safety 10-20%
+
+Strong/excellent businesses at reasonable prices - good for accumulation.
+
+[Format: Brief summary with key numbers]
+
+⚠️ GROUP 4: OVERVALUED (18 Companies)
+Criteria: Quality Score 80+, Margin of Safety <0%
+
+Excellent businesses but too expensive - watch for better prices.
+
+Note: These are high-quality companies. The issue is valuation, not business quality. Add to watchlist and revisit when price declines.
+
+[Format: Brief summary focused on valuation vs quality disconnect]
+
+📊 GROUP 5: NOT QUALIFIED (8 Companies)
+Criteria: Financial Score <75, Kept for Monitoring
+
+These companies did not meet financial quality thresholds. Monitor for improvement:
+
+[Simple list with scores and reason for non-qualification]
+
+SUMMARY STATISTICS & INSIGHTS
+Quality Score Distribution:
+
+Average Quality Score: 81.3
+Median Quality Score: 82.0
+Highest Score: 92.1 ([Company])
+Lowest Qualified Score: 75.0 ([Company])
+Valuation Status:
+
+Undervalued (MOS >20%): 26 companies
+Fairly Valued (MOS 0-20%): 19 companies
+Overvalued (MOS <0%): 7 companies
+Buffett vs Munger Agreement:
+
+Both Recommend BUY: 18 companies
+Buffett BUY, Munger WAIT: 12 companies
+Buffett WAIT, Munger BUY: 8 companies
+Both Recommend PASS: 14 companies
+Investment Opportunity Score:
+
+Slam Dunk Buys (A+): 3 companies - Highest priority
+Strong Buys (A): 8 companies - High priority
+Fair Value (B+/B): 15 companies - Medium priority
+Overvalued (C/D): 18 companies - Watchlist
+HOW TO USE THIS REPORT
+For Immediate Investment Decisions:
+Focus on Group 1 & 2 (Slam Dunks + Strong Buys)
+
+11 companies with best opportunities
+Prioritize by quality score (highest first)
+Build positions according to position sizing rules
+Monitor Group 3 (Fair Value)
+
+Watch for small price dips
+Accumulate during weakness
+Good for dollar-cost averaging
+Watchlist Group 4 (Overvalued)
+
+Set price alerts (25-30% below current)
+Review next quarter
+Buy when margin improves
+Review Group 5 (Not Qualified)
+
+Check next quarter for improvements
+Some may requalify with better fundamentals
+Don't buy yet, even if other factors attractive
+For Deeper Research:
+Compare Buffett vs Munger assessments (learn why they differ)
+Study investment theses to understand key value drivers
+Use sensitivity analysis to test valuation assumptions
+Review margin of safety calculations
+For Portfolio Management:
+Current positions: Check if still in Groups 1-3 (still buy-worthy?)
+New allocation: Focus on Group 1 first, then Group 2
+Rebalancing: Consider trimming Group 4 positions
+Tax-loss harvesting: Review Group 5 candidates
+DETAILED DATA & SUPPORTING FILES
+Complete Data Available:
+
+CSV Export: screening-results-2026-03-14.csv
+
+All 52 companies with complete metrics
+All valuations and margins of safety
+Suitable for spreadsheet analysis
+GitHub Summary: GitHub Actions Run Summary
+
+Quick statistics and charts
+Previous run comparisons
+Performance tracking
+Database Records: Stored in CompanyValuations table
+
+Full audit trail of calculations
+Historical tracking across quarters
+Sensitivity analysis details
+TECHNICAL NOTES
+Valuation Methodology:
+
+DCF: 10-year projection, 2.5% terminal growth, WACC discount rate
+DDM: Gordon Growth Model with buyback adjustment where applicable
+Multiples: 5-peer average (trimmed for outliers), P/E, P/B, P/S
+Buffett: Owner's Earnings × Quality Multiple (15-35x)
+Munger: Quality-based multiple assignment (quality score method)
+Consensus Weighting:
+
+DCF: 40% (growth projection focus)
+DDM: 15% (dividend/buyback validation, only if applicable)
+Multiples: 20% (market-based check)
+Buffett: 15% (mechanical simplicity)
+Munger: 10% (business judgment)
+Data Sources:
+
+SEC EDGAR (10-K/10-Q financial statements)
+Yahoo Finance (stock prices, dividends, shares outstanding)
+Federal Reserve FRED (Treasury yields)
+Company investor relations (dividends, buybacks)
+Screening Date: [Date] Next Screening: [Projected Date]
+
+Questions or clarifications? Review the methodology documentation at [link to GitHub docs]
+
+End of Report
+
+Code
+
+---
+
+### **13.2 GitHub Summary Page Format**
+
+Brief summary posted to GitHub Actions run:
+
+```markdown
+# Stock Market Screener Results - [Date]
+
+✅ **Screening Complete**
+
+## Summary
+
+| Metric | Value |
+|--------|-------|
+| Companies Analyzed | 487 |
+| Passed Financial Filters | 52 |
+| Average Quality Score | 81.3 |
+| Average Fair Value | $287.50 |
+| Average Current Price | $235.80 |
+| Average MOS | +18.7% |
+
+## Opportunities by Group
+
+| Group | Count | Quality | MOS | Action |
+|-------|-------|---------|-----|--------|
+| Slam Dunk Buys | 3 | 85+ | 30%+ | Buy Aggressively |
+| Strong Buys | 8 | 75-80 | 20-30% | Buy Confidently |
+| Fair Value | 15 | 82+ | 10-20% | Accumulate |
+| Overvalued | 18 | 80+ | <0% | Wait |
+| Not Qualified | 8 | <75 | — | Monitor |
+
+## Top 5 Best Opportunities
+
+| Rank | Ticker | Company | Quality | MOS | Price |
+|------|--------|---------|---------|-----|-------|
+| 1 | [TICK] | [Name] | 87 | +42% | $XXX |
+| 2 | [TICK] | [Name] | 85 | +35% | $XXX |
+| 3 | [TICK] | [Name] | 84 | +31% | $XXX |
+| 4 | [TICK] | [Name] | 82 | +28% | $XXX |
+| 5 | [TICK] | [Name] | 80 | +25% | $XXX |
+
+## Key Insights
+
+- **Best Opportunity:** [Company] with [X%] margin of safety
+- **Highest Quality:** [Company] with quality score 92.1
+- **Most Undervalued:** [Company] with [X%] margin of safety
+- **Buffett/Munger Agreement:** [X] companies both recommend buy
+- **New Qualifiers:** [X] companies newly qualified this run
+
+## Comparison with Prior Run
+
+- Maintained: 45 companies
+- New: 5 companies
+- Removed: 7 companies
+- Average quality improvement: +0.8 points
+
+## Files & Links
+
+- [View Full Report (Email Format)](link)
+- [Download CSV Data](link)
+- [View Detailed Company Analyses](link)
+- [Methodology Documentation](link)
+
+**Generated:** [Date] | **Next Run:** [Date]
+13.3 CSV Export Format
+All data in spreadsheet-friendly format:
+
+Code
+Ticker,Company Name,Sector,Current Price,Market Cap ($B),Quality Score,
+DCF Fair Value,DDM Fair Value,Multiples Fair Value,Buffett Fair Value,
+Munger Fair Value,Consensus Fair Value,Current MOS %,Valuation Grade,
+Buffett Recommendation,Munger Recommendation,Consensus Recommendation,
+Group,ROE %,Net Margin %,D/E Ratio,FCF Score,Margin Stability,
+Moat Strength /10,Durability /10,Management /10,Earnings Consistency /10,
+ROIC /10,Investment Thesis
+
+MSFT,Microsoft Corporation,Technology,$420.50,$3140.0,82,
+$523.15,$0.00,$342.29,$122.00,$304.00,$345.60,-21.7%,C,PASS,WAIT,PASS,
+4,35%,33.2%,0.04,10,6.2%,9,9,9,9,8,
+"Microsoft is exceptional but expensive at $420. Quality score 82/100 excellent..."
+
+AAPL,Apple Inc.,Technology,$180.00,$2850.0,85,
+$450.25,$0.00,$380.50,$198.40,$310.00,$365.00,+50.7%,A,BUY,BUY,STRONG BUY,
+1,100%,29.8%,0.15,10,5.1%,10,9,9,9,9,
+"Exceptional business with unassailable moat trading at excellent value..."
+
+[... more companies ...]
+Section 14: Database Integration
+14.1 CompanyValuations Table Schema
+Store all valuation results for historical tracking and analysis:
+
+SQL
+CREATE TABLE CompanyValuations (
+    ValuationID INT PRIMARY KEY AUTO_INCREMENT,
+    CompanyID INT NOT NULL,
+    ScreeningRunID INT NOT NULL,
+    ScreeningDate DATETIME NOT NULL,
+    
+    -- Current Market Data
+    CurrentStockPrice DECIMAL(10, 2) NOT NULL,
+    MarketCapBillions DECIMAL(15, 2),
+    SharesOutstandingBillions DECIMAL(10, 2),
+    
+    -- VALUATION METHOD 1: DCF
+    DCFProjectionYears INT,
+    DCFHistoricalFCFCAGR DECIMAL(5, 2),
+    DCFProjectedGrowthRate DECIMAL(5, 2),
+    DCFTerminalGrowthRate DECIMAL(5, 2),
+    DCFDiscountRateWACC DECIMAL(5, 2),
+    DCFFairValuePerShare DECIMAL(10, 2),
+    DCFTerminalValue DECIMAL(15, 2),
+    DCFSensitivityLow DECIMAL(10, 2),
+    DCFSensitivityHigh DECIMAL(10, 2),
+    
+    -- VALUATION METHOD 2: DDM
+    DDMApplicable BOOLEAN,
+    DDMHistoricalDividendCAGR DECIMAL(5, 2),
+    DDMProjectedGrowthRate DECIMAL(5, 2),
+    DDMTerminalGrowthRate DECIMAL(5, 2),
+    DDMDiscountRate DECIMAL(5, 2),
+    DDMFairValuePerShare DECIMAL(10, 2),
+    DDMAdjustedForBuybacks BOOLEAN,
+    DDMPayoutRatioPercent DECIMAL(5, 2),
+    
+    -- VALUATION METHOD 3: MULTIPLES
+    PEMultiplesFairValue DECIMAL(10, 2),
+    PBMultiplesFairValue DECIMAL(10, 2),
+    PSMultiplesFairValue DECIMAL(10, 2),
+    MultiplesFairValueAverage DECIMAL(10, 2),
+    ComparisonCompanies VARCHAR(255),
+    PEMultiplePeerAverage DECIMAL(5, 2),
+    PBMultiplePeerAverage DECIMAL(5, 2),
+    PSMultiplePeerAverage DECIMAL(5, 2),
+    
+    -- BUFFETT VALUATION TECHNIQUE
+    BuffettOwnerEarningsBillions DECIMAL(15, 2),
+    BuffettQualityMultiple INT,
+    BuffettFairValuePerShare DECIMAL(10, 2),
+    BuffettEarningsYield DECIMAL(5, 3),
+    BuffettRequiredReturn DECIMAL(5, 2),
+    BuffettEarningsYieldAssessment VARCHAR(50),
+    
+    -- MUNGER VALUATION TECHNIQUE
+    MungerBusinessQualityScore INT,
+    MungerMoatStrength INT,
+    MungerDurabilityScore INT,
+    MungerManagementQualityScore INT,
+    MungerEarningsConsistencyScore INT,
+    MungerROCScore INT,
+    MungerQualityMultiple INT,
+    MungerFairValuePerShare DECIMAL(10, 2),
+    MungerFiveStockTestResult VARCHAR(50),
+    MungerOverallAssessment VARCHAR(255),
+    
+    -- CONSENSUS VALUATION
+    ConsensusMethod VARCHAR(50),
+    ConsensusFairValuePerShare DECIMAL(10, 2),
+    ConsensusWeightedFairValue DECIMAL(10, 2),
+    
+    -- MARGIN OF SAFETY
+    BuffettMarginOfSafetyPercent DECIMAL(5, 2),
+    BuffettMarginStatus VARCHAR(50),
+    BuffettBuyPrice20MOS DECIMAL(10, 2),
+    BuffettBuyPrice30MOS DECIMAL(10, 2),
+    BuffettBuyPrice40MOS DECIMAL(10, 2),
+    BuffettBuyPrice50MOS DECIMAL(10, 2),
+    
+    MungerMarginOfSafetyPercent DECIMAL(5, 2),
+    MungerMarginStatus VARCHAR(50),
+    MungerBuyPrice20MOS DECIMAL(10, 2),
+    MungerBuyPrice30MOS DECIMAL(10, 2),
+    MungerBuyPrice40MOS DECIMAL(10, 2),
+    MungerBuyPrice50MOS DECIMAL(10, 2),
+    
+    ConsensusMarginOfSafetyPercent DECIMAL(5, 2),
+    ConsensusMarginStatus VARCHAR(50),
+    ConsensusBuyPrice20MOS DECIMAL(10, 2),
+    ConsensusBuyPrice30MOS DECIMAL(10, 2),
+    ConsensusBuyPrice40MOS DECIMAL(10, 2),
+    ConsensusBuyPrice50MOS DECIMAL(10, 2),
+    
+    -- VALUATION GRADE
+    ValuationGrade VARCHAR(3),
+    ValuationGradeReasoning VARCHAR(500),
+    
+    -- RECOMMENDATIONS
+    BuffettRecommendation VARCHAR(50),
+    MungerRecommendation VARCHAR(50),
+    ConsensusRecommendation VARCHAR(50),
+    GroupingCategory VARCHAR(50),
+    InvestmentThesis VARCHAR(1000),
+    
+    -- AUDIT TRAIL
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    DataSourcesUsed VARCHAR(255),
+    CalculationNotes VARCHAR(500),
+    
+    FOREIGN KEY (CompanyID) REFERENCES Companies(CompanyID),
+    FOREIGN KEY (ScreeningRunID) REFERENCES ScreeningRuns(ScreeningRunID),
+    INDEX idx_date (ScreeningDate),
+    INDEX idx_company (CompanyID),
+    INDEX idx_grade (ValuationGrade)
+);
+14.2 Sample Database Record
+JSON
+{
+  "ValuationID": 12547,
+  "CompanyID": 145,
+  "ScreeningRunID": 89,
+  "ScreeningDate": "2026-03-14",
+  "CurrentStockPrice": 420.50,
+  "MarketCapBillions": 3140.0,
+  "DCFFairValuePerShare": 523.15,
+  "DDMFairValuePerShare": null,
+  "MultiplesFairValueAverage": 342.29,
+  "BuffettFairValuePerShare": 122.00,
+  "MungerFairValuePerShare": 304.00,
+  "ConsensusFairValuePerShare": 345.60,
+  "ConsensusMarginOfSafetyPercent": -21.7,
+  "ConsensusMarginStatus": "OVERVALUED",
+  "ValuationGrade": "C",
+  "BuffettRecommendation": "PASS",
+  "MungerRecommendation": "WAIT",
+  "ConsensusRecommendation": "PASS",
+  "GroupingCategory": "OVERVALUED",
+  "InvestmentThesis": "Exceptional business but too expensive..."
+}
+Section 15: Data Flow Integration
+15.1 Stage 5.4 in Complete Pipeline
+Code
+┌─────────────────────────────────────────────────────────────┐
+│                    INPUT (from Stage 3.3)                    │
+├─────────────────────────────────────────────────────────────┤
+│  All companies with composite score ≥75 (typically 45-60)   │
+│  All 40+ financial metrics calculated                        │
+│  Quality scores (ROE, margins, cash flow, etc.)             │
+│  Current stock price and market data                         │
+│  10-year historical financial statements                     │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│              STAGE 5.4: VALUATION ANALYSIS                   │
+├─────────────────────────────────────────────────────────────┤
+│ ✅ Calculate DCF valuation (10-year projection)              │
+│ ✅ Calculate DDM valuation (dividend/buyback analysis)       │
+│ ✅ Calculate Multiples valuation (peer comparison)           │
+│ ✅ Apply Buffett techniques (Owner's Earnings + yield)       │
+│ ✅ Apply Munger techniques (Quality + Five Stock Test)       │
+│ ✅ Calculate consensus fair value (weighted average)         │
+│ ✅ Analyze margin of safety (multiple thresholds)            │
+│ ✅ Assign valuation grade (A+ to F)                          │
+│ ✅ Create investment recommendations                         │
+│ ✅ Group companies by opportunity (5 groups)                 │
+│ ✅ Store results in database                                 │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│              OUTPUT (to Stage 6 Processing)                  │
+├─────────────────────────────────────────────────────────────┤
+│ • Intrinsic values (5 methods)                              │
+│ • Margin of safety percentages                              │
+│ • Investment recommendations (Buffett, Munger, Joint)       │
+│ • Valuation grades and grouping categories                  │
+│ • Investment theses                                         │
+│ • Database records with audit trail                         │
+│ • Sensitivity analysis ranges                               │
+│ • All supporting calculations                               │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│         STAGE 6: RESULTS PROCESSING                          │
+├─────────────────────────────────────────────────────────────┤
+│ • Organize by grouping category (Groups 1-5)                │
+│ • Identify new/maintained/removed vs prior run              │
+│ • Calculate aggregate statistics                            │
+│ • Prepare formatted reports                                 │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│         STAGE 7: NOTIFICATIONS & STORAGE                     │
+├─────────────────────────────────────────────────────────────┤
+│ • Email report to investor (detailed)                       │
+│ • GitHub summary page (quick view)                          │
+│ • CSV export (spreadsheet data)                             │
+│ • Database storage (complete audit trail)                   │
+└─────────────────────────────────────────────────────────────┘
+15.2 Data Requirements for Stage 5.4
+From Stage 3.3 (Financial Analysis):
+
+Code
+Required Fields:
+  ✅ Company ID & Ticker
+  ✅ Company Name & Sector
+  ✅ Composite Financial Score (0-100)
+  ✅ 10-year financial statements (SEC EDGAR)
+    - Income Statement (Net Income, Tax Rate)
+    - Cash Flow Statement (OCF, CapEx, D&A, FCF)
+    - Balance Sheet (Equity, Debt, Cash, Book Value)
+  ✅ Current market data (stock price, shares outstanding)
+  ✅ Quality scores (ROE, margins, cash flow consistency)
+  ✅ Management quality assessment
+  ✅ Moat strength evaluation
+
+From External Sources:
+  ✅ Current stock price (daily update from Yahoo Finance)
+  ✅ Risk-free rate (10-year Treasury from Fed FRED)
+  ✅ Peer company data (multiples from Yahoo Finance)
+  ✅ Dividend history (10 years from company filings)
+  ✅ Share buyback history (from SEC filings)
+15.3 Quality Checks Before Proceeding
+Before running Stage 5.4 valuation, verify:
+
+Code
+Data Completeness:
+  ✅ 10 years of financial data available (or note if less)
+  ✅ Current stock price available and recent
+  ✅ All required balance sheet items present
+  ✅ FCF can be calculated (OCF and CapEx data)
+
+Financial Reasonableness:
+  ✅ Net Income matches operating cash flow (within 20%)
+  ✅ FCF is positive or has clear path to positive
+  ✅ No accounting red flags (restated earnings, etc.)
+  ✅ Debt levels reasonable relative to industry
+
+Market Data:
+  ✅ Stock price reasonable (not stale data)
+  ✅ Shares outstanding reflects current dilution
+  ✅ Market cap matches stock price × shares
+  ✅ Peer companies are truly comparable
+
+Quality Assessment:
+  ✅ Moat strength scored based on real competitive advantages
+  ✅ Management quality assessment based on track record
+  ✅ Durability assessment realistic (not overly optimistic)
+  ✅ Earnings consistency score reflects actual volatility
+Section 16: Sensitivity Analysis
+16.1 Purpose of Sensitivity Analysis
+Sensitivity analysis tests how valuation changes when key assumptions vary:
+
+Why it matters:
+
+Code
+DCF says fair value is $300/share
+But is that true if:
+  - WACC is 9% instead of 10%? ($340 instead of $300)
+  - Terminal growth is 3% instead of 2.5%? ($330 instead of $300)
+  - Both assumptions wrong? (could be $400 or $220)
+
+Sensitivity analysis shows the range and which assumptions matter most.
+16.2 DCF Discount Rate Sensitivity
+Impact of WACC variations on DCF fair value:
+
+Code
+WACC Range Analysis (holding terminal growth constant at 2.5%):
+
+WACC %    Fair Value/Share    vs Base Case    Interpretation
+8.0%      $558.63             +18.6%          Very optimistic (low risk)
+8.5%      $514.40             +9.1%           Optimistic (lower risk)
+9.0%      $484.65             +2.8%           Slightly optimistic
+9.5%      $461.41             -1.8%           Slightly pessimistic
+10.0%     $442.41             -6.1%           Base case (moderate)
+10.5%     $426.44             -9.4%           Pessimistic (higher risk)
+11.0%     $412.67             -12.1%          Very pessimistic
+11.5%     $400.70             -14.8%          Conservative (much higher risk)
+12.0%     $390.22             -16.9%          Very conservative
+How to interpret:
+
+Code
+If you believe WACC is:
+  - 8-9%: Fair value in $485-560 range (optimistic scenario)
+  - 9-11%: Fair value in $410-485 range (realistic range)
+  - 11-12%: Fair value in $390-410 range (conservative scenario)
+
+Your best estimate (10%): Fair value = $442/share
+Your confidence range: $390-490/share (±11%)
+16.3 Terminal Growth Rate Sensitivity
+Impact of terminal growth variations (holding WACC constant at 10%):
+
+Code
+Terminal Growth %    Fair Value/Share    vs Base Case
+1.5%                 $435.07             -1.6%
+2.0%                 $445.68             +0.8%
+2.3%                 $454.97             +2.9%
+2.5%                 $463.30             +4.8%  (Base case)
+2.7%                 $474.30             +7.1%
+3.0%                 $486.48             +10.0%
+3.5%                 $514.40             +16.3%
+How to interpret:
+
+Code
+Using conservative 2.5% perpetual growth: $463/share
+If market expects 3.0% (reasonable): $487/share (+5%)
+If market expects 3.5% (too optimistic): $514/share (+11%)
+
+Conclusion: Terminal growth is less sensitive than WACC
+(±1% growth rate = ±5% valuation impact)
+(±1% WACC = ±10% valuation impact)
+16.4 2D Sensitivity Matrix (WACC × Terminal Growth)
+Shows impact when BOTH assumptions vary:
+
+Code
+Terminal Growth Rate
+           1.5%     2.0%     2.5%     3.0%     3.5%
+WACC
+8.0%      $601.45  $625.50  $651.25  $679.15  $709.80
+8.5%      $557.42  $579.48  $603.35  $629.48  $658.15
+9.0%      $518.75  $539.65  $562.15  $586.48  $612.88
+9.5%      $484.30  $504.05  $525.22  $548.48  $573.92
+10.0%     $453.41  $471.82  $491.63  $514.40  $539.68  ← Base case
+10.5%     $426.40  $442.95  $460.97  $482.21  $506.51
+11.0%     $401.72  $416.73  $433.43  $452.90  $475.19
+11.5%     $379.42  $392.99  $408.24  $426.21  $446.54
+12.0%     $359.22  $371.60  $385.57  $402.27  $421.27
+Key findings:
+
+Code
+Best case (8% WACC, 3.5% growth): $710/share
+Base case (10% WACC, 2.5% growth): $492/share
+Worst case (12% WACC, 1.5% growth): $359/share
+
+Range: $359 to $710 (98% spread)
+Most likely range: $450-530 (±20% from base)
+
+Conclusion: Fair value is roughly $490/share with $400-580 confidence range
+16.5 Quality Multiple Sensitivity (Munger Method)
+Impact of quality multiple variations on Munger fair value:
+
+Code
+Quality Assessment    Quality Multiple    Fair Value (× $12.15 EPS)
+High estimate        27x                  $328.05
+Base estimate        25x                  $303.75
+Conservative estimate 23x                 $279.45
+
+Buffett equivalent:
+High estimate (28x)                       $340.20
+Base estimate (25x)                       $303.75
+Conservative (22x)                        $267.30
+How to interpret:
+
+Code
+Quality score of 43/50 suggests multiple of 25x
+But confidence range: 23-27x quality multiple
+This gives fair value of $279-328/share
+Central estimate: $304/share
+Range: $279-328 (±8%)
+
+Conclusion: Munger valuation more stable than DCF
+(Depends more on quality assessment than growth assumptions)
+16.6 Interpretation & Use in Decision-Making
+How to use sensitivity analysis:
+
+Code
+Step 1: Calculate base case valuation
+  Result: Fair value = $300/share
+
+Step 2: Run sensitivity analysis
+  WACC sensitivity: $270-350/share range
+  Growth sensitivity: $280-320/share range
+  Multiple sensitivity: $275-330/share range
+
+Step 3: Identify realistic range
+  Conservative estimate: $270/share
+  Base estimate: $300/share
+  Optimistic estimate: $330/share
+  Working range: $270-330/share
+
+Step 4: Compare to current price
+  Current price: $250/share
+  Assessment: Trading below even conservative estimate
+  Conclusion: Stock is undervalued with high confidence
+
+Step 5: Decide on action
+  Margin of safety = ($300 - $250) / $300 = 17%
+  Even if valuation pessimistic, still undervalued
+  Recommendation: BUY at current price
+16.7 Sensitivity Analysis Output Example
+For final report, include summary:
+
+Code
+SENSITIVITY ANALYSIS SUMMARY
+
+BASE CASE FAIR VALUE: $304/share
+
+Discount Rate Sensitivity (WACC):
+  Conservative (12% WACC): $275/share
+  Base Case (10% WACC): $304/share
+  Optimistic (8% WACC): $348/share
+  Range: $275-348 (±13%)
+
+Terminal Growth Sensitivity:
+  Conservative (1.5% growth): $289/share
+  Base Case (2.5% growth): $304/share
+  Optimistic (3.5% growth): $322/share
+  Range: $289-322 (±6%)
+
+Quality Multiple Sensitivity (Munger):
+  Conservative (23x): $280/share
+  Base Case (25x): $304/share
+  Optimistic (27x): $329/share
+  Range: $280-329 (±8%)
+
+CONFIDENCE ASSESSMENT:
+  Most likely range: $280-330/share
+  Central estimate: $304/share
+  Conservative case: $275/share
+
+Current Price: $250/share
+Margin vs conservative: 9%
+Margin vs base: 18%
+Margin vs optimistic: 24%
+
+CONCLUSION: Stock undervalued across all reasonable scenarios.
+Recommend BUY with confidence.
+Summary: Sensitivity Analysis
+Key takeaways:
+
+✅ Valuation is uncertain, not fixed ✅ Sensitivity shows realistic range ✅ Most reasonable outcomes converge ($280-330) ✅ Outliers (very optimistic/pessimistic) excluded ✅ Margin of safety should cover worst reasonable case ✅ Stock at $250 attractive vs even conservative estimate
+
+Use sensitivity to:
+
+Test valuation robustness
+Identify key assumptions
+Build confidence in recommendation
+Communicate valuation uncertainty
+Set realistic expectations
+
+---
+## **Section 17: Real-World Examples**
+
+### **17.1 Complete Example #1: Technology Company (Microsoft - High Growth, No Dividend)**
+
+#### **Company Overview**
+
+Ticker: MSFT Company: Microsoft Corporation Sector: Technology/Software/Cloud Current Stock Price: $420.50 Shares Outstanding: 2.4B Market Cap: $3.14 trillion Date of Analysis: 2026-03-14
+
+Code
+
+#### **Step 1: Financial Data Gathering**
+
+**10-Year Historical Financials:**
+
+Year Net Income D&A CapEx FCF EPS (
+B
+)
+(
+B) (
+B
+)
+(
+B) ($) 2016 $20.5 $5.2 $4.8 $20.9 $2.40 2017 $21.2 $5.5 $5.0 $21.7 $2.51 2018 $26.8 $5.8 $5.3 $27.3 $3.18 2019 $39.2 $6.2 $6.5 $38.9 $4.68 2020 $44.3 $6.8 $7.2 $43.9 $5.49 2021 $69.9 $7.5 $8.1 $69.3 $8.84 2022 $72.8 $8.2 $9.0 $72.0 $9.43 2023 $88.2 $8.9 $10.2 $86.9 $11.52 2024 $99.8 $9.5 $11.5 $97.8 $12.97 2025 $109.5 $10.2 $12.8 $106.9 $14.35
+
+Code
+
+#### **Step 2: DCF Valuation**
+
+**Historical Analysis:**
+
+FCF CAGR (2016-2025): = ($106.9B / $20.9B)^(1/9) - 1 = 18.8% annual growth
+
+Interpretation: Exceptional growth rate
+
+Reflects cloud (Azure) strong adoption
+Reflects AI momentum
+Reflects enterprise software demand
+Code
+
+**Projection (10-year forward):**
+
+Declining growth model (growth decays toward 2.5% terminal):
+
+Year Growth % Projected FCF Discount Factor PV 1 18.0% $126.2B 0.9099 $114.8B 2 15.0% $145.1B 0.8279 $120.2B 3 12.0% $162.5B 0.7539 $122.5B 4 10.0% $178.7B 0.6855 $122.6B 5 8.0% $193.0B 0.6237 $120.4B 6 6.0% $204.6B 0.5674 $116.0B 7 4.5% $213.8B 0.5161 $110.4B 8 3.5% $221.2B 0.4697 $103.9B 9 3.0% $227.8B 0.4274 $97.4B 10 2.5% $233.4B 0.3888 $90.8B
+
+Sum of PV (Years 1-10) = $1,118.8B
+
+Code
+
+**Terminal Value:**
+
+Terminal Value = FCF₁₀ × (1+g) / (WACC - g) = $233.4B × 1.025 / (0.10 - 0.025) = $239.2B / 0.075 = $3,189.3B
+
+PV(Terminal Value) = $3,189.3B / (1.10)^10 = $3,189.3B / 2.594 = $1,230.0B
+
+Code
+
+**DCF Fair Value:**
+
+Enterprise Value = $1,118.8B + $1,230.0B = $2,348.8B
+
+Less: Net Debt Total Debt: $45B Cash: $82B Net Cash: -$37B (negative = net cash position)
+
+Equity Value = $2,348.8B - (-$37B) = $2,385.8B
+
+Per-Share = $2,385.8B / 2.4B shares = $994.08/share
+
+DCF FAIR VALUE: $994.08/share Current Price: $420.50 Upside: 136% (extremely undervalued by DCF)
+
+Code
+
+**DCF Sensitivity:**
+
+WACC × Terminal Growth Sensitivity Matrix:
+
+Code
+       Terminal Growth
+WACC 2.0% 2.5% 3.0% 3.5% 8% $1,245 $1,385 $1,568 $1,815 9% $1,025 $1,127 $1,260 $1,437 10% $855 $994 $1,115 $1,261 ← Base case 11% $724 $835 $932 $1,063 12% $618 $709 $790 $901
+
+Range: $618-1,815/share Most likely: $835-1,115/share
+
+Code
+
+#### **Step 3: DDM Valuation (Buyback-Adjusted)**
+
+**Dividend Analysis:**
+
+Cash Dividends (TTM): $12.2B Share Buybacks (TTM): $27.5B Total Return: $39.7B
+
+Weighted Average Shares: 2.4B Effective DPS: $39.7B / 2.4B = $16.54/share
+
+Recent Buyback Trend: 2023: $26.0B 2024: $28.5B 2025: $27.5B (includes AI investments)
+
+Estimated Annual Buyback: $27.5B (stable)
+
+Code
+
+**Projected Dividends + Buybacks (10 years):**
+
+Year Growth % Adjusted DPS PV 1 8.0% $17.86 $16.37 2 7.5% $19.19 $15.98 3 7.0% $20.53 $15.52 4 6.0% $21.76 $14.92 5 5.0% $22.85 $14.19 6 4.0% $23.76 $13.39 7 3.0% $24.47 $12.47 8 2.8% $25.15 $11.55 9 2.5% $25.78 $10.68 10 2.5% $26.43 $9.80
+
+Sum PV (Years 1-10) = $134.87
+
+Code
+
+**Terminal Value (DDM):**
+
+TV = D₁₀ × (1+g) / (r-g) = $26.43 × 1.025 / (0.095 - 0.025) = $27.09 / 0.070 = $387.0
+
+PV(TV) = $387.0 / (1.095)^10 = $163.4
+
+Code
+
+**DDM Fair Value:**
+
+Total = $134.87 + $163.4 = $298.3/share
+
+DDM FAIR VALUE: $298.30/share Current Price: $420.50 Downside: -41% (overvalued by DDM)
+
+Code
+
+**Why the divergence?**
+
+DCF projects $994, DDM projects $298. Why?
+- DCF assumes all FCF goes to growth/investment
+- DDM only values cash returned (dividends + buybacks)
+- Gap = cash retained for growth investments
+- Microsoft reinvesting ~60% of FCF into:
+  - AI research and development
+  - Cloud infrastructure expansion
+  - Strategic acquisitions
+
+**Interpretation:** Gap is normal and healthy for growth company.
+
+#### **Step 4: Multiples Valuation**
+
+**Peer Selection:**
+
+Comparable technology companies:
+
+Apple (AAPL)
+Alphabet/Google (GOOGL)
+Adobe (ADBE)
+Salesforce (CRM)
+ServiceNow (NOW)
+Code
+
+**Peer Multiples:**
+
+Company Price EPS P/E Book Value P/B Revenue/Sh P/S AAPL $195 $6.40 30.5x $39.00 5.0x $35.50 5.5x GOOGL $180 $6.80 26.5x $101.00 1.8x $60.25 3.0x ADBE $625 $13.20 47.3x $82.00 7.6x $97.50 6.4x CRM $290 $1.90 152.6x $10.25 28.3x $40.75 7.1x NOW $745 $2.85 261.4x $15.00 49.7x $82.50 9.0x
+
+Average P/E: 93.7x (skewed by CRM/NOW) Median P/E: 47.3x (more reliable) Trimmed (exclude outliers): (30.5 + 26.5 + 47.3) / 3 = 34.8x
+
+Code
+
+**Microsoft Metrics:**
+
+TTM EPS: $12.97 Book Value/Share: $35.00 Revenue/Share: $60.75
+
+Code
+
+**Multiples Fair Values:**
+
+P/E Based: 34.8x × $12.97 = $451.36 P/B Based: 6.8x × $35.00 = $238.00 P/S Based: 6.1x × $60.75 = $370.58
+
+Average: ($451.36 + $238.00 + $370.58) / 3 = $353.31
+
+MULTIPLES FAIR VALUE: $353.31/share Current Price: $420.50 Assessment: Slightly overvalued vs peers
+
+Code
+
+#### **Step 5: Buffett Valuation (Owner's Earnings)**
+
+**Normalized Owner's Earnings:**
+
+10-Year Average: Net Income: $62.1B D&A: $7.6B CapEx: $8.3B Δ Working Capital: $0.5B
+
+Owner's Earnings = $62.1B + $7.6B - $8.3B - $0.5B = $60.9B
+
+Alternative: Use recent normalized (exclude one-time items) Last 3-year average: $65.8B (more current)
+
+Use conservative: $60.9B
+
+Code
+
+**Quality Assessment:**
+
+Moat Strength: 9/10
+
+Enterprise software ecosystem (Office, Teams, Azure)
+Massive switching costs (billions in documents, training)
+Network effects (Microsoft ecosystem)
+Durability: 9/10
+
+Software essential forever
+Cloud computing core infrastructure
+AI leadership emerging
+Management: 9/10
+
+Satya Nadella proven (20+ years execution)
+Strategic vision (cloud pivot, AI)
+Capital allocation excellent
+Earnings Consistency: 9/10
+
+Software revenue very predictable
+Subscription model (recurring)
+Margins stable 35%+
+ROE: 8/10
+
+35%+ ROE (excellent)
+ROIC >25% (excellent)
+Returns exceed cost of capital
+TOTAL QUALITY SCORE: 44/50 (Excellent) Quality Multiple: 25x (23-27x range for 40-44 score)
+
+Code
+
+**Buffett Fair Value:**
+
+FV = Owner's Earnings × Quality Multiple = $60.9B × 25 = $1,522.5B
+
+Per-Share = $1,522.5B / 2.4B = $634.38/share
+
+BUFFETT FAIR VALUE: $634.38/share Current Price: $420.50 Upside: 50.8%
+
+Code
+
+**Perpetual Bond Yield Check:**
+
+Market Cap: $420.50 × 2.4B = $1,009.2B Earnings Yield: $60.9B / $1,009.2B = 6.03%
+
+Risk-Free Rate: 4.2% Risk Premium: 3.2% (moderate, Microsoft is quality) Required Return: 7.4%
+
+Comparison: EY: 6.03% RR: 7.4% Shortfall: -1.37%
+
+Assessment: Slightly expensive by earnings yield metric But moderate shortfall acceptable for quality business
+
+Code
+
+#### **Step 6: Munger Valuation (Quality-Based)**
+
+**Business Quality Checklist:**
+
+Moat Strength: 10/10 Unassailable switching costs, ecosystem dominance
+
+Durability: 9/10 Software/cloud permanent, slight AI disruption risk
+
+Management Quality: 9/10 Exceptional execution, insider aligned
+
+Earnings Consistency: 9/10 Very smooth, predictable, high-quality
+
+Return on Capital: 9/10 ROE 35%+, ROIC 25%+, exceptional
+
+TOTAL: 46/50 (Exceptional) Quality Multiple: 31x (top tier for 45-50 score)
+
+Code
+
+**Munger Fair Value:**
+
+Normalized EPS (TTM): $12.97 Quality Multiple: 31x
+
+FV = 31x × $12.97 = $402.07/share
+
+MUNGER FAIR VALUE: $402.07/share Current Price: $420.50 Assessment: Fairly valued (slight premium)
+
+Code
+
+**Five Stock Test:**
+
+Q1: Is this business extraordinary? ✅ YES - Quality 46/50, exceptional moat, durable
+
+Q2: Would I own it forever? ✅ YES - Software/cloud essential, Microsoft likely dominant
+
+Q3: Is valuation reasonable? ⚠️ MAYBE - Fair value $402, current price $420
+
+Small 4.5% premium
+Munger willing to pay small premium for exceptional quality
+But would prefer $360-380 for better margin
+RESULT: ✅ YES, but would prefer lower price
+
+Code
+
+#### **Step 7: Consensus Valuation**
+
+**Summary of All Methods:**
+
+DCF: $994/share (optimistic - assumes perfect execution) DDM: $298/share (conservative - only dividends/buybacks) Multiples: $353/share (market-based validation) Buffett: $634/share (owner's earnings method) Munger: $402/share (quality-based multiple)
+
+WEIGHTED CONSENSUS (DCF 40%, Multiples 20%, Buffett 15%, Munger 25%): = ($994 × 0.40) + ($353 × 0.20) + ($634 × 0.15) + ($402 × 0.25) = $397.6 + $70.6 + $95.1 + $100.5 = $663.8/share
+
+MEDIAN (removes outliers): $402/share
+
+CONSERVATIVE RANGE: $300-400/share CENTRAL ESTIMATE: $403/share OPTIMISTIC RANGE: $634-994/share
+
+Code
+
+**Fair Value Assessment:**
+
+Most realistic range: $350-500/share Central estimate: $400/share Current price: $420.50/share
+
+Code
+
+#### **Step 8: Margin of Safety Analysis**
+
+**Against Central Estimate ($400):**
+
+Current Price: $420.50 Fair Value: $400 MOS: ($400 - $420.50) / $400 = -5.1% (OVERVALUED)
+
+Target Buy Prices: ├─ 20% MOS: $400 × 0.80 = $320 (need 24% decline) ├─ 30% MOS: $400 × 0.70 = $280 (need 33% decline) ├─ 40% MOS: $400 × 0.60 = $240 (need 43% decline) └─ 50% MOS: $400 × 0.50 = $200 (need 52% decline)
+
+Code
+
+**Against Conservative Estimate ($350):**
+
+Current Price: $420.50 Fair Value: $350 (worst reasonable case) MOS: ($350 - $420.50) / $350 = -20.1% (significantly overvalued)
+
+Code
+
+**Against Optimistic Estimate ($634):**
+
+Current Price: $420.50 Fair Value: $634 (best reasonable case) MOS: ($634 - $420.50) / $634 = +33.7% (undervalued)
+
+Code
+
+**Conclusion:**
+
+Price range $350-634 gives wide spread. Central estimate $400 suggests stock is fairly valued (no margin). Conservative case suggests overvalued. Optimistic case suggests undervalued.
+
+Buffett's threshold: Needs 25%+ margin Current: -5% margin vs central (doesn't meet threshold)
+
+Recommendation: PASS (waiting for better price)
+
+Code
+
+#### **Step 9: Valuation Grade**
+
+Financial Quality Score: 82/100 (Excellent) Valuation Grade: B (Fair Value)
+
+Reasoning: ✅ Exceptional business quality (score 82) ✅ Excellent growth prospects ✅ Strong competitive position ❌ Current price offers insufficient margin of safety ❌ Price close to or above fair value estimate
+
+GRADE: B (Fair Value, Hold, not buy at current price)
+
+Code
+
+#### **Step 10: Final Recommendation**
+
+BUFFETT RECOMMENDATION: 🟡 HOLD
+
+Fair value $634 vs current $420 suggests upside
+BUT declining growth assumptions suggest $400 fair value
+Margin of safety insufficient (<25% threshold)
+Would buy below $300/share (25% margin)
+MUNGER RECOMMENDATION: 🟡 WAIT
+
+Exceptional business (would own forever)
+Current price $420 vs $402 fair value = small premium
+Munger prefers clear margin, so would wait for $360-380
+Put on watchlist, monitor quarterly
+CONSENSUS RECOMMENDATION: 🟡 HOLD/PASS
+
+Both recommend pass or wait at current price
+Good business, but not compelling valuation
+Not urgent to buy
+INVESTMENT THESIS:
+
+Microsoft is an exceptional technology business with an unassailable competitive moat built through enterprise software ecosystem lock-in, cloud infrastructure (Azure) dominance, and emerging AI leadership. Financial quality is excellent (score 82/100) with consistent double-digit growth, exceptional returns on capital (35%+ ROE), and fortress balance sheet. However, at $420.50/share, the stock is fairly valued to slightly expensive. Consensus fair value is approximately $400/share, providing insufficient margin of safety by Buffett's standards (requires 25%+ margin). We recommend HOLD if owned and WAIT for better entry point near $280-300/share (25-30% margin). Excellent quality business deserves to be in portfolio, but not at current valuation premium.
+
+GROUPING: GROUP 4 (Overvalued)
+
+Quality: 82/100
+MOS: -5% (negative)
+Recommendation: HOLD/WAIT for better price
+Code
+
+#### **Step 11: Sensitivity Summary**
+
+Fair Value Range (All Scenarios):
+
+Conservative Case ($350):
+
+WACC 12%, Terminal Growth 1.5%, Quality Multiple 20x
+Stock trading at 20% premium
+NOT ATTRACTIVE
+Base Case ($400):
+
+WACC 10%, Terminal Growth 2.5%, Quality Multiple 25x
+Stock trading fairly valued (small premium)
+ACCEPTABLE but no hurry
+Optimistic Case ($634):
+
+WACC 8%, Terminal Growth 3.5%, Quality Multiple 28x
+Stock trading at 20% discount
+ATTRACTIVE (but assumes perfect execution)
+REALISTIC RANGE: $350-500/share MOST PROBABLE: $380-420/share CURRENT PRICE: $420.50/share
+
+Conclusion: Stock within reasonable valuation range but no margin of safety.
+
+Code
+
+---
+
+### **17.2 Complete Example #2: Dividend Stock (Coca-Cola - Mature, Stable)**
+
+#### **Company Overview**
+
+Ticker: KO Company: The Coca-Cola Company Sector: Consumer Staples/Beverages Current Stock Price: $61.50 Shares Outstanding: 2.8B Market Cap: $172.2B Date of Analysis: 2026-03-14
+
+Code
+
+#### **Quick Analysis (Abbreviated)**
+
+**10-Year Dividend History:**
+
+Year DPS Growth 2016 $1.40 — 2017 $1.48 5.7% 2018 $1.56 5.4% 2019 $1.64 5.1% 2020 $1.72 4.9% 2021 $1.76 2.3% 2022 $1.80 2.3% 2023 $1.82 1.1% 2024 $1.84 1.1% 2025 $1.84 0.0%
+
+Trend: Growth decelerating (5%+ to flat) Assessment: Mature company, dividend growth plateauing
+
+Code
+
+**DCF Valuation:**
+
+Historical FCF CAGR: 2.1% (very slow, mature company) Projection: 2.5% growth perpetual (no acceleration expected) WACC: 7.8% (lower risk than Microsoft)
+
+DCF Fair Value: $68.50/share Current Price: $61.50 Upside: 11.4%
+
+Code
+
+**DDM Valuation:**
+
+Expected Dividend (next year): $1.89 (2.7% growth assumed) Required Return: 7.8% Terminal Growth: 2.5%
+
+Using Gordon Growth Model: FV = D₁ / (r - g) = $1.89 / (0.078 - 0.025) = $1.89 / 0.053 = $35.66/share
+
+Wait - that's too low. Let me recalculate with two-stage:
+
+Years 1-5: 2.5% growth Years 6+: 2.5% terminal
+
+Projected Dividends: Year 1: $1.89 PV: $1.75 Year 2: $1.94 PV: $1.67 Year 3: $1.98 PV: $1.60 Year 4: $2.03 PV: $1.53 Year 5: $2.08 PV: $1.47 ...continuing 5-10 years... Sum PV Years 1-10: $14.59
+
+Terminal Value: $45.47 PV(TV): $21.75
+
+DDM Fair Value: $36.34/share
+
+Current Price: $61.50 Assessment: OVERVALUED by 69% (significant overvaluation!)
+
+Code
+
+**Why the disconnect?**
+
+DCF says $68.50 (undervalued) DDM says $36.34 (significantly overvalued) Current price: $61.50 (in between)
+
+Why? Coca-Cola retains earnings for other purposes:
+
+Increased dividends for other regions
+Share buybacks
+Strategic acquisitions
+Capital investments
+If we adjust DDM for buybacks: Cash Returned (Div + Buybacks): $14.2B Effective DPS: $14.2B / 2.8B = $5.07/share
+
+Using buyback-adjusted DDM: FV = $5.07 / (0.078 - 0.025) = $95.66/share
+
+That's still higher than current price! So adjusted DDM says undervalued.
+
+Code
+
+**Multiples Valuation:**
+
+Peer P/E multiples (beverage companies): PepsiCo: 26x P/E Monster Energy: 35x P/E Red Bull (private): N/A Average: 30x P/E
+
+Coca-Cola EPS: $2.10 Fair Value = 30x × $2.10 = $63/share
+
+Current Price: $61.50 (slightly undervalued)
+
+Code
+
+**Buffett Valuation:**
+
+Owner's Earnings: $13.2B (normalized) Quality Multiple: 32x (exceptional moat - brand)
+
+FV = $13.2B × 32 = $422.4B / 2.8B = $150.86/share
+
+Earnings Yield: $13.2B / $172.2B = 7.67% Required Return: 6.7% (4.2% + 2.5% premium)
+
+EY > RR: YES (attractive)
+
+Code
+
+**Munger Valuation:**
+
+Quality Score: 45/50 (Exceptional) Quality Multiple: 30x
+
+FV = 30x × $2.10 = $63/share
+
+Five Stock Test: ✅ YES
+
+Code
+
+**Consensus Summary:**
+
+DCF: $68.50 DDM (unadjusted): $36.34 DDM (buyback-adjusted): $95.66 Multiples: $63.00 Buffett: $150.86 (seems high, may be conservative) Munger: $63.00
+
+Range: $36-$151 (huge spread!) Most likely: $60-95 (more realistic) Central: $73.00/share
+
+Code
+
+**Margin of Safety:**
+
+Current Price: $61.50 Fair Value (conservative): $60 Fair Value (central): $73 Fair Value (optimistic): $95
+
+Assessment: vs conservative: -2% (slightly overvalued) vs central: -16% (moderately overvalued) vs optimistic: -35% (significantly undervalued)
+
+Interpretation: Coca-Cola is priced for optimistic case ($95) More realistic central case ($73) suggests 19% downside Conservative case ($60) suggests 2% downside
+
+Stock trading at upper end of reasonable range.
+
+Code
+
+**Final Recommendation:**
+
+BUFFETT: 🟢 BUY (strong positive assessment) MUNGER: 🟡 WAIT (good business, not compelling price)
+
+CONSENSUS: 🟡 HOLD (fairly valued, good business, no hurry)
+
+INVESTMENT THESIS:
+
+Coca-Cola is one of the world's greatest businesses with an unmatched brand moat, 100+ years of proven durability, and predictable cash generation. The company has consistently returned cash to shareholders through increasing dividends and buybacks. At $61.50/share, the stock is fairly valued to slightly expensive depending on assumptions. Conservative fair value estimates ($60-65) suggest little margin of safety, while optimistic scenarios ($90-95) suggest undervaluation. For a quality holding, Coca-Cola deserves a place in any long-term portfolio, but current price offers limited upside. Recommend HOLD if owned; for new purchases, wait for price dip to $55/share (10% below current) for better entry.
+
+GROUPING: GROUP 3 (Fair Value)
+
+Quality: Exceptional (dividend aristocrat)
+MOS: ~5% (minimal)
+Recommendation: HOLD/ACCUMULATE on dips
+Code
+
+---
+
+### **17.3 Complete Example #3: Unprofitable Company (Biotech with Losses)**
+
+#### **Company Overview**
+
+Ticker: BIOTECH (fictional) Company: Biotech Innovation Corp Sector: Biotechnology/Pharmaceuticals Current Stock Price: $75.00 Market Cap: $6.2B Revenue (TTM): $520M EPS (TTM): -$2.15 (losses)
+
+Code
+
+#### **Problem: Negative Earnings**
+
+Company is losing money - cannot use P/E multiple
+
+Options:
+
+Project when profitable (forward earnings)
+Use P/S multiple (price-to-sales)
+Use P/B multiple if applicable
+Skip valuation if too uncertain
+Code
+
+#### **Approach: Use P/S Multiple**
+
+**Peer Biotech Multiples (profitable peers):**
+
+Company Price Revenue/Share P/S Regeneron $850 $150 5.7x Amgen $330 $95 3.5x Moderna $180 $35 5.1x Average P/S 4.8x
+
+Code
+
+**Biotech Innovation Corp:**
+
+Revenue: $520M Shares: 82.7M Revenue/Share: $6.28
+
+Fair Value = 4.8x × $6.28 = $30.14/share Current Price: $75.00
+
+Code
+
+**Assessment:**
+
+Stock trading at 2.5x what peers pay for same revenue Explanation:
+
+Market betting on future drug approval
+Pipeline has promising phase 3 trials
+Price reflects hope for profitability
+Valuation Grade: F (Overvalued)
+
+Company unprofitable
+Trading at premium to peers
+High risk, high price = poor risk/reward
+Recommend: AVOID or PASS
+Potential: Could be worth much more if drugs approved But: Current price already prices in success Risk/Reward: Unfavorable (large downside if approvals fail)
+
+Code
+
+---
+
+## **Section 18: Implementation Notes**
+
+### **18.1 Data Sources & Integration**
+
+**SEC EDGAR (10-K/10-Q):**
+
+URL: https://www.sec.gov/cgi-bin/browse-edgar Use: Download 10-year historical financials Frequency: Quarterly (10-Q) and Annual (10-K) Key items:
+
+Consolidated Statements of Income
+Consolidated Statements of Cash Flows
+Consolidated Balance Sheets
+Code
+
+**Yahoo Finance API:**
+
+URL: https://finance.yahoo.com Use: Current stock prices, dividends, shares outstanding Frequency: Daily Data points:
+
+Current stock price
+52-week range
+Dividend history
+Stock splits, share count
+Code
+
+**Federal Reserve FRED:**
+
+URL: https://fred.stlouisfed.org Use: Risk-free rate (10-year Treasury yield) Frequency: Daily Symbol: GS10 (10-Year Treasury Constant Maturity Rate)
+
+Code
+
+**Company Investor Relations:**
+
+Source: Company websites Use: Press releases, shareholder letters, presentations Frequency: Quarterly/Annual Information:
+
+Dividend announcements
+Share buyback authorization
+Guidance on future performance
+Code
+
+### **18.2 Calculation Considerations**
+
+**Rounding & Precision:**
+
+Financial statements: Use billions for large numbers Per-share values: Round to 2 decimal places Percentages: Round to 1 decimal place Multiples: Round to 1 decimal place
+
+Example: $1,234,567,890 = $1.23B (3 significant figures) Fair Value: $123.45/share Growth Rate: 8.3% P/E Multiple: 22.5x
+
+Code
+
+**Handling Missing Data:**
+
+If <10 years available:
+
+Use what's available (note limitation)
+Example: Only 7 years historical
+Calculate CAGR on 7 years
+Add note: "Limited to 7 years of data available"
+If quarter incomplete:
+
+Use last complete quarter
+Note: "Data as of Q3 2025"
+Mark as preliminary if very recent
+If single year of losses:
+
+Use normalized earnings (average profitable years)
+Example: Negative in 2023, normalize to 2022/2021 average
+Note methodology in assumptions
+Code
+
+**Edge Cases:**
+
+Negative earnings: ✅ Use P/B, P/S multiples ✅ Project forward earnings ❌ Never use P/E with negative earnings
+
+Negative book value (more liabilities than assets): ✅ Use P/S multiple ✅ Use DCF (if company has positive cash flow) ❌ Don't use P/B multiple
+
+Negative cash flow (company burning cash): ✅ Use P/S multiple ✅ Project to profitability ❌ May not be investable if no path to profitability
+
+Zero dividends + substantial buybacks: ✅ Use buyback-adjusted dividend in DDM ✅ Works same as dividend equivalent ⚠️ Monitor buyback pace (may not be sustainable)
+
+Code
+
+### **18.3 Quality Checkpoints**
+
+**Before accepting valuation results:**
+
+**Data Quality:**
+
+☑️ Financial statements match across periods ☑️ Net income consistent with operating cash flow (±20%) ☑️ Balance sheet balances (Assets = Liabilities + Equity) ☑️ Stock price current (not stale) ☑️ Share count reflects dilution (stock options, warrants)
+
+Code
+
+**Calculation Accuracy:**
+
+☑️ FCF = Operating CF - CapEx (positive or improving) ☑️ ROE = Net Income / Avg Equity (reasonable level) ☑️ P/E = Stock Price / EPS (peer comparison makes sense) ☑️ WACC components (cost of debt, equity) reasonable ☑️ DCF terminal value <50% of total value (or flag)
+
+Code
+
+**Valuation Sanity Checks:**
+
+☑️ Fair value in reasonable range ($100-$500 for large-cap) ☑️ Fair value > current price OR has margin of safety ☑️ Quality multiple matches business quality (not 50x for weak moat) ☑️ Growth assumptions supported by historical data ☑️ Terminal growth rate ≤ GDP growth rate (2.5% conservative) ☑️ DCF and Multiples within reasonable range of each other ☑️ Buffett and Munger recommendations make sense together
+
+Code
+
+**Red Flags (Stop & Investigate):**
+
+🚩 Fair value <current price with no margin → Re-check calculations, may be overvalued
+
+🚩 DCF >> Multiples >> Buffett (wide divergence) → One method has bad assumptions → Investigate which is unreliable
+
+🚩 Fair value changes >30% quarter-over-quarter → Either stock price moved or assumptions changed significantly → Document what changed
+
+🚩 Quality multiple assigned is 35x+ for weak moat company → Over-optimistic assessment → Review quality scoring
+
+🚩 Terminal growth rate >3% → Unrealistic (outpacing economy forever) → Reset to 2.5%
+
+🚩 WACC is <5% or >15% → Likely wrong (too extreme) �� Review components
+
+Code
+
+### **18.4 Performance Optimization**
+
+**Valuation Update Frequency:**
+
+Daily: Stock prices (automatic via API) Weekly: Reviews/monitoring (manual) Monthly: Full revaluation if major price move (>10%) Quarterly: Full revaluation at earnings season Annual: Deep reanalysis with fresh assumptions
+
+Code
+
+**When to Revalue:**
+
+Trigger: Stock price moves >20% from fair value
+
+Examples: Fair value: $100 Previous price: $90 (10% discount) New price: $70 (30% discount) Action: Revalue immediately (crossed threshold)
+
+Fair value: $100 Previous price: $90 (10% discount) New price: $85 (15% discount) Action: Monitor, no urgent revaluation needed
+
+Code
+
+**Batch Processing:**
+
+For screening 500 companies quarterly: Stage 1 (Filters): ~2-3 hours Stage 2-3 (Financial Analysis): ~4-5 hours Stage 5.4 (Valuation): ~3-4 hours Stage 6-7 (Reporting): ~2 hours
+
+Total time: ~12-14 hours per quarter Frequency: Once per quarter (every 90 days)
+
+Code
+
+---
+
+## **Section 19: Troubleshooting Guide**
+
+### **19.1 Common Issues & Solutions**
+
+**Problem: DCF valuation is unrealistic ($500 for $50 stock)**
+
+Likely causes:
+
+Terminal growth rate too high (>3%)
+WACC too low (<5%)
+FCF growth assumptions too aggressive
+Terminal value >70% of total
+Solutions: ✅ Check terminal growth (reset to 2.5%) ✅ Verify WACC calculation (compare to peer WACC) ✅ Review growth assumptions (vs industry growth) ✅ If terminal value >70%, use more conservative growth
+
+If still high: → Company may be in hyper-growth (acceptable if realistic) → Or fair value truly much higher than current price → Document assumptions clearly
+
+Code
+
+**Problem: Multiples valuation much different from DCF**
+
+Example: DCF = $300, Multiples = $500
+
+Possible reasons:
+
+Peers are also overvalued/undervalued
+Company growth different from peers
+Margins different from peers
+Quality different from peers
+Investigation: ✅ Check if peers trading at premiums (bull market) ✅ Compare growth rates (is this company faster/slower?) ✅ Compare margins (profit quality) ✅ Compare moats (competitive position)
+
+Resolution: → If DCF is conservative, Multiples more realistic → If Multiples inflated by market sentiment, DCF more reliable → Likely truth is between them → Use weighted average, not just one method
+
+Code
+
+**Problem: Dividend history inconsistent (cuts, freezes)**
+
+Company: 2021: $2.00 dividend 2022: $1.80 (cut 10%) 2023: $1.80 (frozen) 2024: $1.82 (resume 1%) 2025: $1.84 (slow growth)
+
+Assessment: ✅ Company had financial stress in 2022 ✅ Now recovering ✅ Dividend sustainable going forward?
+
+Action: → Use most recent trend (2023-2025) → Not full historical CAGR (includes cut period) → More conservative growth assumption (2%) → Note in documentation: "Dividend cut in 2022, now stabilizing"
+
+Code
+
+**Problem: Negative book value (balance sheet distressed)**
+
+Company: $100B market cap, -$5B equity This means: Liabilities > Assets Company technically insolvent on balance sheet
+
+DCF: Still valid if cash flows positive P/E: Still valid if profitable P/B: NOT valid (negative book value) P/S: Still valid
+
+Action: ✅ Skip P/B multiple ✅ Use P/S multiple as primary ✅ Investigate why book value negative ✅ Is company distressed or restructuring? ✅ If distressed, may fail (avoid) ✅ If restructuring, opportunity exists (risky)
+
+Code
+
+**Problem: Company paid special dividend (skewed results)**
+
+Dividend history: 2022: $1.50 regular + $0.50 special = $2.00 2023: $1.55 regular 2024: $1.60 regular 2025: $1.65 regular
+
+Issue: If use $2.00 average, over-estimates regular dividend
+
+Solution: ✅ Separate regular from special ✅ Use $1.50-1.65 for projections (regular only) ✅ Special dividend is one-time, not recurring ✅ Project only regular dividend growth
+
+Code
+
+**Problem: Company just changed business model**
+
+Scenario: Company was manufacturing, now shifting to services Historical metrics not relevant to future
+
+Example: IBM: Shifted from hardware → software/services GE: Multiple business exits/restructuring
+
+Solution: ✅ Use only recent years reflecting new business ✅ If transition not complete, be conservative ✅ May need to split valuation: - Old business (declining, uses FCF) - New business (growing, needs separate DCF) ✅ Document the transition ✅ Add extra margin of safety due to uncertainty
+
+Code
+
+---
+
+## **Section 20: Document History**
+
+### **Version Control**
+
+Version: 1.0 Date: 2026-03-14 Author: ThommCroft Status: Complete Scope: Stock Price Valuation Methodology - Stage 5.4
+
+Code
+
+### **Document Purpose**
+
+This document provides complete methodology for Stage 5.4 (Stock Price Valuation Analysis) in the Stock Market Screener system. It covers:
+
+- Three independent valuation methods (DCF, DDM, Multiples)
+- Two master valuation techniques (Buffett, Munger)
+- Consensus valuation combining all methods
+- Margin of Safety analysis and grading
+- Company grouping for investment decisions
+- Output formats for reporting
+- Database integration and historical tracking
+- Sensitivity analysis for confidence ranges
+- Real-world examples with complete walkthroughs
+- Implementation notes and troubleshooting
+
+### **Key Features**
+
+✅ **Comprehensive:** Covers all aspects from data gathering to final recommendation
+✅ **Practical:** Real examples show actual calculations with numbers
+✅ **Flexible:** Works for any company (profitable, unprofitable, with/without dividends)
+✅ **Buffett & Munger:** Integrates both proven investment frameworks
+✅ **Implementation-Ready:** Includes database schema, code templates, output formats
+
+### **Related Documents**
+
+- `01-INVESTMENT-REQUIREMENTS.md` - Investment philosophy and requirements
+- `02-ARCHITECTURE-DESIGN.md` - System architecture and design
+- `03-DATA-FLOW-SCREENING-LOGIC.md` - Stages 1-7 overview
+- `04-PROJECT-ROADMAP.md` - Implementation timeline and milestones
+
+### **Future Enhancements**
+
+Potential future additions:
+- Machine learning to predict WACC and growth rates
+- Real-time valuation updates with stock price movements
+- Macro economic scenario analysis
+- Peer analysis and competitive positioning
+- ESG (Environmental, Social, Governance) integration
+- Portfolio optimization using valuations
+- Tax-loss harvesting based on valuation grades
+
+### **Support & Questions**
+
+For questions about methodology or calculations:
+- Review Section 17 (Real-World Examples) for step-by-step walkthrough
+- Check Section 19 (Troubleshooting) for common issues
+- Refer to specific section (3-16) for detailed method explanation
+- Review investment theses in Section 17 for complete analysis example
+
+### **Final Notes**
+
+This valuation methodology represents synthesis of:
+- Warren Buffett's Owner's Earnings approach
+- Charlie Munger's quality-based business assessment
+- Academic DCF and dividend discount models
+- Market-based multiples validation
+- Practical implementation lessons
+
+The goal is not to calculate "the" intrinsic value (impossible), but to estimate a reasonable range and determine if current price provides adequate margin of safety for profitable investing.
+
+> **"Price is what you pay. Value is what you get."** — Warren Buffett
+
+This document exists to ensure you get more value than the price you pay.
+
+---
+
+## **Glossary of Terms**
+
+CAGR: Compound Annual Growth Rate D&A: Depreciation & Amortization DCF: Discounted Cash Flow (valuation method) DDM: Dividend Discount Model (valuation method) EBT: Earnings Before Tax EBITDA: Earnings Before Interest, Taxes, Depreciation, Amortization EPS: Earnings Per Share FCF: Free Cash Flow (Operating CF - CapEx) GAAP: Generally Accepted Accounting Principles MOS: Margin of Safety Net Income: Bottom-line earnings (after all expenses) OCF: Operating Cash Flow P/B: Price-to-Book multiple P/E: Price-to-Earnings multiple P/S: Price-to-Sales multiple ROE: Return on Equity (Net Income / Shareholders' Equity) ROIC: Return on Invested Capital WACC: Weighted Average Cost of Capital (discount rate)
+
+Valuation Grade A+: Slam Dunk Buy (exceptional quality + strong value) Valuation Grade A: Strong Buy (good quality + good value) Valuation Grade B+: Fair Value / Good Buy (strong quality, reasonable price) Valuation Grade B: Fair Value / Hold (acceptable, no urgency) Valuation Grade C: Overvalued (reasonable quality, high price) Valuation Grade D: Poor Value (weak quality, any price) Valuation Grade F: Avoid (very poor business or extreme overvaluation)
+
+Code
+
+---
+
+### **END OF DOCUMENT**
+
+**Total Sections:** 20  
+**Total Pages:** ~200 (depending on formatting)  
+**Total Examples:** 3 complete real-world walkthroughs  
+**Formulas & Calculations:** 50+  
+**Decision Trees & Matrices:** 10+  
+**Tables & References:** 40+  
+
+This comprehensive document provides everything needed to implement Stage 5.4 Stock Price Valuation Analysis and make informed investment decisions using both Warren Buffett and Charlie Munger's proven methodologies.
