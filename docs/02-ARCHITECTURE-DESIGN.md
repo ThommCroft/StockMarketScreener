@@ -1,6 +1,6 @@
 # Architecture Design Document - Stock Market Screener
 
-**Version:** 3.1 (Solo Developer - .NET 8.0 + MySQL)  
+**Version:** 3.2 (Merged Metric Calculation + Hard Filter Evaluation)  
 **Date:** 2026-03-14  
 **Author:** ThommCroft
 **Stack:** C# .NET 8.0, MySQL 8.0, GitHub Actions (Quarterly + Manual), Console Application  
@@ -17,12 +17,13 @@
 5. [Data Architecture (MySQL)](#data-architecture-mysql)
 6. [Industry Configuration](#industry-configuration)
 7. [Screening Workflow](#screening-workflow)
-8. [Data Reconciliation Layer](#data-reconciliation-layer)
-9. [Results & Notifications](#results--notifications)
-10. [GitHub Actions Automation](#github-actions-automation)
-11. [Stock Price Update Job](#stock-price-update-job)
-12. [Testing Strategy](#testing-strategy)
-13. [Deployment & Operations](#deployment--operations)
+8. [Unified Metric Calculation & Hard Filter Evaluation](#unified-metric-calculation--hard-filter-evaluation)
+9. [Data Reconciliation Layer](#data-reconciliation-layer)
+10. [Results & Notifications](#results--notifications)
+11. [GitHub Actions Automation](#github-actions-automation)
+12. [Stock Price Update Job](#stock-price-update-job)
+13. [Testing Strategy](#testing-strategy)
+14. [Deployment & Operations](#deployment--operations)
 
 ---
 
@@ -32,7 +33,8 @@ The StockMarketScreener is a **console-based financial analysis engine** that:
 
 - **Screens 6 default industries** (configurable to any industry)
 - **Evaluates all companies** in selected industries quarterly/annually
-- **Applies strict 3-stage filtering** to identify high-quality, undervalued stocks
+- **Calculates ALL 40+ metrics** for every company BEFORE any filtering
+- **Applies comprehensive hard filter evaluation** using complete metric data
 - **Only stores passing companies** - complete financial metrics dataset
 - **Automatically removes companies** that fall below thresholds
 - **Sends comprehensive email reports** with detailed scoring
@@ -42,7 +44,9 @@ The StockMarketScreener is a **console-based financial analysis engine** that:
 
 **Key Design Principles:**
 - ✅ Solo developer friendly
-- ✅ Batch processing (quarterly/annual)
+- ✅ Unified metric calculation + hard filter evaluation (merged approach)
+- ✅ No early rejection based on incomplete analysis
+- ✅ Complete financial picture before any decision
 - ✅ Only stores passing companies (no clutter)
 - ✅ Email-first notifications
 - ✅ Minimal operational overhead
@@ -53,49 +57,74 @@ The StockMarketScreener is a **console-based financial analysis engine** that:
 
 ## System Architecture Overview
 
-### High-Level Data Flow
+### High-Level Data Flow (Merged Approach)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  GitHub Actions Trigger (Quarterly/Manual)                  │
 │  OR Local Console Run                                       │
-└────────────┬──────────────────────────────────────���─────────┘
+└────────────┬──────────────────────────────────────────────┘
              │
 ┌────────────▼────────────────────────────────────────────────┐
 │  StockMarketScreener Console Application                    │
 ├─────────────────────────────────────────────────────────────┤
 │  ┌──────────────────────────────────────────────────────┐  │
+│  │ Step 0: Market Cap Pre-Filter                        │  │
+│  │ ├─ Filter: Market Cap > $300M                        │  │
+│  │ └─ Output: Liquid, institutional-quality companies   │  │
+│  └──────────────────────┬───────────────────────────────┘  │
+│                         │                                   │
+│  ┌──────────────────────▼──────────────────────────────┐  │
 │  │ Step 1: Data Ingestion & Reconciliation              │  │
 │  │ ├─ Fetch from SEC EDGAR (10-K/10-Q)                │  │
 │  │ ├─ Fetch from Yahoo Finance API                    │  │
 │  │ ├─ Fetch from IEX Cloud / Alpha Vantage           │  │
 │  │ └─ Reconcile & aggregate data from all sources     │  │
-│  └──────────────────────────────────────────────────────┘  │
-│                          │                                   │
-│  ┌──────────────────────▼──────────────────────────────┐  │
-│  │ Step 2: Metric Calculation Engine                   │  │
-│  │ ├─ Calculate 40+ financial metrics                 │  │
-│  │ ├─ 10-year analysis (prioritize, min 5 years)    │  │
-│  │ └─ Assess business quality                         │  │
 │  └──────────────────────┬───────────────────────────────┘  │
 │                         │                                   │
 │  ┌──────────────────────▼──────────────────────────────┐  │
-│  │ Step 3: 3-Stage Screening                           │  │
-│  │ ├─ Stage 1: Financial Strength (hard filters)      │  │
-│  │ ├─ Stage 2: Quality Assessment (scoring)           │  │
-│  │ └─ Stage 3: Valuation & Management                 │  │
+│  │ Step 2: ALL 40+ METRICS CALCULATION                │  │
+│  │ ├─ Calculate ALL metrics for EVERY company         │  │
+│  │ ├─ 10-year analysis (prioritize, min 5 years)     │  │
+│  │ └─ Year-by-year metrics & trend analysis           │  │
+│  │                                                    │  │
+│  │ ⚠️ NO FILTERING OR REJECTION AT THIS STAGE          │  │
+│  │ ✓ All companies continue to next step              │  │
 │  └──────────────────────┬───────────────────────────────┘  │
 │                         │                                   │
 │  ┌──────────────────────▼──────────────────────────────┐  │
-│  │ Step 4: Results Processing                          │  │
+│  │ Step 3: UNIFIED Hard Filter + Quality Evaluation    │  │
+│  │ ├─ Evaluate hard filters using COMPLETE metrics    │  │
+│  │ ├─ Assess overall financial strength               │  │
+│  │ ├─ Companies below threshold → Skip                │  │
+│  │ └─ Companies passing → Continue to scoring          │  │
+│  └──────────────────────┬───────────────────────────────┘  │
+│                         │                                   │
+│  ┌──────────────────────▼──────────────────────────────┐  │
+│  │ Step 4: Quality Assessment Scoring (0-100)         │  │
+│  │ ├─ Score: Return on Capital (30 points)            │  │
+│  │ ├─ Score: Profitability (30 points)                │  │
+│  │ ├─ Score: Cash Flow (20 points)                    │  │
+│  │ └─ Score: Business Quality (10 points)             │  │
+│  └──────────────────────┬───────────────────────────────┘  │
+│                         │                                   │
+│  ┌──────────────────────▼──────────────────────────────┐  │
+│  │ Step 5: Valuation & Management Ranking             │  │
+│  │ ├─ Score: Valuation (max 35 points)                │  │
+│  │ ├─ Score: Management Quality (max 25 points)       │  │
+│  │ └─ Composite: (Quality×40% + Val×35% + Mgmt×25%)  │  │
+│  └──────────────────────┬───────────────────────────────┘  │
+│                         │                                   │
+│  ┌──────────────────────▼──────────────────────────────┐  │
+│  │ Step 6: Results Processing                          │  │
 │  │ ├─ Only store companies that PASS (score >= 75)   │  │
 │  │ ├─ Compare with previously stored companies       │  │
 │  │ ├─ Remove companies that now FAIL                 │  │
 │  │ └─ Prepare comprehensive results table             │  │
-│  └──────────────────────┬───────────────────────────────┘  │
+│  └──────────────────────┬──��────────────────────────────┘  │
 │                         │                                   │
 │  ┌──────────────────────▼──────────────────────────────┐  │
-│  │ Step 5: Notifications & Output                      │  │
+│  │ Step 7: Notifications & Output                      │  │
 │  │ ├─ Send detailed email with HTML table             │  │
 │  │ ├─ Console output with summary                     │  │
 │  │ └─ CSV export for manual review                    │  │
@@ -133,16 +162,17 @@ StockMarketScreener.Console
 │  ├─ AlphaVantageService (Fallback data source)
 │  └─ DataReconciliationService (Aggregate & validate)
 │
-├─ Metric Calculation
-│  ├─ MetricCalculationService (40+ metrics)
+├─ Metric Calculation (MERGED WITH SCREENING)
+│  ├─ MetricCalculationService (40+ metrics for ALL companies)
 │  ├─ TrendAnalysisService (10-year trends)
-│  └─ StabilityCalculationService (CV, volatility)
+│  ├─ StabilityCalculationService (CV, volatility)
+│  └─ ComprehensiveMetricsAnalyzer (All metrics upfront)
 │
-├─ Screening Engine
-│  ├─ Stage1ScreeningService (MUST HAVE filters)
+├─ Screening Engine (USES CALCULATED METRICS)
+│  ├─ HardFilterEvaluationService (Unified filter assessment)
 │  ├─ Stage2ScoringService (Quality assessment)
 │  ├─ Stage3RankingService (Valuation & Management)
-│  └─ ScreeningOrchestrator (3-stage orchestration)
+│  └─ ScreeningOrchestrator (Unified orchestration)
 │
 ├─ Business Logic
 │  ├─ CompanyStatusManager (Pass/fail tracking)
@@ -296,16 +326,18 @@ IF multiple sources differ → Log discrepancy, use primary source
 ```
 
 **Key Responsibility:**
-- Ensures data quality before metrics calculation
+- Ensures data quality BEFORE metrics calculation
 - Prevents corrupted data from affecting analysis
 - Creates audit trail of data sources used
 - Validates that reconciled data is complete and consistent
 
 ---
 
-### 3. Metric Calculation Service
+### 3. Metric Calculation Service (MERGED COMPONENT)
 
-**Purpose:** Calculate all 40+ financial metrics from reconciled financial data
+**Purpose:** Calculate ALL 40+ financial metrics for EVERY company UPFRONT
+
+**⚠️ CRITICAL:** This service calculates metrics for ALL companies, with NO filtering or rejection:
 
 **Metric Categories (40+):**
 
@@ -313,19 +345,24 @@ IF multiple sources differ → Log discrepancy, use primary source
    - ROE: Return on Equity
    - ROA: Return on Assets
    - ROIC: Return on Invested Capital
+   - ROCE: Return on Capital Employed
 
 2. **Financial Strength (6 metrics)**
    - Debt-to-Equity Ratio
    - Current Ratio
    - Interest Coverage Ratio
    - Total Liabilities-to-Equity
+   - Equity Trend (10-year)
+   - Debt Trend (10-year)
 
 3. **Profitability (8 metrics)**
-   - Net Profit Margin
-   - Operating Margin
+   - Net Profit Margin (with trend)
+   - Operating Margin (with trend)
    - Gross Profit Margin
    - Depreciation Margin
    - Interest Expense Margin
+   - Margin Stability (CV)
+   - EBITDA Margin
 
 4. **Cash Flow (6 metrics)**
    - Operating Cash Flow
@@ -333,11 +370,14 @@ IF multiple sources differ → Log discrepancy, use primary source
    - FCF-to-Net-Income Ratio
    - CapEx as % Revenue
    - CapEx as % OCF
+   - OCF/FCF Growth trends
 
 5. **Growth (7 metrics)**
    - Revenue Growth (YoY, CAGR)
    - Earnings Per Share (EPS)
+   - EPS Growth
    - Retained Earnings
+   - Growth Stability metrics
 
 6. **Valuation (8 metrics)**
    - P/E Ratio
@@ -347,12 +387,15 @@ IF multiple sources differ → Log discrepancy, use primary source
    - Earnings Yield
    - Dividend Yield
    - Payout Ratio
+   - Market Cap
 
 7. **Management Quality (6 metrics)**
    - Insider Ownership %
    - Goodwill Level
    - Goodwill as % of Assets
    - One-Time Charges Frequency
+   - Accounting Quality
+   - Management Tenure
 
 **Data Prioritization:**
 - **Prefer 10 years** of historical data (full analysis)
@@ -366,21 +409,90 @@ IF multiple sources differ → Log discrepancy, use primary source
 - Coefficient of Variation (CV) for stability analysis
 - CAGR (Compound Annual Growth Rate) for growth assessment
 
+**NO REJECTION AT THIS STAGE:**
+- All companies with valid data continue to next stage
+- Metrics for all companies are complete and available
+- Hard filter evaluation uses this complete dataset
+
 ---
 
-### 4. Screening Orchestrator
+### 4. Hard Filter Evaluation Service (MERGED WITH METRICS)
 
-**Purpose:** Orchestrates the entire screening flow end-to-end
+**Purpose:** Evaluate hard filters using the COMPLETE metric dataset just calculated
+
+**CRITICAL CHANGE:** Hard filters are NOT standalone rejection criteria:
+
+**Unified Evaluation Approach:**
+
+```csharp
+public class HardFilterEvaluationService
+{
+    public EvaluationResult EvaluateCompany(CompanyWithAllMetrics company)
+    {
+        // All 40+ metrics are already calculated at this point
+        // Use complete data to assess financial strength
+        
+        var roe10YAvg = company.Metrics.ReturnOnEquity_10YAvg;
+        var netMargin10YAvg = company.Metrics.NetProfitMargin_10YAvg;
+        var deRatio = company.Metrics.DebtToEquityRatio_Current;
+        var ocfTrend = company.Metrics.OperatingCashFlowTrend_10Y;
+        var fcfTrend = company.Metrics.FreeCashFlowTrend_10Y;
+        
+        // Evaluate hard filters within context of COMPLETE financial picture
+        bool passesFinancialStrength = AssessCompleteFinancialStrength(company.Metrics);
+        
+        if (!passesFinancialStrength)
+        {
+            // Company fails hard filters, skip to next stage indicator
+            return EvaluationResult.FailedHardFilters(company);
+        }
+        
+        // Hard filters passed - continue to quality scoring
+        return EvaluationResult.PassedHardFilters(company);
+    }
+    
+    private bool AssessCompleteFinancialStrength(AllMetrics metrics)
+    {
+        // Assess financial fortress using complete metric dataset:
+        // - ROE in context of margins, cash flow, growth
+        // - D/E ratio in context of equity trends, coverage ratios
+        // - Cash flow in context of profitability and reinvestment
+        // - Complete holistic assessment, not checklist
+        
+        var financialScore = CalculateHolisticFinancialStrength(metrics);
+        return financialScore >= RequiredThreshold;
+    }
+}
+```
+
+**Hard Filters Are Evaluated As:**
+- ROE > 15% (10Y avg) - assessed with profitability context
+- Net Margin > 10% (10Y avg) - assessed with operating metrics
+- D/E < 0.50 - assessed with equity trends and coverage
+- OCF Positive (all 10Y) - assessed with FCF conversion and growth
+- FCF Positive (all 10Y) - assessed with OCF quality and sustainability
+
+**Key Differences from Old Approach:**
+- ✅ Hard filters use COMPLETE metric data, not isolated metrics
+- ✅ Context from all metrics informs the assessment
+- ✅ Weakness in one area assessed against strength in others
+- ✅ No premature rejection based on incomplete data
+
+---
+
+### 5. Screening Orchestrator (UNIFIED APPROACH)
+
+**Purpose:** Orchestrates the entire unified flow end-to-end
 
 **Workflow:**
 1. Load industry configuration
 2. Fetch all companies in selected industries
-3. For each company:
+3. **For each company:**
    - Reconcile financial data from multiple sources
-   - Calculate 40+ metrics
-   - Run Stage 1 (hard filters)
-   - Run Stage 2 (quality scoring)
-   - Run Stage 3 (final ranking)
+   - **Calculate ALL 40+ metrics** (step 2-3 merged)
+   - **Evaluate hard filters using complete metrics** (step 3)
+   - Run quality scoring (Stage 2)
+   - Run valuation/management ranking (Stage 3)
    - **ONLY store if passing** (composite score >= 75)
 4. Compare with previously qualified companies
    - Identify newly qualified
@@ -398,7 +510,7 @@ IF multiple sources differ → Log discrepancy, use primary source
 
 ---
 
-### 5. Qualified Company Service
+### 6. Qualified Company Service
 
 **Purpose:** Manage storage of passing companies
 
@@ -417,7 +529,7 @@ IF multiple sources differ → Log discrepancy, use primary source
 
 ---
 
-### 6. Email Notification Service
+### 7. Email Notification Service
 
 **Purpose:** Send comprehensive results email
 
@@ -440,7 +552,7 @@ IF multiple sources differ → Log discrepancy, use primary source
 
 ---
 
-### 7. Stock Price Update Job
+### 8. Stock Price Update Job
 
 **Purpose:** Weekly update of stock prices (separate from screening)
 
@@ -572,7 +684,7 @@ To add custom industries:
 
 ## Screening Workflow
 
-### Quarterly Run Flow
+### Quarterly Run Flow (MERGED APPROACH)
 
 ```
 📅 Quarterly Execution (e.g., March 15, 2026)
@@ -586,7 +698,11 @@ To add custom industries:
 ├─ Fetch Companies (by industry from SEC)
 │  └─ 500+ companies across selected industries
 │
-├─ For Each Company (500+ iterations)
+├─ Stage 0: Market Cap Pre-Filter
+│  ├─ Filter: Market Cap > $300M
+│  └─ ~400-450 companies pass, ~50-100 rejected (too small)
+│
+├─ For Each Qualifying Company (400+ iterations)
 │  ├─ Fetch Financial Data
 │  │  ├─ SEC EDGAR (10-K/10-Q) - authoritative
 │  │  ├─ Yahoo Finance (prices, dividends) - primary
@@ -598,34 +714,30 @@ To add custom industries:
 │  │  ├─ Check: Data integrity (balance sheet balances)
 │  │  └─ Flag: 10-year data vs 5-9 year (prioritize 10)
 │  │
-│  ├─ Calculate 40+ Metrics
-│  │  ├─ Year-by-year calculation
+│  ├─ MERGED STEPS 2-3: Calculate ALL 40+ Metrics
+│  │  ├─ Year-by-year calculation for each metric
 │  │  ├─ 10-year averages and trends
 │  │  ├─ Stability metrics (CV, volatility)
-│  │  └─ Growth rates (CAGR)
+│  │  ├─ Growth rates (CAGR)
+│  │  └─ ⚠️ NO FILTERING HERE - All metrics calculated
 │  │
-│  ├─ Stage 1: Financial Strength (Hard Filters)
-│  │  ├─ ROE > 15%?
-│  │  ├─ Net Margin > 10%?
-│  │  ├─ D/E < 0.50?
-│  │  ├─ Operating Cash Flow positive (all 10 years)?
-│  │  ├─ Free Cash Flow positive (all 10 years)?
-│  │  └─ IF ANY FAIL → SKIP company (not stored)
-│  │  **Note:** These 5 core decision filters are backed by additional 
-│  │  MUST HAVE prerequisites (Market Cap > $300M, 5+ years of data, etc.)
-│  │  defined in Investment Requirements document.
+│  ├─ UNIFIED Hard Filter Evaluation
+│  │  ├─ Evaluate hard filters using COMPLETE 40+ metrics
+│  │  ├─ Assess overall financial strength holistically
+│  │  ├─ Consider context from all metrics
+│  │  └─ IF fails assessment → SKIP; IF passes → Continue
 │  │
 │  ├─ Stage 2: Quality Assessment (Scoring)
-│  │  ├─ Score: Return on Capital (30 points)
-│  │  ├─ Score: Profitability (30 points)
-│  │  ├─ Score: Cash Flow (20 points)
-│  │  ├─ Score: Business Quality (10 points)
+│  │  ├─ Score: Return on Capital (30 points max)
+│  │  ├─ Score: Profitability (30 points max)
+│  │  ├─ Score: Cash Flow (20 points max)
+│  │  ├─ Score: Business Quality (10 points max)
 │  │  └─ Total: Quality Score (0-100)
 │  │
-│  ├─ Stage 3: Valuation & Ranking
-│  │  ├─ Score: Valuation (P/E, P/B, etc.)
-│  │  ├─ Score: Management Quality
-│  │  ├─ Composite: (Quality×40% + Valuation×35% + Management×25%)
+│  ├─ Stage 3: Valuation & Management Ranking
+│  │  ├─ Score: Valuation (P/E, P/B, etc.) - max 35 pts
+│  │  ├─ Score: Management Quality - max 25 pts
+│  │  ├─ Composite: (Quality×40% + Valuation×35% + Mgmt×25%)
 │  │  └─ IF Composite >= 75 → STORE; ELSE SKIP
 │  │
 │  └─ Results
@@ -664,8 +776,83 @@ User runs: dotnet run
 
 Program.cs → ScreeningOrchestrator.RunScreening()
 │
-└─ Same flow as scheduled run
+└─ Same flow as scheduled run (merged approach)
    └─ Results: Email + Console Output + Database update
+```
+
+---
+
+## Unified Metric Calculation & Hard Filter Evaluation
+
+### Why This Merged Approach?
+
+**Prevents False Negatives:**
+- A company with strong fundamentals might fail one metric in isolation
+- Complete analysis reveals the metric is anomalous or contextually explained
+- Example: Temporary debt increase to fund acquisition in strong market position
+
+**Captures True Business Quality:**
+- Cannot evaluate financial strength with only 5 metrics
+- Margin stability, growth quality, cash conversion all matter
+- Competitive moat requires multiple data points
+- Business sustainability requires holistic view
+
+**Aligns with Buffett/Munger Principles:**
+- They analyze complete business picture, not checklists
+- Context and nuance inform investment decisions
+- Financial fortress assessment requires comprehensive analysis
+- Quality assessment needs full metric visibility
+
+**Enables Better Decision Making:**
+- Analyst can see why company passes/fails (complete data visible)
+- All 40+ metrics available for manual review
+- Scoring transparent and defensible
+- Audit trail shows all data considered
+
+### Implementation Details
+
+**Metric Calculation Phase (Before Any Evaluation):**
+```csharp
+var metricsResult = await metricCalculationService.CalculateAllMetricsAsync(company);
+
+// Returns: Comprehensive metrics object with all 40+ metrics calculated
+// - No filtering occurs here
+// - All companies continue to hard filter evaluation
+// - Complete financial picture now available
+```
+
+**Hard Filter Evaluation Phase (Using Complete Metrics):**
+```csharp
+var evaluationResult = await hardFilterEvaluationService.EvaluateCompanyAsync(
+    company, 
+    metricsResult  // Pass the complete metrics just calculated
+);
+
+// Hard filters are evaluated in context of:
+// - Profitability trends alongside margins
+// - Debt ratios alongside cash flow strength
+// - Growth rates alongside capital efficiency
+// - All metrics together paint complete picture
+```
+
+**Quality Scoring Phase (For Companies Passing Hard Filter Evaluation):**
+```csharp
+if (evaluationResult.PassedHardFilters)
+{
+    var qualityScore = await stage2ScoringService.ScoreQualityAsync(
+        company, 
+        metricsResult
+    );
+    
+    var valuationScore = await stage3RankingService.ScoreValuationAsync(
+        company, 
+        metricsResult
+    );
+    
+    var compositeScore = CalculateComposite(qualityScore, valuationScore);
+    
+    // Only companies with composite >= 75 are stored
+}
 ```
 
 ---
@@ -793,19 +980,29 @@ Data Fetch Error:
 
 📈 Processing...
   Company 1/500: MSFT
-    ✅ Stage 1 PASSED
-    ✅ Stage 2 Quality Score: 92/100
-    ✅ Stage 3 Composite: 87.5/100 (BUY)
+    ✅ Market Cap Check: PASS ($3.2T)
+    ✅ Data Validation: PASS (10 years)
+    ✅ Metrics Calculated: ALL 40+ metrics complete
+    ✅ Hard Filter Evaluation: PASS
+    ✅ Quality Score: 92/100
+    ✅ Composite: 87.5/100 (BUY)
     ✅ QUALIFIED & STORED
   
   Company 2/500: AAPL
-    ✅ Stage 1 PASSED
-    ✅ Stage 2 Quality Score: 89/100
-    ✅ Stage 3 Composite: 84.2/100 (BUY)
+    ✅ Market Cap Check: PASS ($3.0T)
+    ✅ Data Validation: PASS (10 years)
+    ✅ Metrics Calculated: ALL 40+ metrics complete
+    ✅ Hard Filter Evaluation: PASS
+    ✅ Quality Score: 89/100
+    ✅ Composite: 84.2/100 (BUY)
     ✅ QUALIFIED & STORED
   
   Company 3/500: XYZ
-    ❌ Stage 1 FAILED: D/E ratio > 0.50
+    ✅ Market Cap Check: PASS ($400M)
+    ✅ Data Validation: PASS (7 years)
+    ✅ Metrics Calculated: ALL 40+ metrics complete
+    ❌ Hard Filter Evaluation: FAILED
+    ❌ Complete assessment: Financial weakness across metrics
     ❌ SKIPPED (not stored)
   
   ...
@@ -815,12 +1012,16 @@ Data Fetch Error:
 ═══════════════════════════════════════════════════════════
 
 📊 Summary
-  Companies Screened: 500
-  Companies Qualified: 45
+  Companies Processed: 500
+  Market Cap Qualified: 480
+  Data Valid: 450
+  Hard Filters Passed: 75
+  Composite Score >= 75: 45
+  
   Newly Qualified: 8
   Maintained: 37
   Removed: 2
-  Execution Time: 4m 23s
+  Execution Time: 45m 30s
 
 📧 Email Sent: your-email@gmail.com
 💾 Database Updated: 45 companies
@@ -859,7 +1060,7 @@ JNJ,Johnson & Johnson,Healthcare,82.1,85,80,78,HOLD,145.75,18.5,MAINTAINED,10,SE
 4. Build application (Release configuration)
 5. Setup MySQL database (Docker service)
 6. Run EF Core migrations
-7. Execute screening application
+7. Execute screening application (merged approach)
 8. Upload results as GitHub artifact (90-day retention)
 9. Commit results to repository (optional)
 10. Send email notification (via MailKit)
@@ -921,7 +1122,7 @@ RECIPIENT_EMAIL = your-email@gmail.com
 - P/E Ratio
 - Dividend yield
 
-**Why Separate from Screening:**
+**Why Separate:**
 - Screening runs quarterly (expensive data fetch)
 - Stock prices change constantly
 - Valuation metrics need updating
@@ -943,20 +1144,26 @@ RECIPIENT_EMAIL = your-email@gmail.com
    - Verify 10-year averaging
    - Test stability (CV) calculations
    - Test CAGR calculations
+   - **NEW:** Test that all 40+ metrics calculate for every company
 
-2. **Screening Logic**
-   - Test Stage 1 filters with passing/failing data
+2. **Hard Filter Evaluation (MERGED)**
+   - Test hard filter assessment using complete metrics
+   - Test contextual evaluation (e.g., D/E in context of trends)
+   - Test holistic financial strength assessment
+   - Verify no premature rejection
+
+3. **Screening Logic**
    - Test quality score with various metrics
    - Test composite score calculation
-   - Verify threshold logic
+   - Verify threshold logic (>= 75)
 
-3. **Data Reconciliation**
+4. **Data Reconciliation**
    - Test data merging from multiple sources
    - Test fallback logic (primary → secondary → tertiary)
    - Test validation logic
    - Mock API responses
 
-4. **Repository Operations**
+5. **Repository Operations**
    - Test save/update/delete operations
    - Verify database constraints
    - Test filtering and querying
@@ -967,16 +1174,29 @@ RECIPIENT_EMAIL = your-email@gmail.com
 
 **Test Data:**
 - 10 well-known companies with real historical data
-- Companies that should PASS screening
-- Companies that should FAIL screening
+- Mix of pass/fail scenarios
 - Edge cases (low margins, high debt, etc.)
 
 **Test Scenarios:**
-1. End-to-end screening of test data
-2. Verify correct companies pass/fail
-3. Verify storage and retrieval
-4. Verify removal of previously qualified companies
-5. Test email generation (no actual send)
+1. **Complete flow with merged approach**
+   - Verify all metrics calculated
+   - Verify hard filter evaluation uses complete metrics
+   - Verify correct companies pass/fail
+
+2. **Hard filter evaluation accuracy**
+   - Company with good overall metrics but one weak area
+   - Verify holistic assessment works
+   - Verify context prevents false rejection
+
+3. **Storage and retrieval**
+   - Verify storage of passing companies
+   - Verify removal of previously qualified companies
+   - Verify all metrics stored
+
+4. **Email generation**
+   - Test email generation (no actual send)
+   - Verify all metrics included
+   - Verify formatting correct
 
 ### Mock Tests
 
@@ -997,6 +1217,11 @@ mockYahoo.Setup(s => s.FetchCurrentData("MSFT"))
 var mockEmail = new Mock<IEmailNotificationService>();
 mockEmail.Setup(s => s.SendScreeningResultsAsync(It.IsAny<string>(), It.IsAny<List<ScreeningResult>>()))
     .Returns(Task.CompletedTask);
+
+// Mock MetricCalculationService
+var mockMetrics = new Mock<IMetricCalculationService>();
+mockMetrics.Setup(s => s.CalculateAllMetricsAsync(It.IsAny<Company>()))
+    .ReturnsAsync(completeMetricsObject);
 ```
 
 ### Test Database
@@ -1034,22 +1259,23 @@ public class ScreeningIntegrationTests : IAsyncLifetime
 
 ```
 Well-Known Test Companies:
-1. MSFT (Microsoft) - Should PASS
-2. AAPL (Apple) - Should PASS
-3. JNJ (Johnson & Johnson) - Should PASS
-4. KO (Coca-Cola) - Should PASS
-5. JPM (JPMorgan Chase) - Should PASS
-6. TSLA (Tesla) - Should FAIL (high valuation)
-7. AMD (Advanced Micro Devices) - Should FAIL (high debt)
-8. SNAP (Snapchat) - Should FAIL (low ROE)
+1. MSFT (Microsoft) - Should PASS (strong across all metrics)
+2. AAPL (Apple) - Should PASS (strong overall)
+3. JNJ (Johnson & Johnson) - Should PASS (quality fundamentals)
+4. KO (Coca-Cola) - Should PASS (stable, strong moat)
+5. JPM (JPMorgan Chase) - Should PASS (financial strength)
+6. TSLA (Tesla) - Should FAIL (high valuation despite metrics)
+7. AMD (Advanced Micro Devices) - Should FAIL (higher debt)
+8. SNAP (Snapchat) - Should FAIL (low ROE overall)
 9. UBER (Uber) - Should FAIL (negative FCF)
-10. GOOG (Google) - Should PASS
+10. GOOG (Google) - Should PASS (strong fundamentals)
 
 Test Data Characteristics:
-- 10 years of historical data
+- 10 years of historical data (2016-2025)
 - Mix of pass/fail scenarios
 - Real financial metrics
 - Used for all test cases
+- Verify merged approach works correctly
 ```
 
 ---
@@ -1079,7 +1305,7 @@ dotnet build
 # 6. Create/update database schema
 dotnet ef database update
 
-# 7. Run screening locally
+# 7. Run screening locally (with merged approach)
 dotnet run --project src/StockMarketScreener.Console/StockMarketScreener.Console.csproj
 
 # 8. Check results
@@ -1121,19 +1347,25 @@ mysql -u root -p stockscreener < backup_2026-03-15.sql
 
 This architecture is successful when:
 
+✅ **Unified Approach**
+- All 40+ metrics calculated before any filtering
+- No premature rejection based on incomplete data
+- Hard filters evaluated with complete financial picture
+- Holistic assessment of company strength
+
 ✅ **Automation**
 - Screening runs completely hands-off via GitHub Actions
 - No manual intervention needed
 - Logs show exactly what happened
 
 ✅ **Data Quality**
-- All 40+ metrics calculate correctly
+- All 40+ metrics calculate correctly for every company
 - Data reconciliation handles API failures
 - Results match financial reality
 
 ✅ **Company Filtering**
 - Only passing companies stored (no clutter)
-- Companies with poor metrics filtered out
+- Complete metric context available for understanding decisions
 - Proper removal when scores decline
 
 ✅ **Results & Notifications**
@@ -1149,16 +1381,16 @@ This architecture is successful when:
 - Minimal operational overhead
 
 ✅ **Performance**
-- First run: 40-50 minutes (full data fetch from APIs with sequential calls)
-  - Data fetching from SEC EDGAR, Yahoo Finance, IEX, Alpha Vantage: 30-40 minutes
-  - Metric calculations: 2-3 minutes
-  - Screening and ranking: 1 minute
+- First run: 45-60 minutes (full data fetch + ALL metric calculation)
+  - Data fetching: 30-40 minutes
+  - ALL metric calculations: 5-10 minutes
+  - Hard filter evaluation: 2-3 minutes
+  - Screening and ranking: 2-3 minutes
   - Results processing and email: 2 minutes
-- Subsequent runs: 10-15 minutes (with caching and local data)
-- With parallel processing (5-10 concurrent API calls): Could reduce to 10-15 minutes
+- Subsequent runs: 15-20 minutes (with local caching)
+- With parallel processing: Could reduce to 20-30 minutes
 - Data reconciliation handles API rate limits gracefully
-- Stock price updates (weekly job) complete in < 5 minutes
-- No timeout errors with proper fallback strategy
+- Stock price updates complete in < 5 minutes
 
 ✅ **Reliability**
 - Robust error handling (continue if 1 company fails)
@@ -1170,14 +1402,21 @@ This architecture is successful when:
 
 ## Summary
 
-The StockMarketScreener architecture is designed specifically for a solo developer with 6 years of C# experience. It prioritizes:
+The StockMarketScreener architecture employs a **unified merged approach** for metric calculation and hard filter evaluation. This design:
 
-1. **Simplicity** - No complex infrastructure
-2. **Automation** - GitHub Actions handles scheduling
-3. **Quality** - Multi-source data reconciliation
-4. **Efficiency** - Only stores passing companies
-5. **Maintainability** - Clean code, well-documented
-6. **Visibility** - Detailed email reports and logs
+1. **Calculates all 40+ metrics** for every company upfront
+2. **Evaluates hard filters** using the complete metric dataset
+3. **Prevents false negatives** from incomplete data analysis
+4. **Provides holistic assessment** of financial strength
+5. **Maintains audit trail** of all decisions
+
+Built specifically for a solo developer with 6 years of C# experience:
+- **Simplicity** - No complex infrastructure
+- **Automation** - GitHub Actions handles scheduling
+- **Quality** - Comprehensive metric analysis
+- **Efficiency** - Only stores passing companies
+- **Maintainability** - Clean code, well-documented
+- **Visibility** - Detailed reports and logs
 
 This is a complete, production-ready architecture that can be built incrementally, tested thoroughly, and operated with minimal effort.
 
@@ -1187,10 +1426,10 @@ This is a complete, production-ready architecture that can be built incrementall
 
 This document is part of a 4-document architecture specification:
 
-1. **01-INVESTMENT-REQUIREMENTS.md** - Warren Buffett principles and financial criteria
-2. **02-ARCHITECTURE-DESIGN.md** - System architecture and technical design (THIS DOCUMENT)
-3. **03-DATA-FLOW-SCREENING-LOGIC.md** - Detailed screening workflow and logic
-4. **04-PROJECT-ROADMAP.md** - Implementation phases and timeline
+1. **01-INVESTMENT-REQUIREMENTS.md** - Warren Buffett principles and financial criteria (UPDATED)
+2. **02-ARCHITECTURE-DESIGN.md** - System architecture and technical design (THIS DOCUMENT - UPDATED)
+3. **03-DATA-FLOW-SCREENING-LOGIC.md** - Detailed screening workflow and logic (NEXT)
+4. **04-PROJECT-ROADMAP.md** - Implementation phases and timeline (NEXT)
 
 All documents are aligned and internally consistent as of 2026-03-14.
 
@@ -1202,5 +1441,7 @@ All documents are aligned and internally consistent as of 2026-03-14.
 |---------|------|--------|---------|
 | 1.0 | 2026-03-13 | ThommCroft | Initial generic architecture |
 | 2.0 | 2026-03-13 | ThommCroft | Web-based multi-user version |
-| 3.0 | 2026-03-13 | ThommCroft | Solo developer edition (MySQL + .NET 8.0 Console), GitHub Actions automation, data reconciliation, email notifications, stock price updates, comprehensive testing strategy |
-| 3.1 | 2026-03-14 | ThommCroft | **CURRENT** - Minor clarifications on Stage 1 hard filters, Market Cap pre-filter integration, FCF requirement confirmation |
+| 3.0 | 2026-03-13 | ThommCroft | Solo developer edition (MySQL + .NET 8.0 Console), GitHub Actions automation, data reconciliation, email notifications, stock price updates |
+| 3.1 | 2026-03-14 | ThommCroft | Minor clarifications on Stage 1 hard filters, Market Cap pre-filter, FCF requirement confirmation |
+| 3.2 | 2026-03-14 | ThommCroft | **CURRENT** - MERGED APPROACH: All 40+ metrics calculated BEFORE hard filter evaluation; unified comprehensive analysis replacing cascading filters; updated data flow diagram; updated component architecture; updated screening workflow; added "Unified Metric Calculation & Hard Filter Evaluation" section |
+
