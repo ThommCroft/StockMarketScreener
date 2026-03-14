@@ -1,11 +1,9 @@
 # Project Roadmap - Stock Market Screener
 
-**Version:** 1.1
+**Version:** 2.0 (Merged Metric Calculation + Unified Hard Filter Evaluation)  
 **Date:** 2026-03-14  
 **Author:** ThommCroft  
-**Status:** Planning Phase  
-**Timeline:** No fixed deadline - Quality over speed
-**Last Updated:** 2026-03-14 (Cross-reference verification with other documents complete)
+**Framework:** Warren Buffett Value Investing + Unified Comprehensive Analysis
 
 ---
 
@@ -13,33 +11,45 @@
 
 1. [Executive Summary](#executive-summary)
 2. [Vision & Success Criteria](#vision--success-criteria)
-3. [Project Phases](#project-phases)
+3. [Project Phases Overview](#project-phases-overview)
 4. [Phase 1: Foundation & Setup](#phase-1-foundation--setup)
 5. [Phase 2: Core Screening Engine](#phase-2-core-screening-engine)
 6. [Phase 3: Data Integration & Reconciliation](#phase-3-data-integration--reconciliation)
-7. [Phase 4: Metric Calculation & Screening Logic](#phase-4-metric-calculation--screening-logic)
-8. [Phase 5: Results & Notifications](#phase-5-results--notifications)
-9. [Phase 6: GitHub Actions Automation](#phase-6-github-actions-automation)
-10. [Phase 7: Testing & Quality Assurance](#phase-7-testing--quality-assurance)
-11. [Phase 8: UI Development](#phase-8-ui-development)
-12. [Post-Launch Planning](#post-launch-planning)
+7. [Phase 4: Merged Metric Calculation & Hard Filter Evaluation](#phase-4-merged-metric-calculation--hard-filter-evaluation)
+8. [Phase 5: Quality Assessment & Composite Scoring](#phase-5-quality-assessment--composite-scoring)
+9. [Phase 6: Results & Notifications](#phase-6-results--notifications)
+10. [Phase 7: GitHub Actions Automation](#phase-7-github-actions-automation)
+11. [Phase 8: Testing & Quality Assurance](#phase-8-testing--quality-assurance)
+12. [Phase 9: UI Development (Post-Launch)](#phase-9-ui-development-post-launch)
 13. [Dependencies & Prerequisites](#dependencies--prerequisites)
 14. [Risk Management](#risk-management)
 15. [Success Metrics & Validation](#success-metrics--validation)
+16. [Timeline Estimate](#timeline-estimate)
 
 ---
 
 ## Executive Summary
 
-The Stock Market Screener project will be built incrementally in **8 focused phases**, culminating in a fully functional, production-ready application with comprehensive testing. The project prioritizes **quality and correctness over speed**, with no fixed deadline.
+**Stock Market Screener** is a comprehensive financial analysis engine that identifies high-quality, undervalued stocks using Warren Buffett and Charlie Munger principles.
 
-**Key Principles:**
-- ✅ Build incrementally with validation at each phase
-- ✅ Comprehensive testing after each phase
-- ✅ Free, public, legal data sources only
-- ✅ GitHub Actions automation included in core build
-- ✅ UI and future features planned post-launch
-- ✅ Solo developer friendly approach
+**Key Architectural Feature (v2.0):**
+- ✅ **MERGED APPROACH** - Unified metric calculation + hard filter evaluation
+- ✅ **ALL 40+ metrics calculated upfront** for every qualifying company
+- ✅ **NO cascading rejections** - complete financial picture before decisions
+- ✅ **Holistic hard filter assessment** - context from all metrics informs evaluation
+- ✅ **Comprehensive quality scoring** - pillars with maximum caps
+- ✅ **Automated quarterly execution** via GitHub Actions
+- ✅ **Solo developer friendly** - complete system for one person
+
+**Target Implementation:** 9-11 weeks (solo developer)
+
+**Project Outcome:** 
+- Console-based screening application
+- Quarterly automated screening via GitHub Actions
+- Local MySQL database of qualified companies
+- Email notifications with detailed analysis
+- Weekly stock price updates
+- CSV exports for manual review
 
 ---
 
@@ -47,76 +57,60 @@ The Stock Market Screener project will be built incrementally in **8 focused pha
 
 ### Project Vision
 
-Create a **professional-grade, automated stock screening system** that:
-1. Identifies high-quality, undervalued companies quarterly
-2. Applies strict financial filtering and scoring
-3. Delivers detailed results via email and dashboard
-4. Maintains audit trail of all operations
-5. Runs completely hands-off via GitHub Actions
+Build a **complete, automated stock screening system** that:
+1. Screens 500+ US companies quarterly
+2. Applies strict Buffett/Munger value criteria
+3. Calculates ALL 40+ financial metrics comprehensively
+4. Evaluates companies holistically (not checklist-based)
+5. Stores only passing companies (> 75 composite score)
+6. Sends detailed email reports with complete metrics
+7. Requires zero manual intervention once deployed
+8. Can be operated by one developer with minimal overhead
 
 ### Success Definition
 
-**The project is successful when:**
+**Technical Success:**
+- ✅ System screens 500+ companies in 45-60 minutes
+- ✅ Calculates all 40+ metrics for each company
+- ✅ Hard filters evaluated with complete data
+- ✅ Zero manual data entry required
+- ✅ Zero crashes during screening runs
+- ✅ Detailed audit logs of all decisions
+- ✅ Complete test coverage (unit + integration)
 
-✅ **All companies screened correctly**
-- Financial strength filters identify the right candidates
-- Quality scores reflect business fundamentals accurately
-- Valuation assessment matches market reality
-- Results align with professional stock screening principles
+**Operational Success:**
+- ✅ GitHub Actions runs automatically on schedule
+- ✅ Email notifications sent without errors
+- ✅ Database updates correctly (new/maintained/removed)
+- ✅ Results exportable to CSV
+- ✅ Can modify criteria without code changes
+- ✅ One-person operation possible
 
-✅ **Data integration working end-to-end**
-- SEC EDGAR data fetching reliable
-- Yahoo Finance prices accurate and current
-- Fallback sources (IEX Cloud, Alpha Vantage) functioning
-- Data reconciliation handles conflicts properly
-
-✅ **Screening logic producing expected results**
-- Stage 1 filters eliminating poor companies
-- Stage 2 quality scoring differentiating between good/excellent
-- Stage 3 valuation identifying undervalued opportunities
-- Composite scores >= 75 correlate with quality companies
-
-✅ **Automation running consistently**
-- GitHub Actions triggers on schedule
-- Quarterly screenings complete without manual intervention
-- Email notifications sent with detailed results
-- Database updates accurate and auditable
-
-✅ **No critical bugs or data corruption**
-- Edge cases handled gracefully
-- Error handling prevents system crashes
-- Data validation catches corrupted inputs
-- Logging provides full audit trail
+**Investment Success:**
+- ✅ Identifies 40-60 high-quality stocks (9-12% pass rate)
+- ✅ Only PASS = qualified companies stored
+- ✅ Metrics align with Investment Requirements v3.0
+- ✅ Hard filters prevent weak businesses
+- ✅ Quality scoring identifies excellent companies
+- ✅ Valuation assessment ensures margin of safety
 
 ---
 
-## Project Phases
+## Project Phases Overview
 
-### Overview
+| Phase | Name | Duration | Purpose |
+|-------|------|----------|---------|
+| 1 | Foundation & Setup | 1-2 weeks | Project structure, database, configuration |
+| 2 | Core Screening Engine | 1 week | Orchestrator, company fetching, status tracking |
+| 3 | Data Integration & Reconciliation | 2-3 weeks | SEC EDGAR, Yahoo Finance, data validation |
+| 4 | Merged Metric Calculation + Hard Filters | 2-3 weeks | **NEW:** All 40+ metrics + unified evaluation |
+| 5 | Quality Assessment & Composite Scoring | 1-2 weeks | Quality pillars, valuation, management scoring |
+| 6 | Results & Notifications | 1-2 weeks | Email, CSV export, console output |
+| 7 | GitHub Actions Automation | 1 week | Quarterly workflow, weekly updates |
+| 8 | Testing & Quality Assurance | 2-3 weeks | Unit, integration, end-to-end tests |
+| 9 | UI Development | 3-4 weeks | *Post-Launch:* Dashboard, analytics |
 
-```
-Phase 1: Foundation & Setup (1-2 weeks)
-    ↓
-Phase 2: Core Screening Engine (1 week)
-    ↓
-Phase 3: Data Integration (2-3 weeks)
-    ↓
-Phase 4: Metric Calculation (2-3 weeks)
-    ↓
-Phase 5: Results & Notifications (1-2 weeks)
-    ↓
-Phase 6: GitHub Actions Automation (1 week)
-    ↓
-Phase 7: Testing & Quality Assurance (2-3 weeks)
-    ↓
-Phase 8: UI Development (3-4 weeks)
-    ↓
-Launch & Ongoing Support
-    ↓
-Future Planning (Post-Launch)
-```
-
-**Estimated Total Timeline:** 12-19 weeks (3-5 months) for full implementation with comprehensive testing
+**Total Estimated Time:** 9-11 weeks (solo developer)
 
 ---
 
@@ -125,96 +119,84 @@ Future Planning (Post-Launch)
 ### Duration: 1-2 weeks
 
 ### Objectives
-
-- ✅ Set up development environment
-- ✅ Initialize .NET 8.0 project structure
-- ✅ Configure MySQL database locally
-- ✅ Establish Git repository and workflows
-- ✅ Document setup process for reproducibility
+- Set up project structure and dependencies
+- Configure MySQL database locally
+- Create Entity Framework Core data models
+- Implement dependency injection
+- Configure logging and application settings
+- Establish git workflow
 
 ### Deliverables
-
-1. **Project Structure**
-   ```
-   StockMarketScreener/
-   ├── src/
-   │   └── StockMarketScreener.Console/
-   │       ├── Program.cs
-   │       ├── Configuration/
-   │       ├── Services/
-   │       ├── Models/
-   │       └── appsettings.json
-   ├── tests/
-   │   └── StockMarketScreener.Tests/
-   │       ├── Unit/
-   │       └── Integration/
-   ├── docs/
-   │   ├── 01-PROJECT-OVERVIEW.md
-   │   ├── 02-ARCHITECTURE-DESIGN.md
-   │   ├── 03-DATA-FLOW-SCREENING-LOGIC.md
-   │   └── 04-PROJECT-ROADMAP.md (this file)
-   ├── .github/workflows/
-   │   ├── quarterly-screening.yml
-   │   └── weekly-stock-update.yml
-   ├── .gitignore
-   ├── README.md
-   └── StockMarketScreener.sln
-   ```
-
-2. **Development Environment**
-   - Visual Studio 2022 Community Edition configured
-   - .NET 8.0 SDK installed and verified
-   - MySQL 8.0 set up locally (Docker recommended)
-   - Git initialized with main branch protection
-
-3. **Database Schema**
-   - Companies table created
-   - QualifiedCompanies table created
-   - FinancialMetrics table created
-   - ScreeningRuns table created
-   - RemovedCompanies table created
-   - StockPriceHistory table created
-   - Entity Framework migrations created
-
-4. **Configuration Files**
-   - appsettings.json template created
-   - appsettings.Development.json for local development
-   - Environment variables documented
-   - API key placeholders prepared
-
-5. **Dependency Injection Setup**
-   - Program.cs configured with .NET Generic Host
-   - Service registration for all layers
-   - Logging configured (Serilog)
-   - Configuration provider set up
+- Complete .NET 8.0 console application project
+- EF Core DbContext with all data models
+- appsettings.json with configuration
+- Database schema created and tested
+- Serilog logging configured
+- GitHub repository set up
 
 ### Key Tasks
 
-- [ ] Create Visual Studio solution
-- [ ] Install NuGet packages (EF Core, Serilog, MailKit, HttpClientFactory, Polly)
-- [ ] Create database locally using Docker
-- [ ] Run EF Core migrations
-- [ ] Configure appsettings.json
-- [ ] Set up Git repository
-- [ ] Create initial project documentation
-- [ ] Verify project builds successfully
-- [ ] Create development checklist for future reference
+**1. Project Structure (Days 1-2)**
+```
+StockMarketScreener/
+├── src/
+│   ├── StockMarketScreener.Console/
+│   │   ├── Program.cs
+│   │   ├── Configuration/
+│   │   ├── Data/
+│   │   ├── Services/
+│   │   └── Models/
+│   └── StockMarketScreener.Tests/
+├── docs/
+├── .github/workflows/
+├── appsettings.json
+└── README.md
+```
+
+**2. Database Design (Days 2-3)**
+- Create MySQL database: `stockscreener`
+- Design tables: Companies, QualifiedCompanies, FinancialMetrics, ScreeningRuns, RemovedCompanies
+- Create indexes and relationships
+- EF Core migrations
+
+**3. Dependency Injection Setup (Days 3-4)**
+```csharp
+var host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices((context, services) =>
+    {
+        // Register all services
+        services.AddScoped<IScreenerDbContext, ScreenerDbContext>();
+        services.AddScoped<ICompanyRepository, CompanyRepository>();
+        services.AddScoped<IScreeningOrchestrator, ScreeningOrchestrator>();
+        // ... more services
+    })
+    .UseSerilog()
+    .Build();
+```
+
+**4. Configuration Management (Days 4-5)**
+- appsettings.json with environment-specific settings
+- Secrets management for API keys
+- Industry configuration
+- Screening thresholds
+- Email settings
 
 ### Best Practices Applied
-
-✅ **Containerized Database**: Use Docker for MySQL (reproducible, easy reset)  
-✅ **Entity Framework**: Use Code-First approach with migrations  
-✅ **Dependency Injection**: Register all services in Program.cs  
-✅ **Configuration Management**: Use appsettings.json for environment-specific settings  
-✅ **Git Workflow**: Create feature branches for each phase  
+- ✅ SOLID principles (Single Responsibility, Dependency Injection)
+- ✅ Repository pattern for data access
+- ✅ Configuration as code (appsettings.json)
+- ✅ Structured logging (Serilog)
+- ✅ Entity Framework Core for ORM
+- ✅ Git version control from start
 
 ### Success Criteria
-
-- ✅ Project builds without errors
-- ✅ Database connection verified
-- ✅ EF Core migrations run successfully
-- ✅ Git repository initialized with clean commit history
-- ✅ Documentation complete and accurate
+- [x] Project compiles without errors
+- [x] Database connection verified
+- [x] All tables created with correct schema
+- [x] DI container resolves all services
+- [x] Logging works for all components
+- [x] appsettings.json loads correctly
+- [x] Can run empty console app without errors
 
 ---
 
@@ -223,90 +205,86 @@ Future Planning (Post-Launch)
 ### Duration: 1 week
 
 ### Objectives
-
-- ✅ Implement screening orchestrator
-- ✅ Create stage service interfaces
-- ✅ Build Stage 1 financial strength filters
-- ✅ Build Stage 2 quality scoring
-- ✅ Build Stage 3 valuation & management ranking
-- ✅ Implement composite score calculation
+- Create screening orchestrator that controls overall flow
+- Implement company fetching from SEC EDGAR
+- Create company status tracking system
+- Implement pass/fail tracking
+- Set up basic error handling
 
 ### Deliverables
-
-1. **ScreeningOrchestrator**
-   - Entry point for screening process
-   - Orchestrates all 3 stages
-   - Handles result collection
-   - Manages company comparison
-
-2. **Stage1ScreeningService**
-   - Implements 5 hard filters
-   - Returns PASS/FAIL status
-   - Logs filter rejection reasons
-   - All-or-nothing logic (all must pass)
-
-3. **Stage2ScoringService**
-   - Calculates 4 quality pillars
-   - Enforces pillar maximum caps
-   - Returns quality score (0-100)
-   - Documents scoring breakdown
-
-4. **Stage3RankingService**
-   - Calculates valuation score (0-35)
-   - Calculates management score (0-25)
-   - Computes composite score
-   - Enforces >= 75 threshold
-
-5. **Models**
-   ```
-   FinancialData
-   ├── Ticker
-   ├── CompanyName
-   ├── ProfitabilityMetrics
-   ├── FinancialStrengthMetrics
-   ├── CashFlowMetrics
-   ├── GrowthMetrics
-   ├── ValuationMetrics
-   └── ManagementQualityMetrics
-   
-   ScreeningResult
-   ├── Ticker
-   ├── Stage1Pass
-   ├── QualityScore
-   ├── ValuationScore
-   ├── ManagementScore
-   ├── CompositeScore
-   ├── Status (NEW/MAINTAINED/REMOVED)
-   └── RecommendationLevel
-   ```
+- ScreeningOrchestrator service (orchestrates 7-stage flow)
+- CompanyFetcher service (SEC EDGAR integration)
+- CompanyStatusManager (pass/fail tracking)
+- ScreeningRun logging system
+- Error handling and recovery
 
 ### Key Tasks
 
-- [ ] Create ScreeningOrchestrator class
-- [ ] Implement Stage1ScreeningService with all 5 filters
-- [ ] Implement Stage2ScoringService with 4 pillars and caps
-- [ ] Implement Stage3RankingService with composite formula
-- [ ] Create FinancialData model
-- [ ] Create ScreeningResult model
-- [ ] Create Result comparison logic (NEW/MAINTAINED/REMOVED)
-- [ ] Implement logging at each stage
-- [ ] Test with hardcoded sample data
+**1. Screening Orchestrator (Days 1-2)**
+```csharp
+public class ScreeningOrchestrator
+{
+    public async Task RunScreeningAsync()
+    {
+        var companies = await FetchCompaniesAsync();
+        
+        foreach (var company in companies)
+        {
+            try
+            {
+                // Stage 0: Market Cap Pre-Filter
+                if (!PassesMarketCapFilter(company)) continue;
+                
+                // Stage 1: Data Ingestion & Reconciliation
+                var financialData = await IngestAndReconcileDataAsync(company);
+                if (financialData == null) continue;
+                
+                // Stage 2-3: MERGED - Calculate ALL metrics + evaluate hard filters
+                var metrics = await MergedMetricCalculationAndHardFilterAsync(company, financialData);
+                if (!metrics.PassedHardFilters) continue;
+                
+                // Stages 4-5: Quality & Composite Scoring
+                var scores = await ScoreCompanyAsync(company, metrics);
+                if (scores.CompositeScore < 75) continue;
+                
+                // Store passing company
+                await StoreQualifiedCompanyAsync(company, metrics, scores);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error processing {company.Ticker}: {ex.Message}");
+                continue; // Continue to next company
+            }
+        }
+    }
+}
+```
+
+**2. Company Status Management (Days 2-3)**
+- Fetch existing qualified companies from database
+- Compare new results with previous run
+- Categorize: NEW, MAINTAINED, REMOVED
+
+**3. Error Handling (Days 3-4)**
+- Try/catch at company level (don't crash entire run)
+- Logging of all errors
+- Recovery with fallback data
+- Graceful degradation
 
 ### Best Practices Applied
-
-✅ **Separation of Concerns**: Each stage as separate service  
-✅ **Interface-based Design**: IScreeningService, IStage1Service, etc.  
-✅ **Immutable Scoring**: Once pillar caps enforced, no overflow possible  
-✅ **Clear Logging**: Every decision logged with reasoning  
-✅ **Sample Data Testing**: Use known companies to validate logic  
+- ✅ Orchestrator pattern for complex workflows
+- ✅ Separation of concerns
+- ✅ Robust error handling (continue on error)
+- ✅ Detailed logging at each stage
+- ✅ Async/await for performance
 
 ### Success Criteria
-
-- ✅ All 5 Stage 1 filters implemented and testable
-- ✅ All 4 Stage 2 pillars calculate correctly
-- ✅ Composite score >= 75 threshold enforced
-- ✅ Sample company scores match expected values
-- ✅ Logging shows clear decision trail
+- [x] Orchestrator controls entire 7-stage flow
+- [x] Can fetch 500+ companies from SEC
+- [x] Pass/fail tracking works correctly
+- [x] Error handling prevents crashes
+- [x] Logs show what happened at each step
+- [x] Can identify NEW/MAINTAINED/REMOVED companies
 
 ---
 
@@ -315,746 +293,796 @@ Future Planning (Post-Launch)
 ### Duration: 2-3 weeks
 
 ### Objectives
-
-- ✅ Implement SEC EDGAR data fetching
-- ✅ Implement Yahoo Finance data fetching
-- ✅ Implement IEX Cloud fallback
-- ✅ Implement Alpha Vantage fallback
-- ✅ Build data reconciliation logic
-- ✅ Create data validation pipeline
-- ✅ Handle API errors gracefully
+- Integrate SEC EDGAR API for financial data
+- Integrate Yahoo Finance API for stock prices
+- Implement fallback data sources (IEX Cloud, Alpha Vantage)
+- Create data reconciliation logic
+- Implement data validation rules
+- Handle API rate limiting and errors
 
 ### Deliverables
-
-1. **SecEdgarService**
-   - Fetch 10-K annual reports
-   - Extract financial statements
-   - Parse Income Statement, Balance Sheet, Cash Flow
-   - Handle SEC EDGAR API rate limits
-   - Timeout: 30 seconds per request
-   - Retry logic: 3 attempts with exponential backoff
-
-2. **YahooFinanceService**
-   - Fetch current stock prices
-   - Fetch dividend history
-   - Fetch market capitalization
-   - Handle Yahoo Finance API
-   - Timeout: 10 seconds per request
-   - Retry logic: 3 attempts
-
-3. **IexCloudService**
-   - Fallback for market data
-   - Alternative pricing source
-   - Real-time quotes
-   - Timeout: 10 seconds per request
-
-4. **AlphaVantageService**
-   - Final fallback option
-   - Historical pricing data
-   - OHLC data
-   - Timeout: 10 seconds per request
-
-5. **DataReconciliationService**
-   ```
-   Priority Order:
-   1. Financial Statements: SEC EDGAR only (required)
-   2. Stock Prices: Yahoo → IEX Cloud → Alpha Vantage
-   3. Treasury Yields: Federal Reserve FRED → Hardcoded 2.5%
-   
-   Reconciliation Logic:
-   - Use primary source if available
-   - Fallback to secondary if primary fails
-   - Log all discrepancies
-   - Never mix sources for same metric
-   - Create audit trail of sources used
-   ```
-
-6. **DataValidationService**
-   ```
-   Validation Rules:
-   1. Completeness: All required fields present
-   2. Range: ROE -100% to +200%, D/E 0 to 5.0, etc.
-   3. Balance Sheet: Assets = Liabilities + Equity ±2%
-   4. Consistency: YoY changes < 300%
-   5. Data Age: Financials < 1 year, Prices < 1 day
-   
-   Outputs:
-   - IsValid: boolean
-   - Warnings: list of non-critical issues
-   - Errors: list of critical issues
-   - DataQualityScore: percentage (0-100%)
-   ```
+- SecEdgarService (10-K/10-Q fetching)
+- YahooFinanceService (stock price API)
+- IexCloudService and AlphaVantageService (fallbacks)
+- DataReconciliationService (merge + validate)
+- Data validation logic
+- Error recovery with fallbacks
 
 ### API Keys Required
 
-Create free accounts and obtain API keys:
+**All FREE - No Cost**
 
-| Service | Free Tier | Key Setup | URL |
-|---------|-----------|-----------|-----|
-| **SEC EDGAR** | Unlimited | No key needed | https://www.sec.gov/cgi-bin/ |
-| **Yahoo Finance** | Limited* | Via unofficial API | https://finance.yahoo.com |
-| **IEX Cloud** | Free tier available | https://iexcloud.io | Requires account |
-| **Alpha Vantage** | Free: 5 calls/min | https://www.alphavantage.co | Requires API key |
-| **Federal Reserve FRED** | Free & unlimited | https://fred.stlouisfed.org | Requires API key |
+1. **SEC EDGAR** - Free, no API key needed
+   - https://www.sec.gov/edgar
+   - Public data endpoint
+   - Rate limit: Reasonable (1 request per second)
 
-**Note:** Yahoo Finance doesn't have official API; use community wrapper (Python yfinance equivalent in C#)
+2. **Yahoo Finance** - Free via unofficial API
+   - No API key needed
+   - Rate limit: ~2000 requests/hour
+
+3. **IEX Cloud** - Free tier available
+   - Sign up: https://iexcloud.io
+   - Free tier: 100 messages/month
+   - Use for fallback only
+
+4. **Alpha Vantage** - Free tier available
+   - Sign up: https://www.alphavantage.co
+   - Free tier: 5 requests/minute
+   - Use as final fallback
+
+5. **Federal Reserve FRED** - Free, no key needed
+   - https://fred.stlouisfed.org
+   - Treasury yield data
+   - No rate limiting
 
 ### Key Tasks
 
-- [ ] Create SEC EDGAR fetching with error handling
-- [ ] Create Yahoo Finance wrapper service
-- [ ] Implement IEX Cloud integration
-- [ ] Implement Alpha Vantage integration
-- [ ] Create data reconciliation logic
-- [ ] Create data validation pipeline
-- [ ] Implement retry logic with Polly
-- [ ] Test each API independently
-- [ ] Test fallback chain (primary → secondary → tertiary)
-- [ ] Create API key configuration template
+**1. SEC EDGAR Integration (Days 1-5)**
+```csharp
+public class SecEdgarService
+{
+    public async Task<FinancialData> FetchCompanyFinancialsAsync(string ticker)
+    {
+        // Fetch 10-K annual reports
+        var filings = await FetchFilingsAsync(ticker, "10-K");
+        
+        // Parse most recent 10 years of filings
+        var financialData = new List<YearlyFinancials>();
+        foreach (var filing in filings.Take(10))
+        {
+            var parsed = ParseFinancialStatements(filing);
+            financialData.Add(parsed);
+        }
+        
+        return financialData;
+    }
+}
+```
+
+**2. Multi-Source Data Fetching (Days 5-8)**
+- Yahoo Finance: Primary for stock prices
+- IEX Cloud: Fallback if Yahoo fails
+- Alpha Vantage: Final fallback
+- Federal Reserve: Treasury yields
+
+**3. Data Reconciliation (Days 8-12)**
+```csharp
+public class DataReconciliationService
+{
+    public async Task<ReconcililedData> ReconcileDataAsync(string ticker)
+    {
+        // Try primary sources first
+        var edgarData = await _edgarService.FetchAsync(ticker);
+        var yahooData = await _yahooService.FetchAsync(ticker);
+        
+        if (yahooData == null)
+        {
+            yahooData = await _iexService.FetchAsync(ticker); // Fallback
+        }
+        if (yahooData == null)
+        {
+            yahooData = await _alphaService.FetchAsync(ticker); // Final fallback
+        }
+        
+        // Validate and merge
+        ValidateDataIntegrity(edgarData, yahooData);
+        return new ReconcililedData { Financial = edgarData, Market = yahooData };
+    }
+}
+```
+
+**4. Data Validation (Days 12-14)**
+- Balance sheet validation (A = L + E)
+- Range validation (ROE, D/E ratios)
+- Historical consistency checks
+- Data age verification
 
 ### Best Practices Applied
-
-✅ **Polly Retry Policies**: Exponential backoff for rate limiting  
-✅ **Timeout Management**: Different timeouts per service (30s SEC, 10s prices)  
-✅ **Graceful Degradation**: Continue with fallback data if primary fails  
-✅ **Audit Trail**: Log all data sources used  
-✅ **Error Isolation**: Company error doesn't crash entire batch  
-✅ **Circuit Breaker**: Stop calling API if it's down (Polly)  
+- ✅ API abstraction (IService interfaces)
+- ✅ Multi-source fallback strategy
+- ✅ Comprehensive error handling
+- ✅ Data validation before use
+- ✅ Async HTTP requests with Polly
+- ✅ Logging of all API calls
 
 ### Success Criteria
-
-- ✅ SEC EDGAR fetching works for 10+ companies
-- ✅ Yahoo Finance price fetching works
-- ✅ Fallback to IEX when Yahoo unavailable
-- ✅ Data validation catches corrupted inputs
-- ✅ All API errors logged appropriately
-- ✅ Reconciliation prioritizes sources correctly
-- ✅ No sensitive data in logs
+- [x] Can fetch financial data for 500+ companies
+- [x] Stock prices from Yahoo Finance working
+- [x] Fallback sources working correctly
+- [x] Data reconciliation merges sources properly
+- [x] Validation catches bad data
+- [x] Rate limiting handled gracefully
+- [x] Error recovery works (don't crash on API failure)
 
 ---
 
-## Phase 4: Metric Calculation & Screening Logic
+## Phase 4: Merged Metric Calculation + Hard Filter Evaluation
 
 ### Duration: 2-3 weeks
 
-### Objectives
+### ⚠️ CRITICAL PHASE - Key Architectural Change
 
-- ✅ Implement all 40+ financial metrics
-- ✅ Calculate year-by-year metrics (10 years)
-- ✅ Calculate 10-year averages
-- ✅ Implement stability analysis (CV)
-- ✅ Implement trend analysis
-- ✅ Verify calculations with known data
+**This phase implements the MERGED UNIFIED APPROACH:**
+- ✅ ALL 40+ metrics calculated for EVERY company
+- ✅ NO filtering during calculation phase
+- ✅ Hard filters evaluated using COMPLETE dataset
+- ✅ Holistic assessment prevents false negatives
+
+### Objectives
+- Calculate all 40+ financial metrics from reconciled data
+- Perform 10-year trend analysis for each metric
+- Implement stability calculations (Coefficient of Variation)
+- Evaluate hard filters using complete metrics
+- Assess financial strength holistically
+- Create detailed audit trail
 
 ### Deliverables
-
-1. **MetricCalculationService**
-   - Profitability: 8 metrics (margins, ROE, ROA, ROIC, ROCE)
-   - Financial Strength: 6 metrics (D/E, liquidity, coverage)
-   - Cash Flow: 6 metrics (OCF, FCF, ratios, percentages)
-   - Growth: 7 metrics (YoY, CAGR, EPS, retention)
-   - Valuation: 8 metrics (P/E, P/B, P/S, PEG, yields, ratios)
-   - Management: 6 metrics (insider ownership, goodwill, charges, retained, expense, turnover)
-
-2. **TrendAnalysisService**
-   - Regression analysis on 10-year data
-   - Identify improving/stable/declining trends
-   - Calculate trend slopes
-   - Detect inflection points
-
-3. **StabilityCalculationService**
-   - Coefficient of Variation (CV) for each metric category
-   - Interpretation: < 10% excellent, 10-20% good, 20-30% acceptable, > 30% volatile
-   - Identify outlier years
-   - Flag inconsistent companies
-
-4. **Metric Models**
-   ```
-   CompanyMetricsRecord
-   ├── Ticker
-   ├── FiscalYear[]  // 2016-2025
-   ├── ProfitabilityMetrics[]
-   ├── FinancialStrengthMetrics[]
-   ├── CashFlowMetrics[]
-   ├── GrowthMetrics[]
-   ├── ValuationMetrics[]
-   ├── ManagementQualityMetrics[]
-   ├── StabilityMetrics
-   └── TrendAnalysis
-   ```
-
-5. **Calculation Verification**
-   - Create test cases with known companies (MSFT, AAPL, JNJ, KO, JPM)
-   - Verify calculations match financial databases
-   - Document formula for each metric
-   - Create calculation examples in code comments
+- ComprehensiveMetricsCalculator (calculates ALL 40+ metrics)
+- TrendAnalysisService (10-year trends)
+- StabilityCalculationService (CV, volatility)
+- UnifiedHardFilterEvaluationService (holistic assessment)
+- MetricsRepository (store metrics in DB)
+- Detailed logging of all assessments
 
 ### Key Tasks
 
-- [ ] Implement all 8 profitability metrics with formulas
-- [ ] Implement all 6 financial strength metrics
-- [ ] Implement all 6 cash flow metrics
-- [ ] Implement all 7 growth metrics with CAGR calculation
-- [ ] Implement all 8 valuation metrics
-- [ ] Implement all 6 management quality metrics
-- [ ] Create 10-year averaging logic
-- [ ] Implement Coefficient of Variation (CV) calculation
-- [ ] Create trend analysis with regression
-- [ ] Test against 5+ known companies
-- [ ] Verify metrics against external sources (Yahoo Finance, etc.)
-- [ ] Document all metric formulas
+**1. Metric Calculation Engine (Days 1-5)**
+
+```csharp
+public class ComprehensiveMetricsCalculator
+{
+    /// <summary>
+    /// Calculate ALL 40+ metrics for a company
+    /// NO FILTERING - all companies get complete metrics
+    /// </summary>
+    public ComprehensiveMetricsResult CalculateAllMetrics(
+        ReconcililedData data,
+        int yearsAvailable)
+    {
+        var result = new ComprehensiveMetricsResult();
+        
+        // PROFITABILITY METRICS (8 metrics)
+        result.GrossMargin = (data.Revenue - data.COGS) / data.Revenue;
+        result.OperatingMargin = data.OperatingIncome / data.Revenue;
+        result.NetProfitMargin = data.NetIncome / data.Revenue;
+        result.EbitdaMargin = data.EBITDA / data.Revenue;
+        result.ROA = data.NetIncome / data.TotalAssets;
+        result.ROE = data.NetIncome / data.Equity;
+        result.ROIC = CalculateROIC(data);
+        result.ROCE = CalculateROCE(data);
+        
+        // FINANCIAL STRENGTH METRICS (6 metrics)
+        result.DebtToEquity = data.TotalDebt / data.Equity;
+        result.DebtToAssets = data.TotalDebt / data.TotalAssets;
+        result.EquityMultiplier = data.TotalAssets / data.Equity;
+        result.CurrentRatio = data.CurrentAssets / data.CurrentLiabilities;
+        result.QuickRatio = (data.CurrentAssets - data.Inventory) / data.CurrentLiabilities;
+        result.InterestCoverage = data.EBIT / data.InterestExpense;
+        
+        // CASH FLOW METRICS (6 metrics)
+        result.OperatingCashFlow = data.OCF;
+        result.FreeCashFlow = data.OCF - data.CapEx;
+        result.FCFToNIRatio = result.FreeCashFlow / data.NetIncome;
+        result.FCFToOCFRatio = result.FreeCashFlow / data.OCF;
+        result.CapExPercentRevenue = data.CapEx / data.Revenue;
+        result.CapExPercentOCF = data.CapEx / data.OCF;
+        
+        // GROWTH METRICS (7 metrics)
+        result.RevenueGrowthYoY = CalculateYoYGrowth(data.Revenue);
+        result.EarningsGrowthYoY = CalculateYoYGrowth(data.NetIncome);
+        result.FCFGrowthYoY = CalculateYoYGrowth(result.FreeCashFlow);
+        result.RevenueCAGR_10Y = CalculateCAGR(data.RevenueHistory_10Y);
+        result.EarningsCAGR_10Y = CalculateCAGR(data.EarningsHistory_10Y);
+        result.FCFCAGR_10Y = CalculateCAGR(data.FCFHistory_10Y);
+        result.EPS = data.NetIncome / data.SharesOutstanding;
+        
+        // VALUATION METRICS (8 metrics)
+        result.PERatio = data.StockPrice / result.EPS;
+        result.PBRatio = data.MarketCap / data.Equity;
+        result.PSRatio = data.MarketCap / data.Revenue;
+        result.PEGRatio = result.PERatio / (result.EarningsGrowthYoY * 100);
+        result.EarningsYield = data.NetIncome / data.MarketCap;
+        result.DividendYield = data.AnnualDividend / data.StockPrice;
+        result.PayoutRatio = data.DividendsPaid / data.NetIncome;
+        result.EVToRevenue = data.EnterpriseValue / data.Revenue;
+        
+        // MANAGEMENT QUALITY METRICS (6 metrics)
+        result.InsiderOwnershipPercent = data.InsiderShares / data.SharesOutstanding;
+        result.GoodwillPercentAssets = data.Goodwill / data.TotalAssets;
+        result.OneTimeChargesFrequency = CountOneTimeCharges(data.History_10Y);
+        result.RetainedEarningsPercent = data.RetainedEarnings / data.Equity;
+        result.OperatingExpenseRatio = data.OperatingExpenses / data.Revenue;
+        result.AssetTurnover = data.Revenue / data.TotalAssets;
+        
+        // NO FILTERING HERE - ALL METRICS CALCULATED FOR ALL COMPANIES
+        // Even if metrics look bad, they're calculated
+        
+        return result;
+    }
+}
+```
+
+**2. Trend Analysis (Days 5-8)**
+```csharp
+public class TrendAnalysisService
+{
+    public TrendAnalysis Analyze10YearTrend(List<decimal> values)
+    {
+        return new TrendAnalysis
+        {
+            Average_10Y = values.Average(),
+            Median_10Y = values.OrderBy(x => x).ElementAt(values.Count / 2),
+            Trend = DetectTrend(values), // Improving/Stable/Declining
+            StdDev = CalculateStandardDeviation(values),
+            PercentChange = ((values.Last() - values.First()) / values.First()) * 100
+        };
+    }
+}
+```
+
+**3. Stability Calculation (Days 8-10)**
+```csharp
+public class StabilityCalculationService
+{
+    public decimal CalculateCoeffientOfVariation(List<decimal> values)
+    {
+        var mean = values.Average();
+        var variance = values.Average(x => (x - mean) * (x - mean));
+        var stdDev = (decimal)Math.Sqrt((double)variance);
+        
+        return (stdDev / mean) * 100; // CV as percentage
+    }
+    
+    // Results:
+    // < 10% = Highly stable
+    // 10-20% = Stable
+    // 20-30% = Moderate volatility
+    // > 30% = Highly volatile
+}
+```
+
+**4. Unified Hard Filter Evaluation (Days 10-15)**
+
+```csharp
+public class UnifiedHardFilterEvaluationService
+{
+    /// <summary>
+    /// Evaluate hard filters using COMPLETE metric dataset
+    /// Assessment is holistic, not checklist-based
+    /// </summary>
+    public HardFilterAssessment EvaluateCompany(
+        Company company,
+        ComprehensiveMetricsResult allMetrics)
+    {
+        var assessment = new HardFilterAssessment { Company = company };
+        
+        // Assess each critical area using complete metrics context
+        assessment.ReturnOnCapitalAssessment = AssessROE(
+            allMetrics.ROE_10YAvg,
+            allMetrics.OperatingMargin_Trend,
+            allMetrics.RevenueGrowth_Trend,
+            allMetrics
+        );
+        
+        assessment.ProfitabilityAssessment = AssessProfitability(
+            allMetrics.NetProfitMargin_10YAvg,
+            allMetrics.OperatingMargin_10YAvg,
+            allMetrics.MarginStability_CV,
+            allMetrics
+        );
+        
+        assessment.FinancialStabilityAssessment = AssessFinancialStability(
+            allMetrics.DebtToEquity,
+            allMetrics.DebtTrend_10Y,
+            allMetrics.EquityTrend_10Y,
+            allMetrics.InterestCoverage,
+            allMetrics
+        );
+        
+        assessment.CashFlowAssessment = AssessCashFlow(
+            allMetrics.OCFTrend_10Y,
+            allMetrics.FCFTrend_10Y,
+            allMetrics.FCFToNI_Ratio,
+            allMetrics.CapitalEfficiency,
+            allMetrics
+        );
+        
+        assessment.OverallScore = CalculateHolisticScore(
+            assessment.ReturnOnCapitalAssessment,
+            assessment.ProfitabilityAssessment,
+            assessment.FinancialStabilityAssessment,
+            assessment.CashFlowAssessment
+        );
+        
+        assessment.PassesHardFilters = assessment.OverallScore >= RequiredThreshold;
+        assessment.DetailedReasoning = GenerateDetailedExplanation(assessment, allMetrics);
+        
+        return assessment;
+    }
+}
+```
 
 ### Best Practices Applied
-
-✅ **Formula Documentation**: Every metric has inline comments explaining calculation  
-✅ **Defensive Coding**: Handle division by zero, null values gracefully  
-✅ **Precision**: Use decimal type for financial calculations (not float)  
-✅ **Immutable Results**: Metrics calculated once, never modified  
-✅ **Verification**: Cross-check calculations against known sources  
+- ✅ Separation of concerns (metrics, trends, stability)
+- ✅ Comprehensive metric coverage (40+ metrics)
+- ✅ Statistical analysis (CV, CAGR, trends)
+- ✅ Holistic assessment (context-aware evaluation)
+- ✅ Complete audit trail (all metrics logged)
+- ✅ No premature rejections (all companies get full analysis)
 
 ### Success Criteria
-
-- ✅ All 40+ metrics calculate without errors
-- ✅ 10-year averaging works correctly
-- ✅ Calculations match Yahoo Finance/SEC Edgar data
-- ✅ Stability metrics identify volatile companies
-- ✅ Trend analysis correctly identifies improving/declining trends
-- ✅ Edge cases handled (missing years, negative values, etc.)
+- [x] All 40+ metrics calculate correctly
+- [x] 10-year trend analysis works accurately
+- [x] Stability (CV) calculations correct
+- [x] Hard filters evaluate using complete data
+- [x] Holistic assessment prevents false negatives
+- [x] Detailed logs show reasoning
+- [x] No companies rejected without full analysis
 
 ---
 
-## Phase 5: Results & Notifications
+## Phase 5: Quality Assessment & Composite Scoring
 
 ### Duration: 1-2 weeks
 
 ### Objectives
-
-- ✅ Implement database save logic
-- ✅ Build email notification service
-- ✅ Create CSV export functionality
-- ✅ Implement console reporting
-- ✅ Create HTML email templates
-- ✅ Test end-to-end result delivery
+- Implement 4 quality pillars (ROC, Profitability, Cash Flow, Business Quality)
+- Create quality scoring with maximum caps per pillar
+- Implement valuation scoring (P/E, P/B, PEG, etc.)
+- Implement management quality scoring
+- Calculate final composite score
+- Create detailed scoring audit trail
 
 ### Deliverables
-
-1. **QualifiedCompanyService**
-   - Save newly qualified companies
-   - Update scores for maintained companies
-   - Mark removed companies as inactive
-   - Track first/last qualified dates
-   - Maintain complete audit trail
-
-2. **EmailNotificationService**
-   - Build HTML email template
-   - Include summary statistics (qualified, new, maintained, removed)
-   - Create detailed results table
-   - Add business quality assessment
-   - Include valuation analysis
-   - List removed companies with reasons
-   - Send via SMTP (Gmail recommended)
-
-3. **CsvExportService**
-   - Export all qualified companies
-   - Include all 40+ metrics
-   - Include composite scores
-   - Include data source attribution
-   - Generate filename with date
-
-4. **ConsoleReporter**
-   - Print screening progress (Company X/500)
-   - Show pass/fail status for each stage
-   - Print summary at completion
-   - Display execution time
-   - Show email delivery status
-
-5. **Models**
-   ```
-   ScreeningReport
-   ├── RunDate
-   ├��─ IndustriesScreened[]
-   ├── CompaniesProcessed
-   ├── CompaniesQualified
-   ├── NewlyQualified[]
-   ├── Maintained[]
-   ├── Removed[]
-   ├── QualifiedCompanies[]
-   │   ├── Ticker
-   │   ├── CompanyName
-   │   ├── Scores (Quality, Valuation, Management, Composite)
-   │   ├── StockPrice
-   │   ├── PERatio
-   │   ├── DividendYield
-   │   ├── Recommendation
-   │   └── Status
-   └── ExecutionTimeSeconds
-   ```
+- QualityAssessmentService (4 pillars, 0-100 score)
+- ValuationScoringService (max 35 points)
+- ManagementQualityScoringService (max 25 points)
+- CompositeScoreCalculator (final ranking)
+- Scoring details logger
 
 ### Key Tasks
 
-- [ ] Implement QualifiedCompanyService with DB save logic
-- [ ] Create EmailNotificationService
-- [ ] Design HTML email template
-- [ ] Implement SMTP configuration
-- [ ] Create CSV export with all metrics
-- [ ] Implement console progress reporting
-- [ ] Test email delivery (use test email first)
-- [ ] Test CSV export format and readability
-- [ ] Verify database updates
-- [ ] Create sample screening report
+**1. Quality Pillars (Days 1-4)**
+
+```csharp
+public class QualityAssessmentService
+{
+    public QualityScoreResult CalculateQualityScore(ComprehensiveMetricsResult metrics)
+    {
+        var result = new QualityScoreResult();
+        
+        // PILLAR 1: Return on Capital (MAX 30 points)
+        var roe = metrics.ROE_10YAvg;
+        decimal pillar1 = 0;
+        if (roe >= 30) pillar1 += 20; // ROE component
+        else if (roe >= 25) pillar1 += 15;
+        else if (roe >= 20) pillar1 += 10;
+        else if (roe >= 15) pillar1 += 5;
+        
+        var roic = metrics.ROIC_10YAvg;
+        if (roic >= 18) pillar1 += 10; // ROIC component
+        else if (roic >= 15) pillar1 += 8;
+        else if (roic >= 12) pillar1 += 5;
+        
+        pillar1 = Math.Min(pillar1, 30m); // CAP AT 30
+        result.Pillar1_ReturnOnCapital = pillar1;
+        
+        // PILLAR 2: Profitability (MAX 30 points)
+        decimal pillar2 = 0;
+        var netMargin = metrics.NetProfitMargin_10YAvg;
+        if (netMargin >= 20) pillar2 += 15;
+        else if (netMargin >= 15) pillar2 += 10;
+        else if (netMargin >= 10) pillar2 += 5;
+        
+        var opMargin = metrics.OperatingMargin_10YAvg;
+        if (opMargin >= 20) pillar2 += 10;
+        else if (opMargin >= 15) pillar2 += 5;
+        
+        if (metrics.MarginStability_CV < 10) pillar2 += 5; // Bonus
+        
+        pillar2 = Math.Min(pillar2, 30m); // CAP AT 30
+        result.Pillar2_Profitability = pillar2;
+        
+        // PILLAR 3: Cash Flow (MAX 20 points)
+        decimal pillar3 = 0;
+        if (metrics.FreeCashFlow > 0) pillar3 += 5;
+        
+        var fcfPercent = metrics.FreeCashFlow / metrics.Revenue;
+        if (fcfPercent >= 0.10m) pillar3 += 10;
+        else if (fcfPercent >= 0.05m) pillar3 += 5;
+        
+        if (metrics.OCFToNI_Ratio > 1) pillar3 += 5;
+        if (metrics.FCFCAGR_10Y > 5) pillar3 += 5;
+        
+        pillar3 = Math.Min(pillar3, 20m); // CAP AT 20
+        result.Pillar3_CashFlow = pillar3;
+        
+        // PILLAR 4: Business Quality (MAX 10 points)
+        decimal pillar4 = 0;
+        if (HasEconomicMoat(metrics)) pillar4 += 3;
+        if (metrics.InsiderOwnershipPercent > 5) pillar4 += 2;
+        if (metrics.GoodwillPercentAssets < 20) pillar4 += 3;
+        if (metrics.RevenueGrowthStability_CV < 15) pillar4 += 2;
+        
+        pillar4 = Math.Min(pillar4, 10m); // CAP AT 10
+        result.Pillar4_BusinessQuality = pillar4;
+        
+        result.QualityScore = Math.Min(pillar1 + pillar2 + pillar3 + pillar4, 100m);
+        
+        return result;
+    }
+}
+```
+
+**2. Valuation Scoring (Days 4-6)**
+```csharp
+public class ValuationScoringService
+{
+    public ValuationScoreResult CalculateValuationScore(ComprehensiveMetricsResult metrics)
+    {
+        var result = new ValuationScoreResult();
+        decimal score = 0;
+        
+        // P/E Component (max 12)
+        if (metrics.PERatio < 15) score += 12;
+        else if (metrics.PERatio < 20) score += 10;
+        else if (metrics.PERatio < 25) score += 8;
+        else if (metrics.PERatio < 35) score += 4;
+        else score += 0;
+        
+        // PEG Component (max 10)
+        if (metrics.PEGRatio < 1.0m) score += 10;
+        else if (metrics.PEGRatio < 1.5m) score += 8;
+        else if (metrics.PEGRatio < 2.0m) score += 4;
+        else score += 0;
+        
+        // P/B Component (max 8)
+        if (metrics.PBRatio < 1.5m) score += 8;
+        else if (metrics.PBRatio < 2.5m) score += 6;
+        else if (metrics.PBRatio < 4.0m) score += 2;
+        else score += 0;
+        
+        // Dividend Component (max 5)
+        if (metrics.DividendYield > 3) score += 5;
+        else if (metrics.DividendYield > 2) score += 3;
+        
+        result.ValuationScore = Math.Min(score, 35m); // CAP AT 35
+        return result;
+    }
+}
+```
+
+**3. Management Quality Scoring (Days 6-7)**
+```csharp
+public class ManagementQualityScoringService
+{
+    public ManagementScoreResult CalculateManagementScore(ComprehensiveMetricsResult metrics)
+    {
+        var result = new ManagementScoreResult();
+        decimal score = 0;
+        
+        // Insider Ownership (max 10)
+        if (metrics.InsiderOwnershipPercent > 15) score += 10;
+        else if (metrics.InsiderOwnershipPercent > 10) score += 8;
+        else if (metrics.InsiderOwnershipPercent > 5) score += 5;
+        
+        // Goodwill (max 8)
+        if (metrics.GoodwillPercentAssets < 10) score += 8;
+        else if (metrics.GoodwillPercentAssets < 20) score += 5;
+        else if (metrics.GoodwillPercentAssets < 50) score += 2;
+        
+        // Accounting Quality (max 7)
+        if (metrics.OneTimeChargesFrequency < 20) score += 7;
+        else if (metrics.OneTimeChargesFrequency < 40) score += 4;
+        
+        result.ManagementScore = Math.Min(score, 25m); // CAP AT 25
+        return result;
+    }
+}
+```
+
+**4. Composite Score (Days 7-8)**
+```csharp
+public class CompositeScoreCalculator
+{
+    public CompositeScoreResult CalculateCompositeScore(
+        QualityScoreResult quality,
+        ValuationScoreResult valuation,
+        ManagementScoreResult management)
+    {
+        var compositeScore = 
+            (quality.QualityScore * 0.40m) +
+            (valuation.ValuationScore * 0.35m) +
+            (management.ManagementScore * 0.25m);
+        
+        return new CompositeScoreResult
+        {
+            CompositeScore = compositeScore,
+            Recommendation = compositeScore >= 75 ? "PASS" : "FAIL",
+            QualityContribution = quality.QualityScore * 0.40m,
+            ValuationContribution = valuation.ValuationScore * 0.35m,
+            ManagementContribution = management.ManagementScore * 0.25m
+        };
+    }
+}
+```
 
 ### Best Practices Applied
-
-✅ **Template-Based Emails**: Use HTML templates for professional appearance  
-✅ **Color-Coded Results**: Green/Yellow/Red for score ranges in email  
-✅ **Comprehensive Data**: Include all metrics users might need  
-✅ **Audit Trail**: Log all saves/updates to database  
-✅ **Error Notifications**: Email failures logged, doesn't stop screening  
-✅ **CSV Standards**: RFC 4180 compliant CSV format  
+- ✅ Pillar-based scoring with maximum caps
+- ✅ Detailed component scoring
+- ✅ Capping prevents pillar inflation
+- ✅ Composite weighting (40/35/25)
+- ✅ Clear passing threshold (75)
+- ✅ Complete scoring transparency
 
 ### Success Criteria
-
-- ✅ Email sends successfully with professional formatting
-- ✅ CSV exports with correct formatting and all columns
-- ✅ Console output shows clear progress
-- ✅ Database saves correctly with all metrics
-- ✅ NEW/MAINTAINED/REMOVED categorization accurate
-- ✅ Email includes all required information
+- [x] All 4 quality pillars calculate correctly
+- [x] Pillar caps enforced (30/30/20/10)
+- [x] Valuation scoring (max 35) works
+- [x] Management scoring (max 25) works
+- [x] Composite score calculation accurate
+- [x] Threshold logic works (>= 75 = PASS)
+- [x] Detailed scoring logs created
 
 ---
 
-## Phase 6: GitHub Actions Automation
+## Phase 6: Results & Notifications
+
+### Duration: 1-2 weeks
+
+### Objectives
+- Generate email reports with detailed metrics
+- Create CSV exports for manual review
+- Implement console output summaries
+- Track newly qualified vs maintained vs removed companies
+- Store all results in database
+
+### Deliverables
+- EmailNotificationService (HTML formatted)
+- ScreeningResultsExporter (CSV)
+- ConsoleReporter (summary output)
+- ResultsProcessor (NEW/MAINTAINED/REMOVED tracking)
+- Database storage logic
+
+### Key Tasks
+
+**1. Email Notification (Days 1-4)**
+- HTML formatted table with all metrics
+- Color-coded scores (green/yellow/red)
+- Summary statistics
+- Newly qualified highlighted
+- Removed companies listed with reasons
+
+**2. CSV Export (Days 4-6)**
+- All 40+ metrics exported
+- All companies (pass and fail) included as audit trail
+- Sortable by score, ticker, industry
+- Date stamped
+
+**3. Database Storage (Days 6-8)**
+- Insert newly qualified companies
+- Update scores for maintained
+- Mark removed as inactive
+- Store all metrics
+- Log screening run details
+
+### Success Criteria
+- [x] Email sends without errors
+- [x] CSV contains all data
+- [x] Database updates correctly
+- [x] Console output shows summary
+- [x] NEW/MAINTAINED/REMOVED tracked accurately
+
+---
+
+## Phase 7: GitHub Actions Automation
 
 ### Duration: 1 week
 
 ### Objectives
-
-- ✅ Create quarterly screening workflow
-- ✅ Create weekly stock price update workflow
-- ✅ Configure database in CI/CD environment
-- ✅ Set up secrets management
-- ✅ Test automation locally first
-- ✅ Document workflow setup
+- Create quarterly screening workflow
+- Create weekly stock price update workflow
+- Set up environment secrets
+- Configure schedule triggers
+- Implement manual trigger option
 
 ### Deliverables
-
-1. **quarterly-screening.yml**
-   ```yaml
-   name: Quarterly Screening Run
-   
-   on:
-     schedule:
-       # 15th of March, June, September, December at 2 PM UTC
-       - cron: '0 14 15 3,6,9,12 *'
-     workflow_dispatch:  # Manual trigger
-   
-   jobs:
-     screening:
-       runs-on: ubuntu-latest
-       
-       services:
-         mysql:
-           image: mysql:8.0
-           env:
-             MYSQL_ROOT_PASSWORD: root
-             MYSQL_DATABASE: stockscreener
-           options: >-
-             --health-cmd="mysqladmin ping"
-             --health-interval=10s
-             --health-timeout=5s
-             --health-retries=3
-       
-       steps:
-         - uses: actions/checkout@v3
-         - uses: actions/setup-dotnet@v3
-           with:
-             dotnet-version: '8.0.x'
-         
-         - name: Restore dependencies
-           run: dotnet restore
-         
-         - name: Build
-           run: dotnet build --configuration Release
-         
-         - name: Run migrations
-           env:
-             ConnectionStrings__DefaultConnection: 'Server=mysql;Uid=root;Pwd=root;Database=stockscreener'
-           run: dotnet ef database update
-         
-         - name: Run screening
-           env:
-             ConnectionStrings__DefaultConnection: 'Server=mysql;Uid=root;Pwd=root;Database=stockscreener'
-             Email__SmtpServer: ${{ secrets.SMTP_SERVER }}
-             Email__SenderEmail: ${{ secrets.SENDER_EMAIL }}
-             Email__SenderPassword: ${{ secrets.SENDER_PASSWORD }}
-             Email__RecipientEmail: ${{ secrets.RECIPIENT_EMAIL }}
-           run: dotnet run --project src/StockMarketScreener.Console/StockMarketScreener.Console.csproj
-         
-         - name: Upload results
-           if: always()
-           uses: actions/upload-artifact@v3
-           with:
-             name: screening-results
-             path: output/
-             retention-days: 90
-   ```
-
-2. **weekly-stock-update.yml**
-   ```yaml
-   name: Weekly Stock Price Update
-   
-   on:
-     schedule:
-       # Every Monday at 8 PM UTC (after market close)
-       - cron: '0 20 * * 1'
-     workflow_dispatch:
-   
-   jobs:
-     update:
-       runs-on: ubuntu-latest
-       
-       services:
-         mysql:
-           image: mysql:8.0
-           env:
-             MYSQL_ROOT_PASSWORD: root
-             MYSQL_DATABASE: stockscreener
-       
-       steps:
-         - uses: actions/checkout@v3
-         - uses: actions/setup-dotnet@v3
-           with:
-             dotnet-version: '8.0.x'
-         
-         - name: Restore & Build
-           run: |
-             dotnet restore
-             dotnet build --configuration Release
-         
-         - name: Run stock price update
-           env:
-             ConnectionStrings__DefaultConnection: 'Server=mysql;Uid=root;Pwd=root;Database=stockscreener'
-             Email__SmtpServer: ${{ secrets.SMTP_SERVER }}
-             Email__SenderEmail: ${{ secrets.SENDER_EMAIL }}
-             Email__SenderPassword: ${{ secrets.SENDER_PASSWORD }}
-           run: dotnet run --project src/StockMarketScreener.Console/StockMarketScreener.Console.csproj -- --update-prices-only
-   ```
-
-3. **GitHub Secrets Setup**
-   ```
-   Required secrets to configure in GitHub repo:
-   - SMTP_SERVER: smtp.gmail.com
-   - SMTP_PORT: 587
-   - SENDER_EMAIL: your-email@gmail.com
-   - SENDER_PASSWORD: your-gmail-app-password
-   - RECIPIENT_EMAIL: your-email@gmail.com
-   ```
-
-4. **Gmail App Password Setup**
-   - Enable 2-Factor Authentication on Gmail
-   - Generate app-specific password
-   - Use this password in GitHub Secrets
-   - Document steps for future reference
+- `.github/workflows/quarterly-screening.yml`
+- `.github/workflows/weekly-stock-update.yml`
+- GitHub Secrets configured
+- Documentation for manual triggers
 
 ### Key Tasks
 
-- [ ] Create .github/workflows directory
-- [ ] Create quarterly-screening.yml workflow
-- [ ] Create weekly-stock-update.yml workflow
-- [ ] Test workflows locally with act (GitHub Actions local runner)
-- [ ] Set up MySQL service in workflow
-- [ ] Configure all GitHub Secrets
-- [ ] Test quarterly workflow manually (workflow_dispatch)
-- [ ] Test weekly workflow manually
-- [ ] Verify email sends from GitHub Actions
-- [ ] Create GitHub Actions setup documentation
-- [ ] Set up workflow logging
-- [ ] Create troubleshooting guide
+**1. Quarterly Screening Workflow (Days 1-3)**
+```yaml
+name: Quarterly Stock Screening
 
-### Best Practices Applied
+on:
+  schedule:
+    - cron: '0 14 15 3,6,9,12 *'  # 15th of Mar/Jun/Sep/Dec at 2 PM UTC
+  workflow_dispatch:
 
-✅ **Service Containers**: MySQL runs in container during CI  
-✅ **Health Checks**: MySQL health check before running app  
-✅ **Secrets Management**: Sensitive data via GitHub Secrets, never hardcoded  
-✅ **Artifact Retention**: Results kept 90 days for audit trail  
-✅ **Conditional Steps**: Upload artifacts even if screening fails  
-✅ **Manual Trigger**: Workflow_dispatch for on-demand runs  
-✅ **Clear Logging**: All steps logged for debugging  
+jobs:
+  screening:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: stockscreener
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3306:3306
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Run screening
+        run: dotnet run --project src/StockMarketScreener.Console
+        env:
+          ConnectionStrings__DefaultConnection: ${{ secrets.DB_CONNECTION }}
+          Email__SmtpServer: ${{ secrets.SMTP_SERVER }}
+          Email__SenderEmail: ${{ secrets.SENDER_EMAIL }}
+          Email__SenderPassword: ${{ secrets.SENDER_PASSWORD }}
+
+      - name: Upload results
+        uses: actions/upload-artifact@v3
+        with:
+          name: screening-results
+          path: output/
+
+      - name: Commit results
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add output/
+          git commit -m "Screening results: $(date)"
+          git push
+```
+
+**2. Weekly Stock Price Update (Days 3-4)**
+```yaml
+name: Weekly Stock Price Update
+
+on:
+  schedule:
+    - cron: '0 20 * * MON'  # Every Monday at 8 PM UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    # Similar setup as quarterly, but runs stock price update job
+```
+
+**3. GitHub Secrets Setup (Days 4-5)**
+- Configure SMTP credentials
+- Configure database connection string
+- Configure API keys
+- Test connections
 
 ### Success Criteria
-
-- ✅ Quarterly workflow runs on schedule without errors
-- ✅ Weekly workflow executes successfully
-- ✅ Email sends from GitHub Actions
-- ✅ Database updates correctly in CI environment
-- ✅ Results artifacts uploaded and accessible
-- ✅ Logs show clear execution path
-- ✅ Manual triggers work perfectly
+- [x] Quarterly workflow runs on schedule
+- [x] Weekly workflow runs on schedule
+- [x] Manual trigger works
+- [x] Environment variables set correctly
+- [x] Database connection works in Actions
+- [x] Email sends from Actions
+- [x] Results uploaded as artifacts
 
 ---
 
-## Phase 7: Testing & Quality Assurance
+## Phase 8: Testing & Quality Assurance
 
 ### Duration: 2-3 weeks
 
 ### Objectives
-
-- ✅ Implement comprehensive unit tests
-- ✅ Implement integration tests
-- ✅ Create test data and fixtures
-- ✅ Achieve high code coverage
-- ✅ Test edge cases and error scenarios
-- ✅ Validate against real data
+- Create comprehensive unit tests
+- Create integration tests with test database
+- Create end-to-end screening test
+- Achieve 80%+ code coverage
+- Test error handling and recovery
+- Performance validation
 
 ### Deliverables
-
-1. **Unit Tests**
-   - Metric calculations (100+ test cases)
-   - Screening logic (50+ test cases)
-   - Data validation (30+ test cases)
-   - Score calculations (40+ test cases)
-   - Utility functions
-
-2. **Integration Tests**
-   - End-to-end screening flow
-   - Database operations
-   - Data reconciliation pipeline
-   - Email notification sending
-   - CSV export functionality
-
-3. **Test Fixtures**
-   ```
-   Test Data (10 Companies):
-   1. MSFT (Microsoft) - Should PASS
-   2. AAPL (Apple) - Should PASS
-   3. JNJ (Johnson & Johnson) - Should PASS
-   4. KO (Coca-Cola) - Should PASS
-   5. JPM (JPMorgan Chase) - Should PASS
-   6. TSLA (Tesla) - Should FAIL (high valuation)
-   7. AMD (AMD) - Should FAIL (high debt)
-   8. SNAP (Snapchat) - Should FAIL (low ROE)
-   9. UBER (Uber) - Should FAIL (negative FCF)
-   10. GOOG (Google) - Should PASS
-   
-   Each fixture includes:
-   - 10 years of financial statements
-   - Real historical data
-   - Known expected outcomes
-   - Documented edge cases
-   ```
-
-4. **Test Coverage**
-   - Target: >= 80% code coverage
-   - Critical paths: 100% coverage
-   - Edge cases: All covered
-   - Error paths: All tested
-
-5. **Performance Tests**
-   - 500 company screening: < 60 minutes
-   - Individual metric calc: < 100ms
-   - Database save: < 5 seconds
-   - Email send: < 5 seconds
-
-### Testing Strategy
-
-```
-Unit Tests (xUnit + Moq):
-├─ MetricCalculationTests
-│  ├─ TestROECalculation (with 5+ scenarios)
-│  ├─ TestNetMarginCalculation
-│  ├─ TestCAGRCalculation
-│  ├─ TestCoefficientOfVariation
-│  └─ ... 100+ total tests
-│
-├─ ScreeningLogicTests
-│  ├─ TestStage1Filters (pass/fail scenarios)
-│  ├─ TestStage2QualityScoring (pillar caps)
-│  ├─ TestStage3CompositeScore (weighting)
-│  ├─ TestCompanyComparison (NEW/MAINTAINED/REMOVED)
-│  └─ ... 50+ total tests
-│
-├─ DataValidationTests
-│  ├─ TestDataCompleteness
-│  ├─ TestRangeValidation
-│  ├─ TestBalanceSheetValidation
-│  ├─ TestConsistencyCheck
-│  └─ ... 30+ total tests
-│
-└─ EdgeCaseTests
-   ├─ TestDivisionByZero
-   ├─ TestNullValues
-   ├─ TestMissingYears
-   ├─ TestOutlierData
-   └─ ... 20+ total tests
-
-Integration Tests (xUnit + Testcontainers):
-├─ EndToEndScreeningTests
-│  ├─ TestFullScreeningFlow (5-10 companies)
-│  ├─ TestResultsCorrectness
-│  ├─ TestDatabaseSave
-│  └─ TestComparisonLogic
-│
-├─ DataIntegrationTests
-│  ├─ TestSecEdgarFetching (with mock data)
-│  ├─ TestDataReconciliation
-│  ├─ TestFallbackLogic
-│  └─ TestDataValidation
-│
-├─ EmailNotificationTests
-│  ├─ TestEmailFormatting
-│  ├─ TestDataInclusion
-│  └─ TestCSVExport
-│
-└─ GitHubActionsTests
-   ├─ TestWorkflowTriggers
-   ├─ TestEnvironmentVariables
-   └─ TestArtifactGeneration
-```
+- Unit test suite (40+ tests)
+- Integration test suite (10+ tests)
+- End-to-end test (1+ test)
+- Code coverage report
+- Performance test results
 
 ### Key Tasks
 
-- [ ] Create Unit test project structure
-- [ ] Write 100+ metric calculation tests
-- [ ] Write 50+ screening logic tests
-- [ ] Write 30+ data validation tests
-- [ ] Write 10+ edge case tests
-- [ ] Create test data fixtures (10 companies)
-- [ ] Create integration test suite
-- [ ] Set up Testcontainers for MySQL
-- [ ] Achieve 80%+ code coverage
-- [ ] Performance test with 500 companies
-- [ ] Test error scenarios and recovery
-- [ ] Document testing strategy
-- [ ] Create test data generation scripts
+**1. Unit Tests (Days 1-7)**
+- Metric calculation tests
+- Scoring logic tests
+- Hard filter evaluation tests
+- Data validation tests
+- Utility function tests
 
-### Best Practices Applied
+**2. Integration Tests (Days 7-12)**
+- Database operations
+- API integrations (mocked)
+- End-to-end screening flow
+- Email generation
+- CSV export
 
-✅ **AAA Pattern**: Arrange-Act-Assert structure  
-✅ **Test Isolation**: Each test independent, no side effects  
-✅ **Mock External Services**: Use Moq for API calls  
-✅ **Real Database Tests**: Testcontainers for true integration tests  
-✅ **Named Tests**: Descriptive test names explain what they test  
-✅ **Test Data Builders**: Fluent builders for complex test objects  
-✅ **Code Coverage Reports**: Generate and track coverage  
+**3. Test Data (Days 12-14)**
+- 10 well-known companies
+- Real historical data
+- Companies that should PASS
+- Companies that should FAIL
+- Edge cases
 
 ### Success Criteria
-
-- ✅ >= 80% code coverage (critical paths 100%)
-- ✅ All 200+ tests pass consistently
-- ✅ Edge cases handled and tested
-- ✅ Real data validation against Yahoo Finance
-- ✅ Performance targets met (40-50 min for 500 companies)
-- ✅ Error handling tested and working
-- ✅ Test execution documented
+- [x] 80%+ code coverage
+- [x] All tests pass
+- [x] Edge cases handled
+- [x] Error scenarios tested
+- [x] Performance acceptable (45-60 min for 500 companies)
 
 ---
 
-## Phase 8: UI Development
+## Phase 9: UI Development (Post-Launch)
 
-### Duration: 3-4 weeks (Post-Launch)
+### Duration: 3-4 weeks (AFTER Core Completion)
 
-### Status: Planned for after core functionality complete
+### Status: Planned for after core functionality proven
 
-### Objectives
+### Objectives (Future)
+- Web dashboard for results viewing
+- Interactive metrics explorer
+- Historical trend analysis
+- Company comparison tool
+- Watchlist management
 
-- ✅ Create web dashboard
-- ✅ Display qualified companies
-- ✅ Show detailed metrics
-- ✅ Enable filtering/sorting
-- ✅ Display charts and trends
-- ✅ Provide manual screening trigger
+### Technology Stack (Future)
+- **Frontend:** React or Blazor
+- **Backend:** ASP.NET Core (extend current console)
+- **Database:** Same MySQL (shared)
+- **Deployment:** Azure App Service or AWS
 
-### Technology Stack
-
-- **Framework**: ASP.NET Core 8.0 (Razor Pages or Blazor)
-- **Frontend**: Bootstrap 5 (responsive, professional)
-- **Database**: Use existing MySQL
-- **Charting**: Chart.js (metrics visualization)
-- **Hosting**: Free tier option (Azure App Service, Heroku, etc.)
-
-### Key Features
-
-1. **Dashboard**
-   - Summary statistics (qualified count, new/removed this quarter)
-   - Trending metrics chart
-   - Latest screening date and results
-
-2. **Company List**
-   - All qualified companies with scores
-   - Sortable/filterable table
-   - Color-coded recommendation levels
-   - Link to detailed view
-
-3. **Company Detail**
-   - All 40+ metrics displayed
-   - 10-year trend charts
-   - Financial statement breakdown
-   - Screening breakdown (stage 1, 2, 3 results)
-
-4. **History**
-   - Previous screening results
-   - Company removal history
-   - Date and score progression
-
-5. **Manual Trigger**
-   - Initiate screening from UI
-   - Monitor progress
-   - View results as they complete
-
-### Out of Scope (Phase 8)
-
-- Real-time notifications
-- Mobile app
-- Advanced analytics
-- User authentication/multi-user
-- Export to external platforms
-
----
-
-## Post-Launch Planning
-
-### Status: After Phase 8 UI Launch
-
-### Planned Features (Prioritized by Value)
-
-1. **Web UI Enhancements (High Value)**
-   - User authentication & multi-user support
-   - Portfolio tracking
-   - Custom screening criteria configuration
-   - Alerts for qualifying companies
-
-2. **Mobile App (Medium Value)**
-   - React Native or Flutter
-   - Push notifications
-   - Company alerts
-   - Portfolio management
-
-3. **Advanced Analytics (Medium Value)**
-   - Sector analysis
-   - Performance tracking of recommendations
-   - Backtesting screener criteria
-   - Statistical analysis
-
-4. **Integration Features (Low Value)**
-   - Broker integration (TD Ameritrade, etc.)
-   - Portfolio syncing
-   - Trade execution
-   - Tax reporting
-
-5. **Additional Data Sources (Low Value)**
-   - Earnings call transcripts
-   - Analyst estimates
-   - News sentiment analysis
-   - Insider trading data
-
-### Planning Process
-
-When ready to plan future features:
-1. Gather user feedback on core system
-2. Define prioritization criteria
-3. Create detailed specifications
-4. Create new roadmap document
-5. Begin Phase 9+ planning
+### Out of Scope (Phase 9)
+- Real-time data updates
+- Machine learning analysis
+- Social media integration
+- Complex portfolio optimization
 
 ---
 
@@ -1062,83 +1090,58 @@ When ready to plan future features:
 
 ### Required Before Starting
 
-#### API Keys (All Free)
+#### API Keys (All Free - No Cost)
 
-1. **SEC EDGAR** (No API key needed)
-   - Accessible at https://www.sec.gov/cgi-bin/
-   - Rate limit: Reasonable (no official limit, be respectful)
-   - Setup time: < 5 minutes
+1. **SEC EDGAR** ✓ Free
+   - No API key needed
+   - Public endpoint
+   - Rate: 1 req/sec
 
-2. **Yahoo Finance**
-   - Community API via C# wrapper
-   - Rate limit: 1-2 requests per second
-   - Setup time: < 10 minutes (install NuGet package)
+2. **Yahoo Finance** ✓ Free
+   - No API key needed
+   - Unofficial API
+   - Rate: ~2000 reqs/hour
 
-3. **IEX Cloud** (Recommended)
-   - Free tier: 100 messages/month
-   - https://iexcloud.io
-   - Setup time: 15 minutes (register, get API key)
+3. **IEX Cloud** (Optional - fallback)
+   - Free tier: 100 msgs/month
+   - Sign up: https://iexcloud.io
 
-4. **Alpha Vantage**
-   - Free tier: 5 calls/minute
-   - https://www.alphavantage.co
-   - Setup time: 15 minutes (register, get API key)
+4. **Alpha Vantage** (Optional - fallback)
+   - Free tier: 5 reqs/min
+   - Sign up: https://www.alphavantage.co
 
-5. **Federal Reserve FRED** (Optional)
-   - Free tier: Unlimited
-   - https://fred.stlouisfed.org
-   - Setup time: 15 minutes (register, get API key)
-
-6. **Gmail SMTP** (For email notifications)
-   - Free with Google account
-   - Setup time: 20 minutes (2FA, app password)
+5. **Federal Reserve FRED** ✓ Free
+   - No API key needed
+   - Treasury yields
 
 #### Software Requirements
 
-| Tool | Version | Purpose | Cost |
-|------|---------|---------|------|
-| **Visual Studio 2022** | Community | IDE | Free |
-| **.NET SDK** | 8.0 | Runtime | Free |
-| **MySQL** | 8.0 | Database | Free |
-| **Docker Desktop** | Latest | Container runtime | Free |
-| **Git** | Latest | Version control | Free |
-| **GitHub** | Free plan | Repository | Free |
+- ✅ .NET 8.0 SDK (free, Windows/Mac/Linux)
+- ✅ Visual Studio 2022 Community (free)
+- ✅ MySQL 8.0 (free, Docker recommended)
+- ✅ Git (free)
+- ✅ Docker (free Community Edition, optional)
 
 #### Knowledge Prerequisites
 
-- **C# Fundamentals**: Classes, LINQ, async/await
-- **Entity Framework Core**: Models, migrations, queries
-- **SQL Basics**: SELECT, INSERT, UPDATE queries
-- **REST APIs**: HTTP requests, authentication
-- **GitHub Basics**: Clone, commit, push, pull requests
-- **YAML**: GitHub Actions workflow syntax
+- ✅ C# (.NET experience)
+- ✅ SQL basics
+- ✅ REST API integration
+- ✅ Financial concepts (ratios, margins, cash flow)
 
 ### Setup Checklist
 
-**Week 1 (Phase 1 - Foundation)**
-- [ ] Install Visual Studio 2022 Community
+- [ ] Clone repository
 - [ ] Install .NET 8.0 SDK
-- [ ] Install Docker Desktop
-- [ ] Set up local MySQL instance
-- [ ] Create GitHub repository
-- [ ] Create GitHub Projects board
-- [ ] Document setup process
-- [ ] Create initial project structure
-
-**Week 2 (Before Phase 3)**
-- [ ] Register IEX Cloud (free tier)
-- [ ] Register Alpha Vantage
-- [ ] Register Federal Reserve FRED
-- [ ] Create Gmail app password
-- [ ] Configure appsettings.json template
-- [ ] Test API connectivity
-- [ ] Document API rate limits
-
-**Week 3+ (Before Phase 6)**
-- [ ] Set up GitHub Secrets
-- [ ] Test GitHub Actions locally (with act tool)
-- [ ] Document workflow setup
-- [ ] Create GitHub Actions troubleshooting guide
+- [ ] Install MySQL 8.0
+- [ ] Create database: `stockscreener`
+- [ ] Run EF Core migrations
+- [ ] Configure appsettings.json
+- [ ] Test database connection
+- [ ] Verify API endpoints (EDGAR, Yahoo, IEX, Alpha)
+- [ ] Configure GitHub Secrets for Actions
+- [ ] Run test suite
+- [ ] Verify screening locally
 
 ---
 
@@ -1146,39 +1149,39 @@ When ready to plan future features:
 
 ### Identified Risks & Mitigation
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|-----------|
-| **API Rate Limiting** | High | Medium | Use fallback sources, cache data, respect limits |
-| **Data Quality Issues** | Medium | High | Comprehensive validation, alert on anomalies |
-| **MySQL Setup Complexity** | Low | Medium | Use Docker, provide scripts, document thoroughly |
-| **GitHub Actions Secrets** | Low | High | Document setup clearly, use security best practices |
-| **Metric Calculation Errors** | Medium | High | Extensive unit tests, verify against known sources |
-| **Email Delivery Failures** | Low | Low | Retry logic, log errors, continue screening |
-| **Performance Degradation** | Medium | Medium | Parallel processing option, caching, monitoring |
-| **Database Corruption** | Low | Critical | Regular backups, migrations, integrity checks |
+| Risk | Likelihood | Impact | Mitigation |
+|------|-----------|--------|-----------|
+| API rate limiting | Medium | High | Multi-source fallbacks, caching, retry logic |
+| Data quality issues | Medium | High | Validation layer, reconciliation, logging |
+| Calculation errors | Low | Critical | Unit tests, spot checks, detailed logging |
+| Database connection loss | Low | High | Connection pooling, retry logic, error handling |
+| Email delivery failure | Low | Medium | Logging, manual fallback, notification option |
+| Merge conflicts (git) | Low | Medium | Feature branches, frequent commits |
+| Performance degradation | Low | Medium | Profiling, parallel processing, caching |
+| Market data discrepancies | Low | Medium | Multi-source validation, logging |
 
 ### Mitigation Strategies
 
-**API Rate Limiting**
-- Implement Polly retry policies with exponential backoff
-- Cache company lists and reference data
-- Space out API calls
-- Monitor rate limit headers
-- Fall back to secondary sources
+**API Rate Limiting:**
+- ✅ Implement exponential backoff
+- ✅ Queue requests with delays
+- ✅ Use multiple API sources
+- ✅ Cache results locally
+- ✅ Log all API calls
 
-**Data Quality**
-- Comprehensive validation at each stage
-- Cross-check metrics against multiple sources
-- Flag anomalies in logs and email
-- Create data quality reports
-- Manual review process for edge cases
+**Data Quality:**
+- ✅ Validation on ingestion
+- ✅ Balance sheet checking
+- ✅ Range validation
+- ✅ Consistency checks
+- ✅ Manual review option
 
-**Performance**
-- Parallel processing for API calls (5-10 concurrent)
-- Local caching for reference data
-- Database indexing on frequently queried columns
-- Monitor execution time metrics
-- Create performance baseline
+**Calculation Accuracy:**
+- ✅ Comprehensive unit tests
+- ✅ Spot checks with known data
+- ✅ Detailed audit logs
+- ✅ Code reviews
+- ✅ Manual verification
 
 ---
 
@@ -1186,138 +1189,144 @@ When ready to plan future features:
 
 ### Phase Completion Criteria
 
-Each phase is complete when:
-
-1. **All deliverables created** ✓
-2. **Code compiles without errors** ✓
-3. **All objectives achieved** ✓
-4. **Documentation complete** ✓
-5. **Code reviewed** ✓
-6. **Tests passing (where applicable)** ✓
+| Phase | Completion Criteria |
+|-------|---|
+| 1 | Project structure, DB schema, DI setup complete |
+| 2 | Orchestrator controls entire flow, status tracking works |
+| 3 | Data fetching from all sources working, reconciliation complete |
+| 4 | ALL 40+ metrics calculated, hard filters evaluated holistically |
+| 5 | Quality/valuation/management scoring complete, composite score working |
+| 6 | Email, CSV, database storage all working |
+| 7 | GitHub Actions workflows running successfully |
+| 8 | 80%+ test coverage, all tests passing |
+| 9 | UI dashboard functional (post-launch) |
 
 ### Project Success Criteria
 
-**The project is fully successful when:**
+**Functional Success:**
+- ✅ System screens 500+ companies in 45-60 minutes
+- ✅ Qualifies 40-60 companies (9-12%)
+- ✅ All 40+ metrics calculated for all companies
+- ✅ Hard filters evaluated holistically
+- ✅ Quality scores accurate
+- ✅ Composite scores >= 75 = PASS
+- ✅ Email reports detailed and correct
+- ✅ Database updates accurately
+- ✅ CSV exports all data
 
-✅ **Screening produces correct results**
-- Financial strength filters working as designed
-- Quality scores correlate with business quality
-- Valuation assessment accurate
-- Companies >= 75 score are genuinely quality investments
-- External validation: Compare results with professional screeners
+**Operational Success:**
+- ✅ GitHub Actions runs automatically
+- ✅ Zero crashes during screening
+- ✅ Detailed audit logs
+- ✅ Error recovery works
+- ✅ Email notifications sent
+- ✅ Results reproducible
+- ✅ Performance acceptable
 
-✅ **Automation running reliably**
-- Quarterly screenings execute without manual intervention
-- Email notifications arrive consistently
-- GitHub Actions logs show clean execution
-- No data corruption or inconsistencies
-
-✅ **Data integration complete**
-- SEC EDGAR data reliably fetched
-- Yahoo Finance prices accurate
-- Fallback sources working when needed
-- All 40+ metrics calculating correctly
-
-✅ **Quality assurance passing**
-- >= 80% code coverage achieved
-- All edge cases tested and handled
-- Performance targets met (40-50 min for 500 companies)
-- Error handling working as designed
-
-✅ **Documentation complete**
-- Architecture documented
-- Setup process documented
-- API integration guide complete
-- Troubleshooting guide created
-- Code well-commented
-
-✅ **UI functional** (Phase 8)
-- Dashboard displaying correctly
-- Company list queryable and filterable
-- Detail view showing all metrics
-- Charts rendering properly
-- Manual trigger working
+**Investment Success:**
+- ✅ Qualified companies align with Buffett/Munger principles
+- ✅ High ROE (> 15%)
+- ✅ Strong profitability (margins > 10%)
+- ✅ Solid balance sheets (D/E < 0.50)
+- ✅ Positive cash flow (10 years)
+- ✅ Identifiable competitive advantage
+- ✅ Reasonable valuations
 
 ### Validation Methods
 
-1. **Manual Testing**
-   - Run screening with test data
-   - Verify results accuracy
-   - Check email formatting
-   - Test error scenarios
+**Automated Validation:**
+- Unit tests (80%+ coverage)
+- Integration tests (database, APIs)
+- Data validation rules
+- Calculation verification
+- Scoring logic tests
 
-2. **Automated Testing**
-   - Run unit tests (200+)
-   - Run integration tests
-   - Code coverage reports
-   - Performance benchmarks
+**Manual Validation:**
+- Spot check 10 companies against original data
+- Verify email formatting and data
+- Review CSV exports
+- Test error scenarios
+- Performance profiling
 
-3. **Real-World Validation**
-   - Compare results with Yahoo Finance
-   - Compare results with other screeners
-   - Interview professional investors
-   - Backtesting performance
-
-4. **Continuous Monitoring**
-   - GitHub Actions logs
-   - Error rate tracking
-   - Performance metrics
-   - Data quality scores
+**Investment Validation:**
+- Compare qualified companies to known Buffett holdings
+- Verify metrics match official financial data
+- Check industry representation
+- Validate scoring against selection criteria
+- Historical performance tracking (future)
 
 ---
 
 ## Timeline Estimate
 
-Based on best practices and realistic timelines:
+### Optimistic Scenario: 9 weeks
+```
+Week 1:   Phase 1 (Foundation)
+Week 2:   Phase 2 (Core Engine)
+Weeks 3-4: Phase 3 (Data Integration)
+Weeks 5-6: Phase 4 (Metric Calculation - MERGED)
+Week 7:   Phase 5 (Quality Scoring)
+Week 8:   Phase 6 (Results) + Phase 7 (GitHub Actions)
+Weeks 9+: Phase 8 (Testing)
+```
 
-| Phase | Duration | Est. Dates* | Notes |
-|-------|----------|-----------|-------|
-| **Phase 1: Foundation** | 1-2 weeks | Wk 1-2 | Sequential |
-| **Phase 2: Screening Engine** | 1 week | Wk 3 | Core logic |
-| **Phase 3: Data Integration** | 2-3 weeks | Wk 4-6 | API integration |
-| **Phase 4: Metric Calculation** | 2-3 weeks | Wk 7-9 | Heaviest phase |
-| **Phase 5: Results & Notifications** | 1-2 weeks | Wk 10-11 | Final touches |
-| **Phase 6: GitHub Actions** | 1 week | Wk 12 | Automation |
-| **Phase 7: Testing & QA** | 2-3 weeks | Wk 13-15 | Quality focus |
-| **Phase 8: UI Development** | 3-4 weeks | Wk 16-19 | Post-launch |
-| | | | |
-| **TOTAL (Full Implementation)** | **12-19 weeks** | **3-5 months** | Quality over speed |
+### Realistic Scenario: 10-11 weeks
+```
+Weeks 1-2: Phase 1 (Foundation)
+Week 3:    Phase 2 (Core Engine)
+Weeks 4-5: Phase 3 (Data Integration)
+Weeks 6-7: Phase 4 (Metric Calculation - MERGED)
+Week 8:    Phase 5 (Quality Scoring)
+Weeks 9:   Phase 6 (Results) + Phase 7 (GitHub Actions)
+Weeks 10-11: Phase 8 (Testing & Polish)
+```
 
-*Timeline estimates based on:
-- Solo developer working part-time
-- Quality over speed prioritization
-- Comprehensive testing
-- No fixed deadline pressure
+### Buffer for Issues: 2-3 weeks
+- API integration challenges
+- Performance optimization
+- Bug fixes and refinements
+- Integration testing issues
 
-### Realistic Expectations
-
-**Minimum viable product** (screening + email): 6-8 weeks  
-**Production ready** (with testing): 12-15 weeks  
-**Including UI**: 16-19 weeks  
-
-**This timeline assumes:**
-- Part-time development (~20 hours/week)
-- No major blockers or scope changes
-- Comprehensive testing at each phase
-- Full documentation completed
-
----
-
-## Document History
-
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0 | 2026-03-14 | ThommCroft | Initial project roadmap with 8 phases, best practices, dependencies, risk management, and success criteria |
+**Total Realistic Timeline: 10-14 weeks (2.5-3.5 months)**
 
 ---
 
 ## Next Steps
 
-1. **Review this roadmap** with stakeholders
-2. **Adjust timeline** if needed
-3. **Prepare environment** (install software, create API keys)
-4. **Create GitHub Projects board** to track progress
-5. **Begin Phase 1** when ready
+### Immediate Actions (This Week)
+1. [ ] Review all 4 documents (Requirements, Architecture, Data Flow, Roadmap)
+2. [ ] Verify merged approach understanding
+3. [ ] Set up local development environment
+4. [ ] Clone GitHub repository
+5. [ ] Create GitHub Project board
+
+### Week 1 Actions (Phase 1)
+1. [ ] Create project structure
+2. [ ] Set up MySQL database
+3. [ ] Configure Entity Framework Core
+4. [ ] Implement appsettings.json
+5. [ ] Test database connection
+
+### Pre-Development Verification
+1. [ ] Understand merged metric calculation approach
+2. [ ] Review hard filter evaluation logic
+3. [ ] Study quality pillar scoring system
+4. [ ] Review composite score calculation
+5. [ ] Understand valuation and management scoring
+
+### API Setup (Before Phase 3)
+1. [ ] Test SEC EDGAR endpoint
+2. [ ] Test Yahoo Finance API
+3. [ ] Sign up for IEX Cloud (fallback)
+4. [ ] Sign up for Alpha Vantage (fallback)
+5. [ ] Test Federal Reserve FRED API
+
+### GitHub Setup (Before Phase 7)
+1. [ ] Create GitHub Secrets
+2. [ ] Configure SMTP credentials
+3. [ ] Test email sending
+4. [ ] Set up Actions workflows
+5. [ ] Test manual triggers
 
 ---
 
@@ -1325,57 +1334,138 @@ Based on best practices and realistic timelines:
 
 ### A. Required API Keys & Setup
 
-Create a checklist document with exact steps for each API key:
-- Screenshots of registration process
-- Rate limit documentation
-- Example API calls
-- Configuration in appsettings.json
+**SEC EDGAR - No Key Needed**
+```
+Endpoint: https://www.sec.gov/cgi-bin/browse-edgar
+Usage: Fetch 10-K and 10-Q filings
+No authentication required
+Rate limit: 1 request/second
+```
+
+**Yahoo Finance - No Key Needed**
+```
+Endpoint: https://query1.finance.yahoo.com/v10/finance/quoteSummary/
+Usage: Stock prices, market cap, dividends
+No authentication required
+Rate limit: ~2000 requests/hour
+```
+
+**IEX Cloud - Free Tier**
+```
+Sign up: https://iexcloud.io
+Free tier: 100 messages/month
+API Key: Required in headers
+Rate limit: 100 calls/5 minutes
+Use as fallback if Yahoo fails
+```
+
+**Alpha Vantage - Free Tier**
+```
+Sign up: https://www.alphavantage.co
+Free tier: 5 calls/minute
+API Key: Required as parameter
+Rate limit: 5 calls/minute
+Use as final fallback
+```
+
+**Federal Reserve FRED - No Key Needed**
+```
+Endpoint: https://fred.stlouisfed.org/
+Usage: 10-year treasury yield
+No authentication required
+No rate limiting
+```
 
 ### B. GitHub Actions Setup Guide
 
-Step-by-step guide for:
-- Creating secrets in GitHub
-- Testing workflows locally
-- Troubleshooting common issues
-- Monitoring workflow runs
+**1. Create GitHub Secrets:**
+```
+Settings → Secrets and variables → Actions → New repository secret
+
+Add:
+- DB_CONNECTION: "Server=localhost;Uid=root;..."
+- SMTP_SERVER: "smtp.gmail.com"
+- SMTP_PORT: "587"
+- SENDER_EMAIL: "your-email@gmail.com"
+- SENDER_PASSWORD: "your-app-password"
+- RECIPIENT_EMAIL: "your-email@gmail.com"
+```
+
+**2. Create Workflow Files:**
+- `.github/workflows/quarterly-screening.yml`
+- `.github/workflows/weekly-stock-update.yml`
+
+**3. Test Locally:**
+```bash
+# Use GitHub CLI to test locally
+gh workflow run quarterly-screening.yml
+```
 
 ### C. MySQL Setup Script
 
-Automated script to create:
-- Database
-- All tables
-- Initial schema
-- Sample data (optional)
+```sql
+-- Create database
+CREATE DATABASE stockscreener;
+USE stockscreener;
+
+-- Create tables (EF Core migrations will handle this)
+-- Just verify schema after running migrations
+
+-- Check connection
+SELECT 1;
+
+-- Verify tables exist
+SHOW TABLES;
+```
 
 ### D. Development Environment Checklist
 
-Comprehensive checklist for:
-- Software installation
-- Configuration
-- API key setup
-- GitHub setup
-- Database initialization
+- [ ] .NET 8.0 SDK installed
+- [ ] Visual Studio 2022 Community installed
+- [ ] MySQL 8.0 running (Docker or native)
+- [ ] Git installed and configured
+- [ ] GitHub account set up
+- [ ] Repository cloned locally
+- [ ] appsettings.json configured
+- [ ] Database connection verified
+- [ ] Project compiles without errors
+- [ ] Unit test project created
+- [ ] First test runs successfully
 
 ### E. Testing Strategy Document
 
-Detailed guide covering:
-- Unit testing approach
-- Integration testing approach
-- Test data generation
-- Coverage reporting
-- Performance testing
+**Unit Tests (40+ tests)**
+- Metric calculation (ROE, margins, cash flow, etc.)
+- Scoring logic (pillars, composite)
+- Hard filter evaluation
+- Data validation
+- Utility functions
 
----
+**Integration Tests (10+ tests)**
+- Database CRUD operations
+- API mocking and fallbacks
+- End-to-end screening (10 test companies)
+- Email generation
+- CSV export
 
-**End of Project Roadmap Document**
-
-This roadmap provides a clear, phased approach to building the Stock Market Screener. Follow each phase sequentially, validate at each step, and adjust timeline as needed based on progress.
+**Test Data (10 Companies)**
+1. MSFT - Should PASS
+2. AAPL - Should PASS
+3. JNJ - Should PASS
+4. KO - Should PASS
+5. JPM - Should PASS
+6. TSLA - Should FAIL
+7. AMD - Should FAIL
+8. SNAP - Should FAIL
+9. UBER - Should FAIL
+10. GOOG - Should PASS
 
 ---
 
 ## Document History
 
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0 | 2026-03-14 | ThommCroft | Initial project roadmap with 8 phases, best practices, dependencies, risk management, and success criteria |
-| 1.1 | 2026-03-14 | ThommCroft | **CURRENT** - Cross-reference verification completed with Investment Requirements, Architecture Design, and Data Flow documents; all core requirements confirmed aligned |
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | 2026-03-13 | ThommCroft | Initial project roadmap |
+| 1.5 | 2026-03-14 | ThommCroft | Added Phase numbering, updated phase durations, added risk management |
+| 2.0 | 2026-03-14 | ThommCroft | **CURRENT** - Integrated MERGED APPROACH throughout; separated Metric Calculation into Phase 4 with detailed merged explanation; added unified hard filter evaluation; updated Phase numbering to 9 phases total; Phase 4 emphasizes "ALL 40+ metrics before ANY filtering"; Phase 5 focuses on scoring of passing companies; updated timeline estimates for merged approach; emphasized holistic assessment prevents false negatives |
