@@ -1,8 +1,8 @@
 # Architecture Design Document - Stock Market Screener
 
-**Version:** 3.0 (Solo Developer - .NET 8.0 + MySQL)  
-**Date:** 2026-03-13  
-**Author:** ThommCroft  
+**Version:** 3.1 (Solo Developer - .NET 8.0 + MySQL)  
+**Date:** 2026-03-14  
+**Author:** ThommCroft
 **Stack:** C# .NET 8.0, MySQL 8.0, GitHub Actions (Quarterly + Manual), Console Application  
 **Deployment:** Local MySQL + GitHub Actions automation  
 
@@ -611,6 +611,9 @@ To add custom industries:
 │  │  ├─ Operating Cash Flow positive (all 10 years)?
 │  │  ├─ Free Cash Flow positive (all 10 years)?
 │  │  └─ IF ANY FAIL → SKIP company (not stored)
+│  │  **Note:** These 5 core decision filters are backed by additional 
+│  │  MUST HAVE prerequisites (Market Cap > $300M, 5+ years of data, etc.)
+│  │  defined in Investment Requirements document.
 │  │
 │  ├─ Stage 2: Quality Assessment (Scoring)
 │  │  ├─ Score: Return on Capital (30 points)
@@ -1186,4 +1189,5 @@ This is a complete, production-ready architecture that can be built incrementall
 |---------|------|--------|---------|
 | 1.0 | 2026-03-13 | ThommCroft | Initial generic architecture |
 | 2.0 | 2026-03-13 | ThommCroft | Web-based multi-user version |
-| 3.0 | 2026-03-13 | ThommCroft | **CURRENT** - Solo developer edition (MySQL + .NET 8.0 Console), GitHub Actions automation, data reconciliation, email notifications, stock price updates, comprehensive testing strategy |
+| 3.0 | 2026-03-13 | ThommCroft | Solo developer edition (MySQL + .NET 8.0 Console), GitHub Actions automation, data reconciliation, email notifications, stock price updates, comprehensive testing strategy |
+| 3.1 | 2026-03-14 | ThommCroft | **CURRENT** - Minor clarifications on Stage 1 hard filters, Market Cap pre-filter integration, FCF requirement confirmation |
