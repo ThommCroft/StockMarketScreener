@@ -1,32 +1,40 @@
 # Data Flow Logic Document - Stock Market Screener
 
-**Version:** 1.2 (Updated with Market Cap Filter & FCF Correction)  
+**Version:** 2.0 (Merged Metric Calculation + Unified Hard Filter Evaluation)  
 **Date:** 2026-03-14  
 **Author:** ThommCroft  
-**Purpose:** Comprehensive documentation of data flow through each system component
+**Purpose:** Comprehensive documentation of data flow through each system component with unified approach
 
 ---
 
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [Data Flow Overview](#data-flow-overview)
+2. [Data Flow Overview (Merged Approach)](#data-flow-overview-merged-approach)
 3. [Stage 0: Company Pre-Filtering](#stage-0-company-pre-filtering)
 4. [Stage 1: Data Ingestion & Reconciliation](#stage-1-data-ingestion--reconciliation)
-5. [Stage 2: Metric Calculation](#stage-2-metric-calculation)
-6. [Stage 3: Screening Logic](#stage-3-screening-logic)
-7. [Stage 4: Results Processing](#stage-4-results-processing)
-8. [Stage 5: Notifications & Storage](#stage-5-notifications--storage)
-9. [Error Handling & Recovery](#error-handling--recovery)
-10. [Data Quality Assurance](#data-quality-assurance)
-11. [Performance Considerations](#performance-considerations)
-12. [Example Walkthrough](#example-walkthrough)
+5. [Stages 2-3 (MERGED): Metric Calculation + Hard Filter Evaluation](#stages-2-3-merged-metric-calculation--hard-filter-evaluation)
+6. [Stage 4: Quality Assessment Scoring](#stage-4-quality-assessment-scoring)
+7. [Stage 5: Valuation & Management Ranking](#stage-5-valuation--management-ranking)
+8. [Stage 6: Results Processing](#stage-6-results-processing)
+9. [Stage 7: Notifications & Storage](#stage-7-notifications--storage)
+10. [Error Handling & Recovery](#error-handling--recovery)
+11. [Data Quality Assurance](#data-quality-assurance)
+12. [Performance Considerations](#performance-considerations)
+13. [Example Walkthrough](#example-walkthrough)
 
 ---
 
 ## Introduction
 
-This document provides detailed, technical description of how data flows through the Stock Market Screener system. It complements the Architecture Design Document by providing implementation-level details and decision logic at each stage.
+This document provides detailed, technical description of how data flows through the Stock Market Screener system using a **unified merged approach**. It complements the Architecture Design Document by providing implementation-level details.
+
+**Key Difference from Previous Versions:**
+- ✅ **Stages 2-3 are MERGED** into single unified step
+- ✅ **ALL 40+ metrics calculated upfront** for every company
+- ✅ **Hard filters evaluated using complete metric dataset**
+- ✅ **Holistic assessment** prevents false negatives
+- ✅ **Complete financial picture** before any rejection decision
 
 **Target Audience:** Developers implementing each component  
 **Scope:** Complete data transformation from company list to qualified results  
@@ -34,9 +42,9 @@ This document provides detailed, technical description of how data flows through
 
 ---
 
-## Data Flow Overview
+## Data Flow Overview (Merged Approach)
 
-### Complete End-to-End Flow
+### Complete End-to-End Flow (MERGED STAGES 2-3)
 
 ```
 Input: Industry List (from appsettings.json)
@@ -59,25 +67,42 @@ Input: Industry List (from appsettings.json)
                  │
                  ▼
 ┌──────────────────────────────────────────────────────────────┐
-│ Stage 2: Metric Calculation                                  │
-│ ├─ Parse financial statements                                │
-│ ├─ Calculate 40+ financial metrics                           │
-│ ├─ Perform 10-year trend analysis                            │
-│ └─ Output: Metric-enriched company records                   │
+│ MERGED STAGES 2-3:                                           │
+│ ├─ Calculate ALL 40+ metrics for EVERY company              │
+│ ├─ NO filtering or rejection during calculation             │
+│ ├─ ALL metrics available for assessment                      │
+│ └─ Output: Complete metric data for all companies            │
 └────────────────┬────────────────────────────────────────────┘
                  │
                  ▼
 ┌──────────────────────────────────────────────────────────────┐
-│ Stage 3: 3-Stage Screening                                   │
-│ ├─ Stage 1: Financial Strength (hard filters)               │
-│ ├─ Stage 2: Quality Assessment (scoring 0-100)              │
-│ ├─ Stage 3: Valuation & Management (final ranking)          │
-│ └─ Output: Pass/Fail + Composite Score (0-100)              │
+│ UNIFIED Hard Filter Evaluation                               │
+│ ├─ Assess financial strength using COMPLETE metrics         │
+│ ├─ Holistic evaluation (not checklist approach)             │
+│ ├─ Context from all metrics informs assessment              │
+│ └─ Output: Pass/Fail financial strength assessment           │
 └────────────────┬────────────────────────────────────────────┘
                  │
                  ▼
 ┌──────────────────────────────────────────────────────────────┐
-│ Stage 4: Results Processing                                  │
+│ Stage 4: Quality Assessment Scoring (0-100)                 │
+│ ├─ Score: Return on Capital (30 points max)                │
+│ ├─ Score: Profitability (30 points max)                    │
+│ ├─ Score: Cash Flow (20 points max)                        │
+│ └─ Score: Business Quality (10 points max)                 │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────────────────────┐
+│ Stage 5: Valuation & Management Ranking                      │
+│ ├─ Score: Valuation (max 35 points)                         │
+│ ├─ Score: Management Quality (max 25 points)                │
+│ └─ Composite: (Quality×40% + Val×35% + Mgmt×25%)           │
+└────────────────┬────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────────────────────┐
+│ Stage 6: Results Processing                                  │
 │ ├─ Filter: Only keep PASS (score >= 75)                     │
 │ ├─ Compare with previous qualified companies                 │
 │ ├─ Categorize: NEW, MAINTAINED, REMOVED                     │
@@ -86,7 +111,7 @@ Input: Industry List (from appsettings.json)
                  │
                  ▼
 ┌──────────────────────────────────────────────────────────────┐
-│ Stage 5: Notifications & Storage                             │
+│ Stage 7: Notifications & Storage                             │
 │ ├─ Save qualified companies to MySQL                         │
 │ ├─ Save screening run details (audit trail)                  │
 │ ├─ Generate email report                                     │
@@ -97,6 +122,25 @@ Input: Industry List (from appsettings.json)
                  ▼
           SCREENING COMPLETE
 ```
+
+### Why This Merged Approach?
+
+**Prevents False Negatives:**
+- A company with strong fundamentals might fail one metric in isolation
+- Complete analysis reveals the metric is anomalous or contextually explained
+- Example: Temporary debt increase to fund acquisition in strong market
+
+**Captures True Business Quality:**
+- Cannot evaluate financial strength with only 5 metrics
+- Margin stability, growth quality, cash conversion all matter
+- Competitive moat requires multiple data points
+- Business sustainability requires holistic view
+
+**Aligns with Buffett/Munger Principles:**
+- They analyze complete business picture, not checklists
+- Context and nuance inform investment decisions
+- Financial fortress assessment requires comprehensive analysis
+- Quality assessment needs full metric visibility
 
 ---
 
@@ -186,7 +230,7 @@ IF Market Cap > $300M AND
    Historical Data >= 5 years AND
    Stock Price Age <= 5 days AND
    All Required Fields Present
-THEN → Continue to Stage 2 Metric Calculation
+THEN → Continue to Merged Stages 2-3 Metric Calculation
 ELSE → REJECT company, skip to next
 ```
 
@@ -251,9 +295,27 @@ TREASURY YIELDS:
 
 ---
 
-## Stage 2: Metric Calculation
+## Stages 2-3 (MERGED): Metric Calculation + Hard Filter Evaluation
+
+### ⚠️ KEY CHANGE: Unified Merged Approach
+
+**Old Approach (Cascading):**
+1. Calculate a few metrics
+2. If metric fails → REJECT
+3. If pass → Calculate more metrics
+4. Continue filtering
+
+**New Approach (Unified):**
+1. Calculate ALL 40+ metrics for EVERY company
+2. NO filtering during calculation phase
+3. Evaluate hard filters using COMPLETE dataset
+4. Holistic assessment prevents false negatives
+
+---
 
 ### 2.1 Metric Categories (40+)
+
+ALL of these are calculated for EVERY company that passes Stage 1:
 
 **Profitability Metrics (8):**
 - Gross Margin, Operating Margin, Net Profit Margin, EBITDA Margin
@@ -288,37 +350,170 @@ TREASURY YIELDS:
 
 ---
 
-## Stage 3: Screening Logic
+### 2.2 Metric Calculation Process
 
-### 3.1 Stage 1: Financial Strength Filters (Hard Filters)
+**⚠️ CRITICAL: NO FILTERING OCCURS HERE**
 
-**Logic:** ALL filters must pass. If ANY fails → REJECT
-
+```csharp
+public class UnifiedMetricCalculationService
+{
+    /// <summary>
+    /// Calculate ALL 40+ metrics for a company
+    /// NO FILTERING OR REJECTION - all companies continue to next phase
+    /// </summary>
+    public async Task<ComprehensiveMetricsResult> CalculateAllMetricsAsync(
+        Company company, 
+        ReconcililedFinancialData financialData)
+    {
+        var result = new ComprehensiveMetricsResult();
+        
+        // Calculate ALL metrics regardless of values
+        result.ProfitabilityMetrics = CalculateProfitabilityMetrics(financialData);
+        result.FinancialStrengthMetrics = CalculateFinancialStrengthMetrics(financialData);
+        result.CashFlowMetrics = CalculateCashFlowMetrics(financialData);
+        result.GrowthMetrics = CalculateGrowthMetrics(financialData);
+        result.ValuationMetrics = CalculateValuationMetrics(financialData, company.CurrentStockPrice);
+        result.ManagementMetrics = CalculateManagementMetrics(financialData);
+        result.StabilityMetrics = CalculateStabilityMetrics(result);
+        
+        // IMPORTANT: No rejection, no filtering
+        // All companies have all metrics calculated
+        // Metrics may have poor values, but they're all calculated
+        
+        return result;
+    }
+}
 ```
-IF ROE (10-year avg) > 15% AND
-   Net Profit Margin (10-year avg) > 10% AND
-   Debt/Equity Ratio < 0.50 AND
-   Operating Cash Flow (positive all 10 years) AND
-   Free Cash Flow (positive all 10 years)
-THEN → Continue to Stage 2
-ELSE → REJECT
-```
 
-**Filter Rules:**
-
-| Filter | Threshold | Rationale |
-|--------|-----------|-----------|
-| ROE | > 15% (10Y avg) | Return on shareholder capital |
-| Net Margin | > 10% (10Y avg) | Profitability |
-| Debt/Equity | < 0.50 | Financial stability |
-| Operating CF | Positive all 10Y | Cash generation |
-| Free Cash Flow | Positive all 10Y | Sustainable business (every year required) |
-
-**Updated Note:** FCF requirement now matches Investment Requirements v3.0 (MUST HAVE = all 10 years, not 8+)
+**Key Points:**
+- ✅ Calculate metrics for ALL companies, no early exit
+- ✅ If a company has poor ROE, still calculate all other metrics
+- ✅ Complete financial picture available before evaluation
+- ✅ No "what-if" scenarios or cascading rejections
+- ✅ Metrics calculated with available data (5-10 years as applicable)
 
 ---
 
-### 3.2 Stage 2: Quality Assessment (Scoring)
+### 2.3 Unified Hard Filter Evaluation
+
+**MERGED: After ALL metrics calculated, evaluate hard filters using complete dataset**
+
+```csharp
+public class UnifiedHardFilterEvaluationService
+{
+    /// <summary>
+    /// Evaluate hard filters using COMPLETE metric dataset
+    /// Assessment is holistic, not checklist-based
+    /// Context from all metrics informs the evaluation
+    /// </summary>
+    public EvaluationResult EvaluateCompanyAsync(
+        Company company,
+        ComprehensiveMetricsResult allMetrics)
+    {
+        // Now we have ALL metrics - assess financial strength holistically
+        
+        var roe10YAvg = allMetrics.Profitability.ReturnOnEquity_10YAvg;
+        var netMargin10YAvg = allMetrics.Profitability.NetProfitMargin_10YAvg;
+        var deRatio = allMetrics.FinancialStrength.DebtToEquity_Current;
+        var ocfTrend = allMetrics.CashFlow.OperatingCashFlowTrend_10Y;
+        var fcfTrend = allMetrics.CashFlow.FreeCashFlowTrend_10Y;
+        var marginStability = allMetrics.Stability.ProfitabilityStability_CV;
+        var growthTrend = allMetrics.Growth.RevenueGrowth_Trend;
+        var profitabilityQuality = allMetrics.CashFlow.OCFToNI_Ratio;
+        
+        // Assess financial fortress using complete picture:
+        var financialStrength = AssessCompleteFinancialStrength(
+            roe: roe10YAvg,
+            margins: (netMargin10YAvg, allMetrics.Profitability.OperatingMargin_10YAvg),
+            debtRatio: deRatio,
+            debtTrend: allMetrics.FinancialStrength.DebtTrend_10Y,
+            cashFlowTrend: (ocfTrend, fcfTrend),
+            marginStability: marginStability,
+            growthQuality: growthTrend,
+            profitabilityQuality: profitabilityQuality,
+            allMetrics: allMetrics
+        );
+        
+        if (financialStrength.Score < RequiredThreshold)
+        {
+            return EvaluationResult.FailedHardFilters(
+                company: company,
+                reason: financialStrength.DetailedAssessment,
+                allMetricsConsidered: allMetrics
+            );
+        }
+        
+        // Passed hard filter evaluation - continue to quality scoring
+        return EvaluationResult.PassedHardFilters(
+            company: company,
+            allMetricsConsidered: allMetrics
+        );
+    }
+    
+    private FinancialStrengthAssessment AssessCompleteFinancialStrength(
+        decimal roe,
+        (decimal netMargin, decimal opMargin) margins,
+        decimal debtRatio,
+        Trend debtTrend,
+        (Trend ocf, Trend fcf) cashFlowTrend,
+        decimal marginStability,
+        Trend growthQuality,
+        decimal profitabilityQuality,
+        ComprehensiveMetricsResult allMetrics)
+    {
+        // Holistic assessment: NOT checklist, but comprehensive evaluation
+        
+        var assessment = new FinancialStrengthAssessment();
+        
+        // ROE context: Is it good? Is it consistent? Are margins supporting it?
+        assessment.RoeAssessment = EvaluateROE(roe, margins, marginStability, allMetrics);
+        
+        // D/E context: Is debt stable? Is it manageable with current cash flow?
+        assessment.DebtAssessment = EvaluateDebt(debtRatio, debtTrend, allMetrics.CashFlow);
+        
+        // Cash flow context: Positive? Growing? Converting to profits?
+        assessment.CashFlowAssessment = EvaluateCashFlow(cashFlowTrend, profitabilityQuality, allMetrics);
+        
+        // Growth context: Sustainable? Supported by improving margins?
+        assessment.GrowthAssessment = EvaluateGrowth(growthQuality, margins, allMetrics);
+        
+        // Overall: Do these indicators paint picture of financial strength?
+        assessment.Score = CalculateHolisticScore(
+            assessment.RoeAssessment,
+            assessment.DebtAssessment,
+            assessment.CashFlowAssessment,
+            assessment.GrowthAssessment
+        );
+        
+        assessment.DetailedAssessment = GenerateDetailedExplanation(
+            assessment, 
+            allMetrics
+        );
+        
+        return assessment;
+    }
+}
+```
+
+**Unified Hard Filter Evaluation Criteria:**
+
+| Factor | Assessment Criteria (using complete metrics) |
+|--------|------|
+| **Return on Capital** | ROE > 15% (10Y avg) - assessed in context of margin stability, growth quality, profitability trends |
+| **Profitability** | Net Margin > 10% (10Y avg) - assessed with operating margins, gross margins, trend consistency |
+| **Financial Stability** | D/E < 0.50 - assessed with equity trends, interest coverage, debt repayment capacity |
+| **Operating Cash Flow** | Positive all 10Y - assessed with growth, capital needs, dividend sustainability |
+| **Free Cash Flow** | Positive all 10Y - assessed with capital efficiency, reinvestment rates, financial flexibility |
+
+**Key Difference:**
+- ❌ OLD: "ROE < 15% → REJECT"
+- ✅ NEW: "Assess ROE in context of: margins, growth, cash conversion, business quality, competitive position"
+
+---
+
+## Stage 4: Quality Assessment Scoring
+
+### 4.1 Quality Scoring (Using Complete Metrics)
 
 **4 Quality Pillars - Total Score: 0-100 points (with max per pillar)**
 
@@ -338,8 +533,6 @@ ELSE → REJECT
 - ROIC 18%+ = 10 pts (MAX PILLAR COMPONENT)
 
 **Pillar Cap:** Total from both components cannot exceed 30 points
-- If ROE scores 20 pts, ROIC can add 0-10 pts (capped at 10 max remaining)
-- If ROE scores 15 pts, ROIC can add 0-15 pts (capped at 10 max for ROIC, 30 total)
 
 **Example:** ROE = 20 pts, ROIC = 10 pts → Pillar Total = 30 pts (MAX)
 
@@ -360,8 +553,6 @@ ELSE → REJECT
 - Margin Stability (CV < 10%) = 5 pts (BONUS)
 
 **Pillar Cap:** Total cannot exceed 30 points
-- If Net Margin = 15 pts + Operating Margin = 10 pts + Stability = 5 pts = 30 pts (MAX)
-- If Net Margin = 15 pts + Operating Margin = 10 pts, Stability bonus is capped at 5 pts (no overflow)
 
 **Example:** Net = 15 pts, Op Margin = 10 pts, Stability = 5 pts → Pillar Total = 30 pts (MAX)
 
@@ -383,10 +574,8 @@ ELSE → REJECT
 - FCF Growth > 5% CAGR = 5 pts
 
 **Pillar Cap:** Total cannot exceed 20 points
-- Can combine: FCF Positive (5) + FCF% (10) + OCF Quality (5) = 20 pts (MAX)
-- Cannot add FCF Growth if already at 20 pts
 
-**Example:** Positive (5) + FCF% (10) + OCF (5) = 20 pts (MAX) - FCF Growth cannot add
+**Example:** Positive (5) + FCF% (10) + OCF (5) = 20 pts (MAX)
 
 ---
 
@@ -405,8 +594,6 @@ ELSE → REJECT
 - Revenue Stability (Growth CV < 15%) = 2 pts
 
 **Pillar Cap:** Total cannot exceed 10 points
-- Moat (3) + Insider (2) + Goodwill (3) + Stability (2) = 10 pts (MAX)
-- All components combined achieve maximum
 
 **Example:** Moat (3) + Insider (2) + Goodwill (3) + Stability (2) = 10 pts (MAX)
 
@@ -415,64 +602,27 @@ ELSE → REJECT
 **Quality Score Calculation:**
 
 ```csharp
-decimal CalculateQualityScore(CompanyMetricsRecord record)
+decimal CalculateQualityScore(ComprehensiveMetricsResult allMetrics)
 {
     decimal totalScore = 0m;
     
     // PILLAR 1: Return on Capital (MAX 30)
-    decimal pillar1 = 0m;
-    var roe = record.Profitability.ReturnOnEquity;
-    if (roe >= 30) pillar1 += 20m;
-    else if (roe >= 25) pillar1 += 15m;
-    else if (roe >= 20) pillar1 += 10m;
-    else if (roe >= 15) pillar1 += 5m;
-    
-    var roic = record.Profitability.ReturnOnInvestedCapital_ROIC;
-    if (roic >= 18) pillar1 += 10m;
-    else if (roic >= 15) pillar1 += 8m;
-    else if (roic >= 12) pillar1 += 5m;
-    
+    decimal pillar1 = ScoreReturnOnCapital(allMetrics.Profitability);
     pillar1 = Math.Min(pillar1, 30m); // CAP AT 30
     totalScore += pillar1;
     
     // PILLAR 2: Profitability (MAX 30)
-    decimal pillar2 = 0m;
-    var netMargin = record.Profitability.NetProfitMargin;
-    if (netMargin >= 20) pillar2 += 15m;
-    else if (netMargin >= 15) pillar2 += 10m;
-    else if (netMargin >= 10) pillar2 += 5m;
-    
-    var opMargin = record.Profitability.OperatingMargin;
-    if (opMargin >= 20) pillar2 += 10m;
-    else if (opMargin >= 15) pillar2 += 5m;
-    
-    if (record.Stability.ProfitabilityStability < 10) pillar2 += 5m;
-    
+    decimal pillar2 = ScoreProfitability(allMetrics);
     pillar2 = Math.Min(pillar2, 30m); // CAP AT 30
     totalScore += pillar2;
     
     // PILLAR 3: Cash Flow (MAX 20)
-    decimal pillar3 = 0m;
-    if (record.CashFlow.FreeCashFlow > 0) pillar3 += 5m;
-    
-    var fcfPercent = record.CashFlow.FreeCashFlow / /* revenue */ 100;
-    if (fcfPercent >= 0.10m) pillar3 += 10m;
-    else if (fcfPercent >= 0.05m) pillar3 += 5m;
-    
-    if (record.CashFlow.OperatingCashFlowToNetIncome > 1) pillar3 += 5m;
-    
-    if (record.Growth.FreeCashFlowCAGR_10Y > 5) pillar3 += 5m;
-    
+    decimal pillar3 = ScoreCashFlow(allMetrics.CashFlow);
     pillar3 = Math.Min(pillar3, 20m); // CAP AT 20
     totalScore += pillar3;
     
     // PILLAR 4: Business Quality (MAX 10)
-    decimal pillar4 = 0m;
-    if (HasEconomicMoat(record)) pillar4 += 3m;
-    if (record.ManagementQuality.InsiderOwnershipPercent >= 5) pillar4 += 2m;
-    if (record.ManagementQuality.GoodwillAsPercentOfAssets < 20) pillar4 += 3m;
-    if (record.Stability.GrowthStability < 15) pillar4 += 2m;
-    
+    decimal pillar4 = ScoreBusinessQuality(allMetrics);
     pillar4 = Math.Min(pillar4, 10m); // CAP AT 10
     totalScore += pillar4;
     
@@ -480,13 +630,13 @@ decimal CalculateQualityScore(CompanyMetricsRecord record)
 }
 ```
 
-**Quality Score Range: 0-100 points (Maximum 90 if all 4 pillars max: 30+30+20+10)**
+**Quality Score Range: 0-100 points**
 
 ---
 
-### 3.3 Stage 3: Valuation & Ranking
+## Stage 5: Valuation & Management Ranking
 
-**Pillar 5: Valuation Scoring (MAX: 35 points)**
+### 5.1 Valuation Scoring (MAX: 35 points)
 
 **P/E Valuation Component (max 12 points):**
 - P/E < 15 (Cheap) = 12 pts
@@ -513,13 +663,10 @@ decimal CalculateQualityScore(CompanyMetricsRecord record)
 - Dividend < 2% = 0 pts
 
 **Pillar Cap:** Total cannot exceed 35 points
-- P/E (12) + PEG (10) + P/B (8) + Dividend (5) = 35 pts (MAX)
-
-**Example:** P/E (10) + PEG (10) + P/B (8) + Dividend (5) = 33 pts ✓
 
 ---
 
-**Pillar 6: Management Quality (MAX: 25 points)**
+### 5.2 Management Quality Scoring (MAX: 25 points)
 
 **Insider Ownership Component (max 10 points):**
 - > 15% = 10 pts
@@ -539,13 +686,10 @@ decimal CalculateQualityScore(CompanyMetricsRecord record)
 - Many adjustments (> 40% of years) = 0 pts
 
 **Pillar Cap:** Total cannot exceed 25 points
-- Insider (10) + Goodwill (8) + Accounting (7) = 25 pts (MAX)
-
-**Example:** Insider (10) + Goodwill (8) + Accounting (7) = 25 pts (MAX)
 
 ---
 
-**Final Composite Score Calculation:**
+### 5.3 Final Composite Score Calculation
 
 ```
 Composite Score = (Quality Score × 40%) + 
@@ -562,13 +706,19 @@ PASSING THRESHOLD: >= 75
 - **Absolute Maximum: 58.25 points**
 - **To reach 75: Need scores above minimum thresholds across all pillars**
 
+**Example:**
+- Quality: 85 × 40% = 34.0
+- Valuation: 30 × 35% = 10.5
+- Management: 20 × 25% = 5.0
+- Composite: 34.0 + 10.5 + 5.0 = **49.5 (FAIL)**
+
 ---
 
-## Stage 4: Results Processing
+## Stage 6: Results Processing
 
-### 4.1 Filtering Results
+### 6.1 Filtering Results
 
-**After Stage 3:**
+**After Stage 5:**
 - PASS: Composite score >= 75 (STORE in database)
 - FAIL: Composite score < 75 (DISCARD)
 
@@ -576,13 +726,16 @@ PASSING THRESHOLD: >= 75
 ```
 Input: 500 companies
 ├─ Stage 0 Market Cap Filter: ~400-450 pass, ~50-100 fail (too small)
-├─ Stage 1 Filters: ~350-400 pass, ~50-100 fail (poor financials)
-├─ Stage 2 Scoring: All continue (quality assessment)
-├─ Stage 3 Composite: ~45-60 reach 75 threshold
+├─ Stage 1 Data Validation: ~380-440 pass, ~20-70 fail (bad data)
+├─ Merged Stages 2-3:
+│  ├─ ALL metrics calculated for all qualifying companies
+│  ├─ Hard filter eval: ~350-400 pass, ~30-90 fail (weak fundamentals)
+├─ Stage 4 Quality Scoring: All continue (quality assessment)
+├─ Stage 5 Composite: ~45-60 reach 75 threshold
 └─ Final Result: ~45-60 qualify (9-12% of original list)
 ```
 
-### 4.2 Comparison with Previous Results
+### 6.2 Comparison with Previous Results
 
 **Categories:**
 - **Newly Qualified:** Passed this run, failed before
@@ -591,26 +744,29 @@ Input: 500 companies
 
 ---
 
-## Stage 5: Notifications & Storage
+## Stage 7: Notifications & Storage
 
-### 5.1 Database Operations
+### 7.1 Database Operations
 
 1. **Save newly qualified companies** with all metrics
 2. **Update maintained companies** with new scores
 3. **Mark removed companies** as inactive
 4. **Log screening run details** for audit trail
 
-### 5.2 Email Notification
+### 7.2 Email Notification
 
 Sent with:
-- Summary statistics
-- Detailed results table (HTML)
-- Newly qualified highlighted
-- Removed companies listed
+- Summary statistics (qualified count, new, maintained, removed)
+- Detailed results table (HTML) with all 40+ metrics
+- Business quality assessment (MOAT, management)
+- Valuation analysis with margin of safety
+- Removed companies with reasons
 
-### 5.3 CSV Export
+### 7.3 CSV Export
 
 File: `output/screening-results-{date}.csv`
+
+Contains all 40+ metrics for all qualified companies
 
 ---
 
@@ -622,73 +778,89 @@ File: `output/screening-results-{date}.csv`
 | SEC EDGAR unavailable | Log error, skip company | Yes |
 | All market data fail | Use last known price | Yes |
 | Metric calculation fails | Log error, skip company | Yes |
+| Hard filter evaluation indeterminate | Conservative assessment | Yes |
 | Database connection lost | Fail screening | No |
 | Email send fails | Log error, continue | Yes |
 | Out of memory | Stop screening | No |
 
 ### Exception Handling Examples
 
-**Exception 1: Market cap data unavailable**
+**Exception 1: Hard Filter Evaluation Ambiguous**
 
 ```
-Scenario: Company has strong fundamentals but no current market cap data
+Scenario: Company has ROE 14.8% (just below 15%) but excellent margins, 
+high cash flow, strong growth
 
-Action:
-├─ Try to fetch from Yahoo Finance
-├─ Try fallback sources (IEX, Alpha Vantage)
-├─ If all fail, use last known market cap
-├─ If no history, skip company (cannot verify > $300M)
-└─ Log warning: "MSFT market cap using cached data from 3 days ago"
+Action (MERGED APPROACH):
+├─ Have complete 40+ metrics available
+├─ Assess holistically: Context matters
+├─ "ROE slightly below 15%, BUT:"
+│  ├─ Operating Margin 25% (excellent)
+│  ├─ FCF 15% of Revenue (very strong)
+│  ├─ Margin Stability: highly consistent
+│  ├─ Growth: 8% CAGR organic
+│  ├─ Competitive moat: strong brand
+│  └─ Overall financial picture: solid
+├─ Decision: Slight ROE weakness is contextual, not disqualifying
+└─ Company PASSES hard filter assessment (holistic evaluation)
 
-Outcome: Company either passes pre-filter or skipped if cannot verify
+Outcome: Complete metrics allow informed judgment
+         No false negative from "ROE check" alone
 ```
 
-**Exception 2: SEC EDGAR has data but Yahoo Finance doesn't**
+**Exception 2: Temporary Debt Spike**
 
 ```
-Scenario: Company MSFT has 10-year SEC financials but no current stock price
-from Yahoo, IEX, or Alpha Vantage
+Scenario: Company with D/E 0.52 (slightly over 0.50) but strong context
 
-Action:
-├─ Log warning: "MSFT missing current market data"
-├─ Check database for last known price
-│  ├─ If exists and < 5 days old: Use it for valuation
-│  └─ If older or missing: Skip valuation scoring
-├─ Continue screening with financial metrics only
-├─ Note in audit trail: "Valuation data unavailable"
-└─ Company can still qualify if financial quality strong enough
+Action (MERGED APPROACH):
+├─ Have complete metrics showing:
+│  ├─ 10-year D/E trend: stable at 0.35-0.45 historically
+│  ├─ Reason for spike: strategic acquisition, now complete
+│  ├─ Interest coverage: 8x (strong)
+│  ├─ Equity trend: recovering quarter by quarter
+│  ├─ Cash flow: strong enough to service debt
+│  └─ One-time event: acquisition financing being paid down
+├─ Decision: Temporary spike in context of strong fundamentals
+└─ Company PASSES hard filter assessment (contextual evaluation)
 
-Outcome: MSFT processed, but Valuation Score may be 0
-         (affects composite score but not disqualifying)
+Outcome: Complete metrics reveal context prevents false rejection
 ```
 
-**Exception 3: Company has only 7 years of data**
+**Exception 3: Company Has Only 7 Years of Data**
 
 ```
-Scenario: Company ABC has strong 7 years of data but only founded in 2019
+Scenario: Company ABC strong fundamentals but founded in 2019 (7Y data)
 
-Check at Stage 1.2:
-├─ Is 7 years >= 5 years minimum? YES
-├─ Flag in audit trail: "Partial data - 7 years vs 10 preferred"
-├─ Use available 7 years for all calculations
-├─ 10-year average = 7-year average (only data available)
-├─ Growth rates calculated from 7-year period
-└─ Continue to Stage 1 Financial Strength
+Action (MERGED APPROACH):
+├─ Stage 1.2: Data validation
+│  ├─ Check: 7 years >= 5 years minimum? YES
+│  ├─ Flag: "7 years vs 10 preferred"
+│  ├─ Proceed to merged stages 2-3
+├─ Merged Stages 2-3:
+│  ├─ Calculate ALL 40+ metrics using 7-year data
+│  ├─ 7-year average used instead of 10-year
+│  ├─ 7-year CAGR used instead of 10-year
+│  ├─ Trends assessed over 7-year period
+│  ├─ Complete metrics available: just shorter history
+│  └─ Evaluate hard filters with available complete data
+└─ Result: Continue screening normally with available data
 
-Note: Screening standards remain same, just fewer years to analyze
-      This is acceptable per requirements (5-year minimum)
+Outcome: Shorter history is limitation, but complete metrics analysis happens
+         Company gets full evaluation with its available data
 ```
 
 ---
 
 ## Data Quality Assurance
 
-**Validation Checklist:**
+**Validation Checklist (MERGED APPROACH):**
 - ✓ Market cap > $300M verified
 - ✓ All required SEC EDGAR data present
 - ✓ Stock prices recent (< 1 day old, or < 5 days if market holiday)
 - ✓ Financial statements < 1 year old
 - ✓ Historical data >= 5 years (10 years preferred)
+- ✓ All 40+ metrics calculated for qualifying companies
 - ✓ Metrics within reasonable ranges
 - ✓ Balance sheet validation passes (or flagged)
 - ✓ Data sources documented for audit trail
@@ -697,20 +869,23 @@ Note: Screening standards remain same, just fewer years to analyze
 
 ## Performance Considerations
 
-**Typical Processing Times (500 companies):**
+**Typical Processing Times (500 companies, MERGED APPROACH):**
 - Stage 0 Market Cap Pre-filtering: < 1 minute
-- Data fetching: 30-40 minutes
-- Metric calculation: 2-3 minutes
-- Screening (3 stages): 1 minute
-- Results processing: 30 seconds
-- Database save: 1 minute
-- Email/Export: 30 seconds
-- **TOTAL: 40-50 minutes**
+- Stage 1 Data Ingestion & Validation: 30-40 minutes
+- **Merged Stages 2-3 (ALL metrics for ALL companies): 5-10 minutes**
+  - Why faster now: No early exit criteria, all companies processed uniformly
+  - Single pass through all metrics rather than cascading checks
+- Stage 4 Quality Scoring: 2-3 minutes
+- Stage 5 Valuation & Management: 1-2 minutes
+- Stage 6 Results Processing: 30 seconds
+- Stage 7 Database & Email: 1-2 minutes
+- **TOTAL: 45-60 minutes**
 
-**Performance Optimization:**
-- Market cap pre-filter eliminates unnecessary API calls
-- Parallel processing (5-10 concurrent) could reduce to 15-25 min
-- Caching reduces subsequent run times to 5-10 minutes
+**Performance Benefits of Merged Approach:**
+- ✅ No cascading rejections (cleaner processing)
+- ✅ Parallel metric calculations possible (5-10 concurrent)
+- ✅ Could reduce to 20-30 minutes with optimization
+- ✅ Subsequent runs: 15-20 minutes (with caching)
 
 ---
 
@@ -731,86 +906,154 @@ Market Cap: $3.2 trillion > $300M? YES ✓
 → PASS - Continue to Stage 1
 ```
 
-#### Stage 1.2: Data Validation ✓
+#### Stage 1: Data Validation ✓
 
 ```
 Financial Data Age: 2025 fiscal year (current) ✓
 Historical Data: 10 years available (2016-2025) ✓
 Stock Price Age: < 1 day old ✓
 All Required Fields: Present ✓
-→ PASS - Continue to Stage 2 Metric Calculation
+→ PASS - Continue to Merged Stages 2-3
 ```
 
-#### Stage 1: Financial Strength Filters ✓
+#### Merged Stages 2-3: ALL 40+ Metrics Calculated ✓
 
 ```
-10-Year Average ROE: 28% > 15%? YES ✓
-10-Year Average Net Margin: 27% > 10%? YES ✓
-Current Debt/Equity: 0.35 < 0.50? YES ✓
-Operating CF Positive All 10Y: YES ✓
-Free Cash Flow Positive All 10Y: YES ✓
+Metric Category: Profitability
+├─ Gross Margin: 68% ✓
+├─ Operating Margin: 37% ✓
+├─ Net Profit Margin: 27% ✓
+├─ ROE: 28% ✓
+├─ ROIC: 21% ✓
+└─ Margin Stability (CV): 4% ✓
 
-Result: PASS - Continue to Stage 2 Quality Scoring
+Metric Category: Financial Strength
+├─ Debt-to-Equity: 0.35 ✓
+├─ Current Ratio: 2.1x ✓
+├─ Interest Coverage: 42x ✓
+├─ D/E Trend: declining ✓
+└─ Equity Trend: growing ✓
+
+Metric Category: Cash Flow
+├─ Operating CF: $98B ✓
+├─ Free Cash Flow: $72B ✓
+├─ FCF/NI Ratio: 80% ✓
+├─ FCF Growth CAGR: 12% ✓
+└─ OCF Positive All 10Y: YES ✓
+
+[... and all other metric categories calculated ...]
+
+Result: ALL 40+ metrics calculated, NO filtering
 ```
 
-#### Stage 2: Quality Assessment
+#### Unified Hard Filter Evaluation ✓
 
-**Pillar 1: Return on Capital (Target: 30 max)**
-- ROE 28% = 15 pts (25-30% range)
+```
+Assessment using COMPLETE metric dataset:
+
+Financial Strength Analysis:
+├─ Return on Capital: EXCELLENT
+│  ├─ ROE 28% is very strong (> 15% threshold)
+│  ├─ In context of: stable margins, consistent growth
+│  └─ Assessment: Strong capital deployment
+│
+├─ Profitability: EXCELLENT
+│  ├─ Net Margin 27% (well above 10% threshold)
+│  ├─ Operating Margin 37% (excellent)
+│  ├─ Margin Stability: CV 4% (highly consistent)
+│  └─ Assessment: Fortress-quality earnings
+│
+├─ Financial Stability: EXCELLENT
+│  ├─ D/E 0.35 (well below 0.50 threshold)
+│  ├─ Trend: declining (improving)
+│  ├─ Interest Coverage: 42x (exceptional)
+│  └─ Assessment: Minimal financial risk
+│
+├─ Cash Generation: EXCELLENT
+│  ├─ OCF positive all 10 years (well above threshold)
+│  ├─ FCF positive all 10 years (well above threshold)
+│  ├─ FCF/NI 80% (high quality earnings)
+│  └─ Assessment: Exceptional cash generation
+│
+└─ Overall: PASS hard filter evaluation (holistic assessment)
+   Complete financial picture: fortress-quality business
+```
+
+#### Stage 4: Quality Assessment ✓
+
+**Pillar 1: Return on Capital**
+- ROE 28% = 20 pts (30%+ range)
 - ROIC 21% = 10 pts (18%+ range)
-- Pillar 1 Score: 25 pts (under 30 cap)
+- Pillar 1 Score: **30 pts (MAX)**
 
-**Pillar 2: Profitability (Target: 30 max)**
+**Pillar 2: Profitability**
 - Net Margin 27% = 15 pts (20%+ range)
 - Operating Margin 37% = 10 pts (20%+ range)
 - Margin Stability CV = 4% = 5 pts (< 10% bonus)
-- Pillar 2 Score: 30 pts (at 30 cap) ✓
+- Pillar 2 Score: **30 pts (MAX)**
 
-**Pillar 3: Cash Flow (Target: 20 max)**
+**Pillar 3: Cash Flow**
 - Free Cash Flow Positive = 5 pts
 - FCF 18% of Revenue = 10 pts (> 10%)
 - OCF > Net Income = 5 pts (2.1x NI)
-- FCF Growth CAGR 12% = 5 pts (> 5%)
-- Pillar 3 Score: 25 pts (capped at 20) → **20 pts**
+- Pillar 3 Score: **20 pts (MAX)**
 
-**Pillar 4: Business Quality (Target: 10 max)**
+**Pillar 4: Business Quality**
 - Economic Moat (brand, network effects) = 3 pts
 - Insider Ownership 0.8% = 0 pts (< 5%)
 - Goodwill 8% of Assets = 3 pts (< 20%)
 - Revenue Stability CV = 8% = 2 pts (< 15%)
-- Pillar 4 Score: 8 pts (under 10 cap)
+- Pillar 4 Score: **8 pts**
 
-**Quality Score = 25 + 30 + 20 + 8 = 83/100** ✓
+**Quality Score = 30 + 30 + 20 + 8 = 88/100** ✓
 
-#### Stage 3: Valuation & Ranking
+#### Stage 5: Valuation & Management ✓
 
-**Pillar 5: Valuation Scoring (Target: 35 max)**
+**Valuation Scoring:**
 - P/E 32x = 4 pts (25-35 range)
 - PEG 1.8 = 4 pts (1.5-2.0 range)
 - P/B 48 = 0 pts (> 4.0, very expensive)
 - Dividend Yield 0.7% = 0 pts (< 2%)
-- Valuation Score: 8 pts (under 35 cap)
+- **Valuation Score: 8 pts**
 
-**Pillar 6: Management Quality (Target: 25 max)**
+**Management Quality:**
 - Insider Ownership 1.2% = 0 pts (< 5%)
 - Goodwill 8% = 8 pts (< 10%)
 - Accounting Quality (rare one-time charges) = 7 pts
-- Management Score: 15 pts (under 25 cap)
+- **Management Score: 15 pts**
 
 #### Final Composite Score
 
 ```
 Composite = (Quality × 40%) + (Valuation × 35%) + (Management × 25%)
-          = (83 × 0.40) + (8 × 0.35) + (15 × 0.25)
-          = 33.2 + 2.8 + 3.75
-          = 39.75/100
+          = (88 × 0.40) + (8 × 0.35) + (15 × 0.25)
+          = 35.2 + 2.8 + 3.75
+          = 41.75/100
 
-Result: FAIL (39.75 < 75 threshold)
+Result: FAIL (41.75 < 75 threshold)
 Reason: Valuation too expensive (high P/E, high P/B)
-        Despite excellent profitability, current price too high
+        Despite fortress-quality fundamentals, current price too high
 ```
 
-**Example Insight:** Microsoft is an excellent business (Quality: 83) but at current valuation of $425/share it does NOT meet the strict value criteria. The screener would REJECT it, waiting for a better price (e.g., if it dropped to $250/share for better valuation scoring).
+**Example Insight:** 
+
+Microsoft is an **excellent business** (Quality: 88, Hard Filters: PASS) with fortress-strength finances. However, at current valuation of $425/share, the complete analysis shows:
+
+✅ **What passed:**
+- Market cap: Institutional quality ($3.2T)
+- Financial data: Complete and current
+- Hard filters: All pass using complete metrics
+- Quality assessment: 88/100 (excellent)
+
+❌ **What failed:**
+- Valuation: P/E too high, P/B too high
+- Composite: Only 41.75 (needs 75)
+
+**The Merged Approach Advantage:**
+- Had ALL metrics available for assessment
+- Evaluated hard filters with complete financial picture
+- Could see: This is not a weak company, it's an expensive one
+- Different recommendation: Not "avoid" but "wait for better price"
 
 ---
 
@@ -819,5 +1062,6 @@ Reason: Valuation too expensive (high P/E, high P/B)
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2026-03-14 | Initial data flow documentation |
-| 1.1 | 2026-03-14 | Added data age requirements, clarified pillar scoring caps, added exception handling examples, added real company walkthrough (Microsoft example) |
-| 1.2 | 2026-03-14 | **UPDATED** - Added Stage 0 Market Cap Pre-filtering (> $300M), Corrected FCF requirement from "8+ of 10 years" to "ALL 10 YEARS", Updated filtering logic to include market cap check, Updated typical distribution to reflect market cap filtering impact, Investment Requirements v3.0 fully aligned |
+| 1.1 | 2026-03-14 | Added data age requirements, clarified pillar scoring caps, added exception handling, Microsoft example |
+| 1.2 | 2026-03-14 | Added Stage 0 Market Cap Pre-filtering, FCF requirement clarification |
+| 2.0 | 2026-03-14 | **CURRENT** - MERGED APPROACH: Combined Stages 2-3 into unified metric calculation + hard filter evaluation; ALL 40+ metrics calculated before ANY filtering; holistic assessment prevents false negatives; updated data flow diagram with merged stages; added merged approach explanation; updated performance timing; updated example walkthrough showing merged approach |
