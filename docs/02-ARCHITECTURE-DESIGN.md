@@ -54,11 +54,112 @@ The StockMarketScreener is a **console-based financial analysis engine** that:
 ## System Architecture Overview
 
 ### High-Level Data Flow
-┌─────────────────────────────────────────────────────────────┐ │ GitHub Actions Trigger (Quarterly/Manual) │ │ OR Local Console Run │ └────────────┬────────────────────────────────────────────────┘ │ ┌────────────▼────────────────────────────────────────────────┐ │ StockMarketScreener Console Application │ ├─────────────────────────────────────────────────────────────┤ │ ┌──────────────────────────────────────────────────────┐ │ │ │ Step 1: Data Ingestion & Reconciliation │ │ │ │ ├─ Fetch from SEC EDGAR (10-K/10-Q) │ │ │ │ ├─ Fetch from Yahoo Finance API │ │ │ │ ├─ Fetch from IEX Cloud / Alpha Vantage │ │ │ │ └─ Reconcile & aggregate data from all sources │ │ │ └──────────────────────────────────────────────────────┘ │ │ │ │ │ ┌──────────────────────▼──────────────────────────────┐ │ │ │ Step 2: Metric Calculation Engine │ │ │ │ ├─ Calculate 40+ financial metrics │ │ │ │ ├─ 10-year analysis (prioritize, min 5 years) │ │ │ │ └─ Assess business quality │ │ │ └──────────────────────┬───────────────────────────────┘ │ │ │ │ │ ┌──────────────────────▼──────────────────────────────┐ │ │ │ Step 3: 3-Stage Screening │ │ │ │ ├─ Stage 1: Financial Strength (hard filters) │ │ │ │ ├─ Stage 2: Quality Assessment (scoring) │ │ │ │ └─ Stage 3: Valuation & Management │ │ │ └──────────────────────┬───────────────────────────────┘ │ │ │ │ │ ┌──────────────────────▼──────────────────────────────┐ │ │ │ Step 4: Results Processing │ │ │ │ ├─ Only store companies that PASS (score >= 75) │ │ │ │ ├─ Compare with previously stored companies │ │ │ │ ├─ Remove companies that now FAIL │ │ │ �� └─ Prepare comprehensive results table │ │ │ └──────────────────────┬───────────────────────────────┘ │ │ │ │ │ ┌──────────────────────▼──────────────────────────────┐ │ │ │ Step 5: Notifications & Output │ │ │ │ ├─ Send detailed email with HTML table │ │ │ │ ├─ Console output with summary │ │ │ │ └─ CSV export for manual review │ │ │ └──────────────────────────────────────────────────────┘ │ └─────────────────────────────────────────────────────────────┘ │ ┌────────┴────────┬──────────────┐ │ │ │ ▼ ▼ ▼ MySQL Email Console Database Notification Output
 
+```
+┌─────────────────────────────────────────────────────────────┐
+│  GitHub Actions Trigger (Quarterly/Manual)                  │
+│  OR Local Console Run                                       │
+└────────────┬──────────────────────────────────────���─────────┘
+             │
+┌────────────▼────────────────────────────────────────────────┐
+│  StockMarketScreener Console Application                    │
+├─────────────────────────────────────────────────────────────┤
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │ Step 1: Data Ingestion & Reconciliation              │  │
+│  │ ├─ Fetch from SEC EDGAR (10-K/10-Q)                │  │
+│  │ ├─ Fetch from Yahoo Finance API                    │  │
+│  │ ├─ Fetch from IEX Cloud / Alpha Vantage           │  │
+│  │ └─ Reconcile & aggregate data from all sources     │  │
+│  └──────────────────────────────────────────────────────┘  │
+│                          │                                   │
+│  ┌──────────────────────▼──────────────────────────────┐  │
+│  │ Step 2: Metric Calculation Engine                   │  │
+│  │ ├─ Calculate 40+ financial metrics                 │  │
+│  │ ├─ 10-year analysis (prioritize, min 5 years)    │  │
+│  │ └─ Assess business quality                         │  │
+│  └──────────────────────┬───────────────────────────────┘  │
+│                         │                                   │
+│  ┌──────────────────────▼──────────────────────────────┐  │
+│  │ Step 3: 3-Stage Screening                           │  │
+│  │ ├─ Stage 1: Financial Strength (hard filters)      │  │
+│  │ ├─ Stage 2: Quality Assessment (scoring)           │  │
+│  │ └─ Stage 3: Valuation & Management                 │  │
+│  └──────────────────────┬───────────────────────────────┘  │
+│                         │                                   │
+│  ┌──────────────────────▼──────────────────────────────┐  │
+│  │ Step 4: Results Processing                          │  │
+│  │ ├─ Only store companies that PASS (score >= 75)   │  │
+│  │ ├─ Compare with previously stored companies       │  │
+│  │ ├─ Remove companies that now FAIL                 │  │
+│  │ └─ Prepare comprehensive results table             │  │
+│  └──────────────────────┬───────────────────────────────┘  │
+│                         │                                   │
+│  ┌──────────────────────▼──────────────────────────────┐  │
+│  │ Step 5: Notifications & Output                      │  │
+│  │ ├─ Send detailed email with HTML table             │  │
+│  │ ├─ Console output with summary                     │  │
+│  │ └─ CSV export for manual review                    │  │
+│  └──────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+             │
+    ┌────────┴────────┬──────────────┐
+    │                 │              │
+    ▼                 ▼              ▼
+  MySQL           Email          Console
+  Database        Notification     Output
+```
 
 ### Component Architecture
-StockMarketScreener.Console ├─ Program.cs (Entry Point, DI Configuration) ├─ Configuration │ ├─ IndustryConfigService (6 default + custom) │ ├─ ScreeningOptionsConfig (thresholds, settings) │ └─ DataSourceConfig (API endpoints, keys) │ ├─ Data Layer │ ├─ ScreenerDbContext (EF Core + MySQL) │ ├─ ICompanyRepository │ ├─ IFinancialMetricsRepository │ ├─ IQualifiedCompanyRepository │ └─ IRemovedCompanyRepository │ ├─ External Data Services │ ├─ SecEdgarService (10-K/10-Q fetching) │ ├─ YahooFinanceService (Stock prices, dividends) │ ├─ IexCloudService (Alternative market data) │ ├─ AlphaVantageService (Fallback data source) │ └─ DataReconciliationService (Aggregate & validate) │ ├─ Metric Calculation │ ├─ MetricCalculationService (40+ metrics) │ ├─ TrendAnalysisService (10-year trends) │ └─ StabilityCalculationService (CV, volatility) │ ├─ Screening Engine │ ├─ Stage1ScreeningService (MUST HAVE filters) │ ├─ Stage2ScoringService (Quality assessment) │ ├─ Stage3RankingService (Valuation & Management) │ └─ ScreeningOrchestrator (3-stage orchestration) │ ├─ Business Logic │ ├─ CompanyStatusManager (Pass/fail tracking) │ ├─ QualifiedCompanyService (Store passing companies) │ ├─ RemovedCompanyService (Track removals) │ └─ DataValidationService (Ensure data quality) │ ├─ Results & Reporting │ ├─ ScreeningResultsFormatter (HTML table) │ ├─ EmailNotificationService (Send results) │ ├─ ScreeningResultsExporter (CSV export) │ └─ ConsoleReporter (Console output) │ └─ Background Jobs ├─ StockPriceUpdateJob (Weekly, no email) └─ ScreeningJob (Quarterly/Manual)
+
+```
+StockMarketScreener.Console
+├─ Program.cs (Entry Point, DI Configuration)
+├─ Configuration
+│  ├─ IndustryConfigService (6 default + custom)
+│  ├─ ScreeningOptionsConfig (thresholds, settings)
+│  └─ DataSourceConfig (API endpoints, keys)
+│
+├─ Data Layer
+│  ├─ ScreenerDbContext (EF Core + MySQL)
+│  ├─ ICompanyRepository
+│  ├─ IFinancialMetricsRepository
+│  ├─ IQualifiedCompanyRepository
+│  └─ IRemovedCompanyRepository
+│
+├─ External Data Services
+│  ├─ SecEdgarService (10-K/10-Q fetching)
+│  ├─ YahooFinanceService (Stock prices, dividends)
+│  ├─ IexCloudService (Alternative market data)
+│  ├─ AlphaVantageService (Fallback data source)
+│  └─ DataReconciliationService (Aggregate & validate)
+│
+├─ Metric Calculation
+│  ├─ MetricCalculationService (40+ metrics)
+│  ├─ TrendAnalysisService (10-year trends)
+│  └─ StabilityCalculationService (CV, volatility)
+│
+├─ Screening Engine
+│  ├─ Stage1ScreeningService (MUST HAVE filters)
+│  ├─ Stage2ScoringService (Quality assessment)
+│  ├─ Stage3RankingService (Valuation & Management)
+│  └─ ScreeningOrchestrator (3-stage orchestration)
+│
+├─ Business Logic
+│  ├─ CompanyStatusManager (Pass/fail tracking)
+│  ├─ QualifiedCompanyService (Store passing companies)
+│  ├─ RemovedCompanyService (Track removals)
+│  └─ DataValidationService (Ensure data quality)
+│
+├─ Results & Reporting
+│  ├─ ScreeningResultsFormatter (HTML table)
+│  ├─ EmailNotificationService (Send results)
+│  ├─ ScreeningResultsExporter (CSV export)
+│  └─ ConsoleReporter (Console output)
+│
+└─ Background Jobs
+   ├─ StockPriceUpdateJob (Weekly, no email)
+   └─ ScreeningJob (Quarterly/Manual)
+```
 
 ---
 
@@ -90,10 +191,19 @@ StockMarketScreener.Console ├─ Program.cs (Entry Point, DI Configuration) �
 | **Federal Reserve FRED** | Treasury yields | Primary |
 
 ### Local Development Environment
-Development Machine ├─ Visual Studio 2022 Community (free) ├─ .NET 8.0 SDK ├─ MySQL 8.0 (Docker or native) ├─ MySQL Workbench (GUI client) ├─ Git for version control └─ Postman (API testing - optional)
 
-Quick Start (MySQL via Docker): docker run --name mysql -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 mysql:8.0
+```
+Development Machine
+├─ Visual Studio 2022 Community (free)
+├─ .NET 8.0 SDK
+├─ MySQL 8.0 (Docker or native)
+├─ MySQL Workbench (GUI client)
+├─ Git for version control
+└─ Postman (API testing - optional)
 
+Quick Start (MySQL via Docker):
+  docker run --name mysql -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 mysql:8.0
+```
 
 ---
 
@@ -143,15 +253,15 @@ Quick Start (MySQL via Docker): docker run --name mysql -e MYSQL_ROOT_PASSWORD=r
     "DefaultConnection": "Server=localhost;Uid=root;Pwd=root;Database=stockscreener"
   }
 }
+```
 
+**Customization:**
+- Add/remove industries via `IndustriesToScreen` array
+- Adjust score threshold in `PassingScoreThreshold`
+- Control data retention with minimum/preferred years
 
 ---
 
-## **UPDATE 6: Core Components - Part 2 (Data Reconciliation)**
-
-Add after the Industry Configuration section:
-
-```markdown
 ### 2. Data Reconciliation Service
 
 **Purpose:** Fetch data from multiple sources and reconcile into single, reliable dataset
@@ -176,8 +286,14 @@ Add after the Industry Configuration section:
    - Historical data
 
 **Reconciliation Logic:**
-IF SEC EDGAR data available → Use it (authoritative) IF Yahoo Finance data available → Use it (market data) IF Yahoo fails → Try IEX Cloud IF IEX fails → Try Alpha Vantage IF all fail → Log error, skip company IF multiple sources differ → Log discrepancy, use primary source
-
+```
+IF SEC EDGAR data available → Use it (authoritative)
+IF Yahoo Finance data available → Use it (market data)
+IF Yahoo fails → Try IEX Cloud
+IF IEX fails → Try Alpha Vantage
+IF all fail → Log error, skip company
+IF multiple sources differ → Log discrepancy, use primary source
+```
 
 **Key Responsibility:**
 - Ensures data quality before metrics calculation
@@ -364,41 +480,51 @@ IF SEC EDGAR data available → Use it (authoritative) IF Yahoo Finance data ava
 ### Table Descriptions
 
 **QualifiedCompanies** (Main table)
-Ticker, CompanyName, Sector, Industry
-CompositeScore (0-100)
-QualityScore, ValuationScore, ManagementScore
-Recommendation (BUY, HOLD, NEUTRAL)
-StockPrice, MarketCap, PERatio, DividendYield
-YearsOfDataAnalyzed (5-10)
-DataSourcesUsed (SEC EDGAR, Yahoo Finance, etc.)
-FirstQualifiedDate, LastQualifiedDate
-IsActive (1 = currently qualified, 0 = removed)
+```
+- Ticker, CompanyName, Sector, Industry
+- CompositeScore (0-100)
+- QualityScore, ValuationScore, ManagementScore
+- Recommendation (BUY, HOLD, NEUTRAL)
+- StockPrice, MarketCap, PERatio, DividendYield
+- YearsOfDataAnalyzed (5-10)
+- DataSourcesUsed (SEC EDGAR, Yahoo Finance, etc.)
+- FirstQualifiedDate, LastQualifiedDate
+- IsActive (1 = currently qualified, 0 = removed)
+```
 
 **FinancialMetrics** (Historical data)
-QualifiedCompanyId (foreign key)
-FiscalYear (2016-2025 for 10-year analysis)
-All 40+ metrics as decimal columns
-Enables trend analysis and historical review
+```
+- QualifiedCompanyId (foreign key)
+- FiscalYear (2016-2025 for 10-year analysis)
+- All 40+ metrics as decimal columns
+- Enables trend analysis and historical review
+```
 
 **ScreeningRuns** (Audit trail)
-RunDate, RunType (Scheduled/Manual)
-Status (Success/Failed/Partial)
-CompaniesProcessed, CompaniesQualified
-NewlyQualified, MaintainedQualified, Removed
-ExecutionTimeSeconds
-IndustriesScreened
+```
+- RunDate, RunType (Scheduled/Manual)
+- Status (Success/Failed/Partial)
+- CompaniesProcessed, CompaniesQualified
+- NewlyQualified, MaintainedQualified, Removed
+- ExecutionTimeSeconds
+- IndustriesScreened
+```
 
 **RemovedCompanies** (Track removal history)
-Ticker, CompanyName, Sector, Industry
-ReasonRemoved (which filters it failed)
-LastCompositeScore
-DateRemoved
-ScreeningRunIdRemoved
+```
+- Ticker, CompanyName, Sector, Industry
+- ReasonRemoved (which filters it failed)
+- LastCompositeScore
+- DateRemoved
+- ScreeningRunIdRemoved
+```
 
 **StockPriceHistory** (Weekly updates)
-QualifiedCompanyId
-StockPrice, MarketCap, PERatio, DividendYield
-UpdateDate, Source (Yahoo, IEX, etc.)
+```
+- QualifiedCompanyId
+- StockPrice, MarketCap, PERatio, DividendYield
+- UpdateDate, Source (Yahoo, IEX, etc.)
+```
 
 ### Why MySQL for This Project
 
@@ -425,34 +551,119 @@ public static readonly Dictionary<string, string> DefaultIndustries = new()
     ["Healthcare"] = "Pharmaceuticals, Medical Devices, Biotech, Healthcare Services",
     ["Defensive Industry"] = "Utilities, Real Estate, Infrastructure, Staples"
 };
+```
+
+### Customization
 
 To add custom industries:
+```json
 {
   "Screening": {
     "IndustriesToScreen": [
       "Technology",
       "Healthcare",
-      "Custom Energy Sector"  // Can add any industry
+      "Custom Energy Sector"
     ]
   }
 }
+```
 
 ---
 
-## **UPDATE 12: Screening Workflow**
-
-Replace the "Screening Workflow" section:
-
-```markdown
 ## Screening Workflow
 
 ### Quarterly Run Flow
-📅 Quarterly Execution (e.g., March 15, 2026) │ ├─ GitHub Actions triggered at 2 PM UTC ├─ OR Manual trigger via workflow_dispatch │ ├─ Load Configuration │ └─ Industries: [Consumer Defensive, Technology, Healthcare, ...] │ ├─ Fetch Companies (by industry from SEC) │ └─ 500+ companies across selected industries │ ├─ For Each Company (500+ iterations) │ ├─ Fetch Financial Data │ │ ├─ SEC EDGAR (10-K/10-Q) - authoritative │ │ ├─ Yahoo Finance (prices, dividends) - primary │ │ ├─ IEX Cloud (fallback if Yahoo fails) │ │ └─ Alpha Vantage (final fallback) │ │ │ ├─ Validate Data Quality │ │ ├─ Check: 5+ years available (10 preferred) │ │ ├─ Check: Data integrity (balance sheet balances) │ │ └─ Flag: 10-year data vs 5-9 year (prioritize 10) │ │ │ ├─ Calculate 40+ Metrics │ │ ├─ Year-by-year calculation │ │ ├─ 10-year averages and trends │ │ ├─ Stability metrics (CV, volatility) │ │ └─ Growth rates (CAGR) │ │ │ ├─ Stage 1: Financial Strength (Hard Filters) │ │ ├─ ROE > 15%? │ │ ├─ Net Margin > 10%? │ │ ├─ D/E < 0.50? │ │ ├─ Operating Cash Flow positive? │ │ ├─ Free Cash Flow positive? │ │ └─ IF ANY FAIL → SKIP company (not stored) │ │ │ ├─ Stage 2: Quality Assessment (Scoring) │ │ ├─ Score: Return on Capital (30 points) │ │ ├─ Score: Profitability (30 points) │ │ ├─ Score: Cash Flow (20 points) │ │ ├─ Score: Business Quality (10 points) │ │ └─ Total: Quality Score (0-100) │ │ │ ├─ Stage 3: Valuation & Ranking │ │ ├─ Score: Valuation (P/E, P/B, etc.) │ │ ├─ Score: Management Quality │ │ ├─ Composite: (Quality×40% + Valuation×35% + Management×25%) │ │ └─ IF Composite >= 75 → STORE; ELSE SKIP │ │ │ └─ Results │ ├─ PASS & STORE (composite >= 75) │ │ └─ Save all metrics to MySQL │ └─ FAIL & SKIP (composite < 75) │ └─ No storage, not listed │ ├─ Compare with Previous Results │ ├─ Newly Qualified (passed this run, didn't before) │ ├─ Maintained (passed both runs) │ └─ Removed (passed before, failed this run - DELETE from storage) │ ├─ Update Database │ ├─ INSERT newly qualified companies │ ├─ UPDATE scores for maintained companies │ ├─ DELETE removed companies (mark inactive) │ └─ UPDATE ScreeningRuns with summary │ ├─ Send Email Notification │ ├─ Subject: Screening Results - {Date} │ ├─ Summary: X qualified, Y new, Z maintained, W removed │ ├─ Detailed results table with all metrics │ ├─ Business quality assessment │ ├─ Valuation analysis │ └─ Removed companies list │ └─ ✅ Complete └─ Logs available, CSV exported, database updated
+
+```
+📅 Quarterly Execution (e.g., March 15, 2026)
+│
+├─ GitHub Actions triggered at 2 PM UTC
+├─ OR Manual trigger via workflow_dispatch
+│
+├─ Load Configuration
+│  └─ Industries: [Consumer Defensive, Technology, Healthcare, ...]
+│
+├─ Fetch Companies (by industry from SEC)
+│  └─ 500+ companies across selected industries
+│
+├─ For Each Company (500+ iterations)
+│  ├─ Fetch Financial Data
+│  │  ├─ SEC EDGAR (10-K/10-Q) - authoritative
+│  │  ├─ Yahoo Finance (prices, dividends) - primary
+│  │  ├─ IEX Cloud (fallback if Yahoo fails)
+│  │  └─ Alpha Vantage (final fallback)
+│  │
+│  ├─ Validate Data Quality
+│  │  ├─ Check: 5+ years available (10 preferred)
+│  │  ├─ Check: Data integrity (balance sheet balances)
+│  │  └─ Flag: 10-year data vs 5-9 year (prioritize 10)
+│  │
+│  ├─ Calculate 40+ Metrics
+│  │  ├─ Year-by-year calculation
+│  │  ├─ 10-year averages and trends
+│  │  ├─ Stability metrics (CV, volatility)
+│  │  └─ Growth rates (CAGR)
+│  │
+│  ├─ Stage 1: Financial Strength (Hard Filters)
+│  │  ├─ ROE > 15%?
+│  │  ├─ Net Margin > 10%?
+│  │  ├─ D/E < 0.50?
+│  │  ├─ Operating Cash Flow positive?
+│  │  ├─ Free Cash Flow positive?
+│  │  └─ IF ANY FAIL → SKIP company (not stored)
+│  │
+│  ├─ Stage 2: Quality Assessment (Scoring)
+│  │  ├─ Score: Return on Capital (30 points)
+│  │  ├─ Score: Profitability (30 points)
+│  │  ├─ Score: Cash Flow (20 points)
+│  │  ├─ Score: Business Quality (10 points)
+│  │  └─ Total: Quality Score (0-100)
+│  │
+│  ├─ Stage 3: Valuation & Ranking
+│  │  ├─ Score: Valuation (P/E, P/B, etc.)
+│  │  ├─ Score: Management Quality
+│  │  ├─ Composite: (Quality×40% + Valuation×35% + Management×25%)
+│  │  └─ IF Composite >= 75 → STORE; ELSE SKIP
+│  │
+│  └─ Results
+│     ├─ PASS & STORE (composite >= 75)
+│     │  └─ Save all metrics to MySQL
+│     └─ FAIL & SKIP (composite < 75)
+│        └─ No storage, not listed
+│
+├─ Compare with Previous Results
+│  ├─ Newly Qualified (passed this run, didn't before)
+│  ├─ Maintained (passed both runs)
+│  └─ Removed (passed before, failed this run - DELETE from storage)
+│
+├─ Update Database
+│  ├─ INSERT newly qualified companies
+│  ├─ UPDATE scores for maintained companies
+│  ├─ DELETE removed companies (mark inactive)
+│  └─ UPDATE ScreeningRuns with summary
+│
+├─ Send Email Notification
+│  ├─ Subject: Screening Results - {Date}
+│  ├─ Summary: X qualified, Y new, Z maintained, W removed
+│  ├─ Detailed results table with all metrics
+│  ├─ Business quality assessment
+│  ├─ Valuation analysis
+│  └─ Removed companies list
+│
+└─ ✅ Complete
+   └─ Logs available, CSV exported, database updated
+```
 
 ### Manual Execution
+
+```
 User runs: dotnet run
 
-Program.cs → ScreeningOrchestrator.RunScreening() │ └─ Same flow as scheduled run └─ Results: Email + Console Output + Database update
+Program.cs → ScreeningOrchestrator.RunScreening()
+│
+└─ Same flow as scheduled run
+   └─ Results: Email + Console Output + Database update
+```
 
 ---
 
@@ -467,13 +678,24 @@ Program.cs → ScreeningOrchestrator.RunScreening() │ └─ Same flow as sche
 - Can cross-validate for accuracy
 
 **Reconciliation Strategy:**
-Financial Statements (Income, Balance Sheet, Cash Flow): 1st choice: SEC EDGAR (official, required)
+```
+Financial Statements (Income, Balance Sheet, Cash Flow):
+  1st choice: SEC EDGAR (official, required)
 
-Stock Prices & Dividends: 1st choice: Yahoo Finance API 2nd choice: IEX Cloud (if Yahoo fails) 3rd choice: Alpha Vantage (final fallback)
+Stock Prices & Dividends:
+  1st choice: Yahoo Finance API
+  2nd choice: IEX Cloud (if Yahoo fails)
+  3rd choice: Alpha Vantage (final fallback)
 
-Treasury Yields: 1st choice: Federal Reserve FRED API 2nd choice: Hardcoded estimate if API unavailable
+Treasury Yields:
+  1st choice: Federal Reserve FRED API
+  2nd choice: Hardcoded estimate if API unavailable
 
-If multiple sources available: → Use primary source (authoritative) → Log discrepancies for manual review → Never mix sources for same metric
+If multiple sources available:
+  → Use primary source (authoritative)
+  → Log discrepancies for manual review
+  → Never mix sources for same metric
+```
 
 **Validation Before Use:**
 - Check data completeness (all required fields present)
@@ -482,7 +704,13 @@ If multiple sources available: → Use primary source (authoritative) → Log di
 - Verify historical consistency (no sudden 1000% swings)
 
 **Error Recovery:**
-Data Fetch Error: ├─ Log error with details ├─ Try next source in priority ├─ After all sources fail → Skip company └─ Continue to next company (don't crash)
+```
+Data Fetch Error:
+  ├─ Log error with details
+  ├─ Try next source in priority
+  ├─ After all sources fail → Skip company
+  └─ Continue to next company (don't crash)
+```
 
 ---
 
@@ -549,25 +777,54 @@ Data Fetch Error: ├─ Log error with details ├─ Try next source in priori
    - Link to repository (for future UI)
 
 ### Console Output Format
-═══════════════════════════════════════════════════════════ STOCK MARKET SCREENING RUN ═══════════════════════════════════════════════════════════
 
-📊 Configuration Industries: Consumer Defensive, Technology, Healthcare, ... Minimum Data: 5 years (prefer 10) Passing Threshold: 75
+```
+═══════════════════════════════════════════════════════════
+  STOCK MARKET SCREENING RUN
+═══════════════════════════════════════════════════════════
 
-📈 Processing... Company 1/500: MSFT ✅ Stage 1 PASSED ✅ Stage 2 Quality Score: 92/100 ✅ Stage 3 Composite: 87.5/100 (BUY) ✅ QUALIFIED & STORED
+📊 Configuration
+  Industries: Consumer Defensive, Technology, Healthcare, ...
+  Minimum Data: 5 years (prefer 10)
+  Passing Threshold: 75
 
-Company 2/500: AAPL ✅ Stage 1 PASSED ✅ Stage 2 Quality Score: 89/100 ✅ Stage 3 Composite: 84.2/100 (BUY) ✅ QUALIFIED & STORED
+📈 Processing...
+  Company 1/500: MSFT
+    ✅ Stage 1 PASSED
+    ✅ Stage 2 Quality Score: 92/100
+    ✅ Stage 3 Composite: 87.5/100 (BUY)
+    ✅ QUALIFIED & STORED
+  
+  Company 2/500: AAPL
+    ✅ Stage 1 PASSED
+    ✅ Stage 2 Quality Score: 89/100
+    ✅ Stage 3 Composite: 84.2/100 (BUY)
+    ✅ QUALIFIED & STORED
+  
+  Company 3/500: XYZ
+    ❌ Stage 1 FAILED: D/E ratio > 0.50
+    ❌ SKIPPED (not stored)
+  
+  ...
 
-Company 3/500: XYZ ❌ Stage 1 FAILED: D/E ratio > 0.50 ❌ SKIPPED (not stored)
+═══════════════════════════════════════════════════════════
+  SCREENING COMPLETED
+═══════════════════════════════════════════════════════════
 
-...
+📊 Summary
+  Companies Screened: 500
+  Companies Qualified: 45
+  Newly Qualified: 8
+  Maintained: 37
+  Removed: 2
+  Execution Time: 4m 23s
 
-═══════════════════════════════════════════════════════════ SCREENING COMPLETED ═══════════════════════════════════════════════════════════
-
-📊 Summary Companies Screened: 500 Companies Qualified: 45 Newly Qualified: 8 Maintained: 37 Removed: 2 Execution Time: 4m 23s
-
-📧 Email Sent: your-email@gmail.com 💾 Database Updated: 45 companies 📁 CSV Exported: output/results-2026-03-15.csv
+📧 Email Sent: your-email@gmail.com
+💾 Database Updated: 45 companies
+📁 CSV Exported: output/results-2026-03-15.csv
 
 ✅ SCREENING SUCCESSFUL
+```
 
 ### CSV Export Format
 
@@ -578,14 +835,10 @@ MSFT,Microsoft Corporation,Technology,87.5,92,82,88,BUY,350.25,28.3,NEW,10,SEC E
 AAPL,Apple Inc.,Technology,84.2,89,78,82,BUY,180.50,25.8,MAINTAINED,10,SEC EDGAR; Yahoo Finance,2025-09-20,2026-03-15
 JNJ,Johnson & Johnson,Healthcare,82.1,85,80,78,HOLD,145.75,18.5,MAINTAINED,10,SEC EDGAR; Yahoo Finance,2025-12-10,2026-03-15
 ...
+```
 
 ---
 
-## **UPDATE 15: GitHub Actions Automation - Part 1**
-
-Replace the "GitHub Actions Automation" section header and add:
-
-```markdown
 ## GitHub Actions Automation
 
 ### Quarterly Screening Workflow
@@ -609,13 +862,21 @@ Replace the "GitHub Actions Automation" section header and add:
 10. Send email notification (via MailKit)
 
 **Environment Variables:**
-ConnectionStrings__DefaultConnection: MySQL connection Email__SmtpServer: smtp.gmail.com Email__SenderEmail: your-email@gmail.com Email__SenderPassword: app-specific-password
+```
+ConnectionStrings__DefaultConnection: MySQL connection
+Email__SmtpServer: smtp.gmail.com
+Email__SenderEmail: your-email@gmail.com
+Email__SenderPassword: app-specific-password
+```
 
 **GitHub Secrets Required:**
-SMTP_SERVER = smtp.gmail.com SMTP_PORT = 587 SENDER_EMAIL = your-email@gmail.com
-SENDER_PASSWORD = your-gmail-app-password RECIPIENT_EMAIL = your-email@gmail.com
-
----
+```
+SMTP_SERVER = smtp.gmail.com
+SMTP_PORT = 587
+SENDER_EMAIL = your-email@gmail.com
+SENDER_PASSWORD = your-gmail-app-password
+RECIPIENT_EMAIL = your-email@gmail.com
+```
 
 ### Weekly Stock Price Update Workflow
 
@@ -733,9 +994,12 @@ mockYahoo.Setup(s => s.FetchCurrentData("MSFT"))
 var mockEmail = new Mock<IEmailNotificationService>();
 mockEmail.Setup(s => s.SendScreeningResultsAsync(It.IsAny<string>(), It.IsAny<List<ScreeningResult>>()))
     .Returns(Task.CompletedTask);
+```
 
-Test Database
-Setup:
+### Test Database
+
+**Setup:**
+```csharp
 // Use in-memory SQLite for fast unit tests
 // Use Testcontainers for integration tests with real MySQL
 
@@ -761,8 +1025,11 @@ public class ScreeningIntegrationTests : IAsyncLifetime
         await _container.StopAsync();
     }
 }
+```
 
-Test Data (10 Companies)
+### Test Data (10 Companies)
+
+```
 Well-Known Test Companies:
 1. MSFT (Microsoft) - Should PASS
 2. AAPL (Apple) - Should PASS
@@ -770,24 +1037,20 @@ Well-Known Test Companies:
 4. KO (Coca-Cola) - Should PASS
 5. JPM (JPMorgan Chase) - Should PASS
 6. TSLA (Tesla) - Should FAIL (high valuation)
-7. AMD (Advanced Micro Devices) - FAIL (high debt)
+7. AMD (Advanced Micro Devices) - Should FAIL (high debt)
 8. SNAP (Snapchat) - Should FAIL (low ROE)
 9. UBER (Uber) - Should FAIL (negative FCF)
 10. GOOG (Google) - Should PASS
 
 Test Data Characteristics:
-10 years of historical data
-Mix of pass/fail scenarios
-Real financial metrics
-Used for all test cases
+- 10 years of historical data
+- Mix of pass/fail scenarios
+- Real financial metrics
+- Used for all test cases
+```
 
 ---
 
-## **UPDATE 19: Deployment & Operations**
-
-Replace the "Deployment & Operations" section:
-
-```markdown
 ## Deployment & Operations
 
 ### Local Development Setup
@@ -818,7 +1081,11 @@ dotnet run --project src/StockMarketScreener.Console/StockMarketScreener.Console
 
 # 8. Check results
 ls -la output/  # Results CSV and HTML
+```
 
+### GitHub Actions Deployment
+
+```
 No special deployment needed!
 
 1. Code pushed to GitHub
@@ -827,28 +1094,26 @@ No special deployment needed!
 4. Results stored as artifacts
 5. Email sent upon completion
 6. MySQL database updated
+```
 
-Backup Strategy
-Local Database Backup:
+### Backup Strategy
+
+**Local Database Backup:**
+```bash
 # Backup MySQL
 mysqldump -u root -p stockscreener > backup_$(date +%Y-%m-%d).sql
 
 # Restore from backup
 mysql -u root -p stockscreener < backup_2026-03-15.sql
+```
 
-Automated Backup (optional):
-
-Add Docker volumes for persistence
-Use cloud-hosted MySQL (Azure Database for MySQL, AWS RDS)
-Automated backups with retention
+**Automated Backup (optional):**
+- Add Docker volumes for persistence
+- Use cloud-hosted MySQL (Azure Database for MySQL, AWS RDS)
+- Automated backups with retention
 
 ---
 
-## **UPDATE 20: Success Criteria**
-
-Replace the "Success Criteria" section:
-
-```markdown
 ## Success Criteria
 
 This architecture is successful when:
