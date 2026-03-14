@@ -1,7 +1,7 @@
-# Investment Requirements Document - Version 3.0
+# Investment Requirements Document - Version 3.1
 
-**Version:** 3.0 (Complete with All Metrics)  
-**Date:** 2026-03-13  
+**Version:** 3.1 (Merged Metric Calculation & Hard Filter Evaluation)  
+**Date:** 2026-03-14  
 **Author:** ThommCroft  
 **Framework:** Warren Buffett & Charlie Munger Value Investing Principles + Complete Spreadsheet Metrics
 
@@ -14,18 +14,25 @@
 3. [Complete Metrics Reference](#complete-metrics-reference)
 4. [Screening Criteria by Category](#screening-criteria-by-category)
 5. [Priority Classification](#priority-classification)
-6. [Implementation Notes](#implementation-notes)
-7. [Data Sources](#data-sources)
+6. [Metric Calculation & Filtering Integration](#metric-calculation--filtering-integration)
+7. [Implementation Notes](#implementation-notes)
+8. [Data Sources](#data-sources)
 
 ---
 
 ## Executive Summary
 
-This document defines **strict, quantifiable criteria** for identifying high-quality value stocks based on Warren Buffett and Charlie Munger's proven investment principles, combined with **all metrics from the spreadsheet analysis tool**. The screener evaluates companies across **all industries** using a multi-stage filtering approach:
+This document defines **strict, quantifiable criteria** for identifying high-quality value stocks based on Warren Buffett and Charlie Munger's proven investment principles, combined with **all 40+ metrics** from comprehensive financial analysis. 
 
-- **Stage 1 (MUST HAVE)**: Financial Strength - Hard filters eliminating weak businesses
-- **Stage 2 (SHOULD HAVE)**: Quality Assessment - Deep analysis of business quality and earnings
-- **Stage 3 (SHOULD HAVE)**: Valuation & Management - Identifies opportunities with safety margin
+**CRITICAL APPROACH:** All financial metrics are calculated for every company BEFORE any hard filter evaluation occurs. This ensures that hard filter assessment is based on complete financial data, not premature rejection based on incomplete analysis.
+
+The screener evaluates companies across **all industries** using a **unified multi-stage approach**:
+
+- **Stage 0 (PRE-FILTER)**: Market Cap > $300M - Ensure institutional-quality liquidity
+- **Stage 1 (MERGED)**: Data Ingestion + ALL 40+ Metric Calculation - Complete financial analysis for every company
+- **Stage 2 (EVALUATION)**: Financial Strength Assessment - Evaluate hard filters using comprehensive metric data
+- **Stage 3 (SCORING)**: Quality Assessment - Deep analysis of business quality and earnings (0-100 points)
+- **Stage 4 (RANKING)**: Valuation & Management - Final composite scoring identifying opportunities with safety margin
 
 **Target Universe**: All US-listed equities with market cap > $300M
 
@@ -179,9 +186,10 @@ These metrics demonstrate whether management efficiently deploys shareholder cap
 - Flag if declining trend evident
 - For ROIC: NOPAT ÷ (Total Assets - Current Liabilities)
 
-**Rejection Rule:**
-- ROE < 10% = automatic rejection (Stage 1)
-- ROE > 15% but declining trend = watch carefully
+**Evaluation Notes (Post-Metric Calculation):**
+- ROE < 10% indicates weak management capital deployment
+- ROE with declining trend suggests competitive pressure or operational deterioration
+- Evaluated within complete metric context for holistic financial assessment
 
 ---
 
@@ -205,10 +213,11 @@ Low debt and strong liquidity provide financial flexibility and reduce risk.
 - Interest Coverage = EBIT ÷ Interest Expense
 - Companies with negative EBIT = automatic rejection
 
-**Rejection Rules:**
-- D/E > 0.75 = automatic rejection
-- D/E < 0.50 but rapidly increasing = watch carefully
-- Current Ratio < 1.2 or > 3.0 = investigate
+**Evaluation Notes (Post-Metric Calculation):**
+- D/E > 0.75 indicates excessive leverage
+- Rapidly increasing D/E despite current compliance suggests deteriorating financial health
+- Evaluated alongside all other financial metrics for complete picture
+- Current Ratio outside 1.5-2.5x range flagged for investigation
 
 ---
 
@@ -234,10 +243,11 @@ Profit margins reveal pricing power, competitive position, and operational effic
 - Calculate coefficient of variation: StdDev(Margins) ÷ Mean(Margins)
 - Industry context matters (retail vs. software vs. utilities)
 
-**Rejection Rules:**
-- Declining margins for 3+ years = reject
-- Negative operating margin = reject
-- Margin volatility > 20% = reject (unpredictable)
+**Evaluation Notes (Post-Metric Calculation):**
+- Declining margins for 3+ years indicates structural competitive weakness
+- Negative operating margin shows inability to generate profits from core business
+- Margin volatility > 20% (CV > 0.20) signals unpredictable business conditions
+- Evaluated within complete financial context; may indicate broader issues
 
 **What Buffett/Munger REJECT:**
 - ❌ EBITDA-centric analysis (ignores capital needs)
@@ -265,10 +275,12 @@ Cash flow is harder to manipulate than earnings. "Real earnings" = operating cas
 - FCF/NI Ratio < 0.60 indicates earnings quality issues
 - If OCF < 0 any year = automatic reject
 
-**Rejection Rules:**
-- Any year with negative OCF or FCF = reject
-- FCF declining for 3+ years = reject
-- FCF/NI < 0.50 = earnings quality concern
+**Evaluation Notes (Post-Metric Calculation):**
+- Negative OCF in any year indicates cash burn (critical issue)
+- Negative FCF despite positive net income reveals accounting manipulation
+- FCF declining for 3+ years suggests unsustainable business model
+- FCF/NI < 0.50 indicates earnings are not backed by cash (red flag)
+- Evaluated within complete metric context for business sustainability assessment
 
 ---
 
@@ -292,10 +304,11 @@ Growth without profitability destroys value. Efficient capital deployment matter
 - Monitor both absolute growth and stability
 - If EPS declining despite revenue growth = margin compression (red flag)
 
-**Rejection Rules:**
-- Negative revenue growth for 2+ years = reject
-- Revenue growing but earnings declining = reject (unsustainable)
-- CapEx > 20% of revenue = capital-intensive (may still be acceptable)
+**Evaluation Notes (Post-Metric Calculation):**
+- Negative revenue growth for 2+ years indicates declining business
+- Revenue growing but earnings declining reveals margin compression and competitive pressure
+- CapEx > 20% of revenue indicates capital-intensive model (may still be acceptable depending on industry)
+- Evaluated within complete financial picture for sustainable growth assessment
 
 ---
 
@@ -326,10 +339,11 @@ Price matters. Buffett won't buy even good companies at expensive valuations.
 - Average quality (ROE 15-20%, moderate moat): Limit to P/E 15-20x
 - Low quality (ROE 10-15%, weak moat): Want P/E < 12x
 
-**Rejection Rules:**
-- P/E > 30x without exceptional growth = reject
-- Earnings Yield < 10-Year Treasury = reject
-- PEG > 2.0 = expensive relative to growth
+**Evaluation Notes (Post-Metric Calculation):**
+- P/E > 30x without exceptional growth indicates overvaluation
+- Earnings Yield < 10-Year Treasury means inferior return vs. risk-free bonds
+- PEG > 2.0 suggests stock is expensive relative to growth prospects
+- Evaluated within complete business quality assessment
 
 ---
 
@@ -352,6 +366,13 @@ Buffett: "We look for managers with integrity, intelligence, and passion for the
 - Impairments: Listed on income statement; watch for recurring
 - One-Time Charges: Review 10-K for "adjusted earnings" claims
 - Red Flags: Revenue recognition changes, frequent restatements, unusual related-party deals
+
+**Evaluation Notes (Post-Metric Calculation):**
+- CEO with < 1% ownership indicates misaligned incentives
+- Frequent accounting restatements signal unreliable earnings and poor financial controls
+- Substantial goodwill with impairments indicates management overpaid for acquisitions
+- Frequent "one-time charges" suggest chronic operational problems disguised as exceptional items
+- Management turnover (3+ changes in 5 years) indicates instability or governance issues
 
 **Red Flags (Automatic Rejection):**
 - ❌ CEO with < 1% ownership
@@ -398,23 +419,226 @@ Economic moats separate great businesses from commodities.
 
 ### MUST HAVE (Deal Breakers)
 
-ALL of these must be satisfied or company is rejected immediately:
+These metrics represent critical financial strength indicators. All must be evaluated within the context of complete metric calculation:
 
-| Metric | Threshold | Notes |
-|--------|-----------|-------|
-| **ROE** | > 15% (10-year average) | Core quality metric |
-| **ROE Trend** | Stable or growing | Quality must not be declining |
-| **Net Margin** | > 10% | High-quality earnings |
-| **Operating Margin** | > 10% | Core business profitability |
-| **Margin Stability** | CV < 15% | Predictable and consistent |
-| **Debt-to-Equity** | < 0.50 | Financial strength |
-| **D/E Trend** | Declining or stable | Not increasing leverage |
-| **Current Ratio** | 1.5 - 2.5x | Can meet obligations |
-| **Operating Cash Flow** | Positive (every year) | Real cash from operations |
-| **OCF Growth** | > 0% (10-year CAGR) | Sustainable cash generation |
-| **Free Cash Flow** | Positive (every year) | Cash available to shareholders |
-| **FCF Growth** | > 0% (10-year CAGR) | Growing cash for shareholders |
-| **Revenue Growth** | > 0% (10-year average) | Business not declining |
-| **Business Model Simplicity** | Easy to understand | Within circle of competence |
+| Metric | Threshold | Assessment Notes |
+|--------|-----------|-----------------|
+| **ROE** | > 15% (10-year average) | Core quality metric; evaluated within complete capital efficiency context |
+| **ROE Trend** | Stable or growing | Quality deterioration flag; assessed against all profitability metrics |
+| **Net Margin** | > 10% | High-quality earnings indicator; evaluated with cash flow metrics |
+| **Operating Margin** | > 10% | Core business profitability; assessed with margin stability |
+| **Margin Stability** | CV < 15% | Predictable and consistent; indicates competitive moat strength |
+| **Debt-to-Equity** | < 0.50 | Financial strength; evaluated with liquidity and equity trends |
+| **D/E Trend** | Declining or stable | Leverage assessment; must not be increasing despite passing threshold |
+| **Current Ratio** | 1.5 - 2.5x | Liquidity assessment; evaluated with OCF and cash flow trends |
+| **Operating Cash Flow** | Positive (every year) | Real cash generation; must be positive in all 10 years analyzed |
+| **OCF Growth** | > 0% (10-year CAGR) | Sustainable cash generation; positive trend required |
+| **Free Cash Flow** | Positive (every year) | Cash available to shareholders; must be positive in all 10 years analyzed |
+| **FCF Growth** | > 0% (10-year CAGR) | Growing cash for shareholders; positive trend required |
+| **Revenue Growth** | > 0% (10-year average) | Business not declining; assessed for sustainability |
+| **Business Model Simplicity** | Easy to understand | Within circle of competence; must be clearly understandable |
 
-**Stage 1 Screening Logic:**
+### Hard Filter Evaluation Using Complete Metrics
+
+**These hard filters are NOT standalone rejection criteria.** Instead, they represent key financial strength indicators that are evaluated AFTER all 40+ metrics have been calculated and analyzed comprehensively.
+
+The hard filter evaluation is a **holistic assessment using the complete metric dataset**:
+
+- ✅ A company is NOT rejected until the full financial picture is analyzed
+- ✅ All 40+ metrics provide context and nuance for hard filter evaluation
+- ✅ No company is eliminated based on incomplete data
+- ✅ Hard filters identify critical weakness across the comprehensive metric analysis
+- ✅ Individual metric weakness may be offset by strength in other areas or explained by business model
+
+**Example:** A company with D/E ratio slightly above 0.50 might be acceptable if:
+- Equity is rapidly growing (D/E Trend declining)
+- Interest coverage is very strong (> 10x)
+- Operating cash flow is robust and stable
+- Asset turnover is high (efficient use of leverage)
+- Complete financial picture is otherwise strong
+
+---
+
+## Metric Calculation & Filtering Integration
+
+### Unified Analysis Approach
+
+Rather than cascading filters that eliminate companies early, the screener employs a **unified comprehensive analysis** where:
+
+1. **All 40+ metrics are calculated** for every company that passes pre-filters (market cap > $300M)
+   - No premature rejections based on incomplete analysis
+   - Complete financial picture developed for each company
+   - All calculations performed uniformly
+
+2. **Hard filters are evaluated** against the complete metric dataset
+   - Not standalone rejection criteria
+   - Evaluated within context of all other financial metrics
+   - Consider trends, stability, and business model implications
+
+3. **No company is rejected** until the full financial analysis is complete
+   - Comprehensive financial strength assessment performed
+   - Context from 40+ metrics informs hard filter interpretation
+   - Weakness in one area assessed against strength in others
+
+4. **Quality scoring applies** to companies passing hard filter assessment
+   - Quality, Valuation, and Management pillars scored (0-100 range)
+   - Composite score calculated (40% Quality + 35% Valuation + 25% Management)
+   - Final threshold: Composite score >= 75 for qualification
+
+### Why This Approach Works Better
+
+**Prevents False Negatives:**
+- A company with strong fundamentals might fail one metric in isolation
+- Complete analysis reveals the metric is anomalous or explained by context
+- Example: Temporary debt increase to fund acquisition in strong market position
+
+**Captures Business Quality:**
+- You cannot evaluate financial strength by five metrics alone
+- Margin stability, growth quality, cash conversion all matter
+- Competitive moat assessment requires multiple data points
+- Business sustainability requires holistic view
+
+**Aligns with Buffett/Munger Principles:**
+- They analyze complete business picture, not checklist items
+- Context and nuance inform investment decisions
+- Financial fortress must be assessed comprehensively
+- Quality assessment requires full metric visibility
+
+**Enables Better Decision Making:**
+- Analyst can see why a company passes or fails
+- Complete metric dataset available for manual override if needed
+- Audit trail shows all data considered
+- Scoring transparent and defensible
+
+---
+
+## Implementation Notes
+
+### Stage-by-Stage Implementation
+
+**Stage 0: Market Cap Pre-Filter**
+- Eliminate companies < $300M market cap (saves API calls)
+- ~10-15% of universe rejected at this step
+- Focus remaining effort on institutional-quality companies
+
+**Stage 1: Data Ingestion & Metric Calculation**
+- Fetch financial data from SEC EDGAR (authoritative)
+- Fetch market data from Yahoo Finance (with fallbacks: IEX Cloud, Alpha Vantage)
+- **Calculate ALL 40+ metrics for every company**
+- Validate data quality and completeness
+- Create year-by-year metrics and 10-year averages
+
+**Stage 2: Financial Strength Assessment**
+- Evaluate hard filters using complete metric data
+- Assess market cap trends and liquidity positions
+- Evaluate leverage and financial flexibility
+- Determine financial fortress status
+
+**Stage 3: Quality Scoring (0-100)**
+- Pillar 1: Return on Capital (max 30 points)
+- Pillar 2: Profitability (max 30 points)
+- Pillar 3: Cash Flow Quality (max 20 points)
+- Pillar 4: Business Quality (max 10 points)
+
+**Stage 4: Valuation & Management Ranking**
+- Pillar 5: Valuation Scoring (max 35 points)
+- Pillar 6: Management Quality (max 25 points)
+- Composite: (Quality × 40%) + (Valuation × 35%) + (Management × 25%)
+
+**Stage 5: Results Processing**
+- PASS: Composite score >= 75 (store in database)
+- FAIL: Composite score < 75 (discard)
+- Compare with previous qualified companies
+- Identify new, maintained, and removed companies
+
+### Data Completeness Requirements
+
+**Financial Statements:**
+- Required: Current fiscal year (< 1 year old)
+- Preferred: 10 years of historical data (2016-2025 for 10 years as of 2026)
+- Minimum: 5 years of historical data
+- Rejected: < 5 years (insufficient for trend analysis)
+
+**Stock Prices:**
+- Required: Current price (< 1 day old)
+- Acceptable: Up to 5 days old (market holiday accommodation)
+- Rejected: > 5 days old (stale for valuation)
+
+**Data Integrity:**
+- All required fields present (revenue, net income, assets, liabilities, etc.)
+- Balance sheet balanced: Assets ≈ Liabilities + Equity (±2% tolerance)
+- No missing critical data points
+- Year-over-year changes reasonable (< 300% variance)
+
+---
+
+## Data Sources
+
+### Primary Financial Data Source
+
+**SEC EDGAR (Official, Authoritative)**
+- 10-K annual reports
+- 10-Q quarterly reports
+- Required for all companies
+- Most reliable, official source
+- No fallback acceptable (if unavailable, skip company)
+
+### Market Data Sources (Priority Order)
+
+**1. Yahoo Finance (Primary)**
+- Current stock prices
+- Dividend history
+- Market capitalization
+- Most reliable for US equities
+- Rate limit: 1-2 requests/second
+
+**2. IEX Cloud (Fallback #1)**
+- Real-time quotes
+- Alternative pricing source
+- Free tier available (100 messages/month)
+- Used if Yahoo fails
+
+**3. Alpha Vantage (Fallback #2)**
+- Historical pricing
+- Final fallback option
+- Free tier: 5 calls/minute
+- Used if IEX fails
+
+### Treasury Yield Data
+
+**Federal Reserve FRED API (Primary)**
+- 10-year Treasury yield
+- Daily updates
+- Official source
+
+**Fallback: Hardcoded Estimate (2.5%)**
+- Used if FRED API unavailable
+- Conservative estimate
+- Note in results that estimate used
+
+### Reconciliation & Validation
+
+**Data Quality Assurance:**
+- ✓ All required fields present
+- ✓ Data within reasonable ranges
+- ✓ Balance sheet validates
+- ✓ Year-over-year consistency
+- ✓ Age requirements met
+- ✓ Data sources documented
+
+**Audit Trail:**
+- Every metric calculation logged with source
+- Data source priority recorded
+- Fallback usage documented
+- Discrepancies flagged for review
+
+---
+
+## Document History
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | 2026-03-13 | ThommCroft | Initial investment requirements specification |
+| 2.0 | 2026-03-13 | ThommCroft | Added comprehensive metrics reference and 8 categories |
+| 3.0 | 2026-03-13 | ThommCroft | Complete refinement with all 40+ metrics, hard filters, and scoring |
+| 3.1 | 2026-03-14 | ThommCroft | **CURRENT** - MERGED APPROACH: All 40+ metrics calculated BEFORE hard filter evaluation; unified comprehensive analysis replacing cascading filters |
