@@ -1146,12 +1146,16 @@ This architecture is successful when:
 - Minimal operational overhead
 
 ✅ **Performance**
-- First run: 40-50 minutes (full data fetch from APIs)
-- Subsequent runs: Could be faster with caching
-- 500+ companies screened in < 5 minutes
-- Data reconciliation handles API rate limits
-- Stock price updates complete quickly
-- No timeout errors
+- First run: 40-50 minutes (full data fetch from APIs with sequential calls)
+  - Data fetching from SEC EDGAR, Yahoo Finance, IEX, Alpha Vantage: 30-40 minutes
+  - Metric calculations: 2-3 minutes
+  - Screening and ranking: 1 minute
+  - Results processing and email: 2 minutes
+- Subsequent runs: 10-15 minutes (with caching and local data)
+- With parallel processing (5-10 concurrent API calls): Could reduce to 10-15 minutes
+- Data reconciliation handles API rate limits gracefully
+- Stock price updates (weekly job) complete in < 5 minutes
+- No timeout errors with proper fallback strategy
 
 ✅ **Reliability**
 - Robust error handling (continue if 1 company fails)
