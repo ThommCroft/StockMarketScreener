@@ -1183,6 +1183,19 @@ This is a complete, production-ready architecture that can be built incrementall
 
 ---
 
+## Cross-Document References
+
+This document is part of a 4-document architecture specification:
+
+1. **01-INVESTMENT-REQUIREMENTS.md** - Warren Buffett principles and financial criteria
+2. **02-ARCHITECTURE-DESIGN.md** - System architecture and technical design (THIS DOCUMENT)
+3. **03-DATA-FLOW-SCREENING-LOGIC.md** - Detailed screening workflow and logic
+4. **04-PROJECT-ROADMAP.md** - Implementation phases and timeline
+
+All documents are aligned and internally consistent as of 2026-03-14.
+
+---
+
 ## Document History
 
 | Version | Date | Author | Changes |
