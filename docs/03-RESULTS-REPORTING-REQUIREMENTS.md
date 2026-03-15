@@ -1100,7 +1100,7 @@ Ensure grade matches recommendation
 
 ---
 
-###Related Documents
+### Related Documents
 
 | Document | Covers | Purpose |
 |----------|--------|---------|
@@ -1111,7 +1111,7 @@ Ensure grade matches recommendation
 
 ---
 
-###Document History
+### Document History
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
