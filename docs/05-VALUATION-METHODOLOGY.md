@@ -1,6 +1,6 @@
 # Stock Price Valuation Methodology - Stage 5.4
 
-**Version:** 1.0  
+**Version:** 1.1
 **Date:** 2026-03-14  
 **Author:** ThommCroft  
 **Framework:** Warren Buffett & Charlie Munger Value Investing Principles  
@@ -2930,17 +2930,12 @@ Federal Reserve FRED (Treasury yields)
 Company investor relations (dividends, buybacks)
 Screening Date: [Date] Next Screening: [Projected Date]
 
-Questions or clarifications? Review the methodology documentation at [link to GitHub docs]
-
-End of Report
-
 ---
 
 ### **13.2 GitHub Summary Page Format**
 
 Brief summary posted to GitHub Actions run:
 
-```markdown
 # Stock Market Screener Results - [Date]
 
 ✅ **Screening Complete**
