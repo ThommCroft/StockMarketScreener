@@ -470,7 +470,7 @@ sequenceDiagram
     participant GitHubSummaryGenerator
     participant CSVExportGenerator
     participant IRepository
-    database MySQL
+    participant MySQL
 
     ScreeningOrchestrator->>ReportingService: GenerateAndSendAsync(valuations)
     activate ReportingService
@@ -486,7 +486,7 @@ sequenceDiagram
             ReportGroupingService->>ReportGroupingService: Group 2: STRONG BUYS
         else Quality >= 82 AND MOS >= 10%
             ReportGroupingService->>ReportGroupingService: Group 3: FAIR VALUE
-        else Quality >= 80 AND MOS < 0%
+        else Quality >= 80 AND MOS less than 0%
             ReportGroupingService->>ReportGroupingService: Group 4: OVERVALUED (Watchlist)
         end
     end
@@ -544,7 +544,7 @@ sequenceDiagram
     Note over ReportingService: ✓ Email sent<br/>✓ GitHub summary posted<br/>✓ CSV generated<br/>✓ Database updated
     deactivate ReportingService
     
-    ScreeningOrchestrator-->>ScreeningOrchestrator: QUARTERLY SCREENING COMPLETE!
+    ScreeningOrchestrator->>ScreeningOrchestrator: QUARTERLY SCREENING COMPLETE!
     Note over ScreeningOrchestrator: Results Delivered:<br/>1. Email report (detailed)<br/>2. GitHub summary (quick view)<br/>3. CSV export (spreadsheet)<br/>4. Database storage (historical)
 ```
 
