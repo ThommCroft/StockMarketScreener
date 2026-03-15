@@ -1,6 +1,6 @@
 # Stock Market Screener - Valuation Methodology Requirements
 
-**Version:** 1.2
+**Version:** 1.3
 **Date:** 2026-03-15  
 **Author:** ThommCroft  
 **Framework:** Warren Buffett & Charlie Munger Value Investing Principles + Multi-Method Valuation  
@@ -4439,55 +4439,216 @@ Zero dividends + substantial buybacks: ✅ Use buyback-adjusted dividend in DDM 
 
 ### **12.3 Quality Checkpoints**
 
-**Before accepting valuation results:**
+**Before accepting valuation results, validate across four dimensions:**
 
-**Data Quality:**
+#### **Data Quality Validation**
 
-☑️ Financial statements match across periods ☑️ Net income consistent with operating cash flow (±20%) ☑️ Balance sheet balances (Assets = Liabilities + Equity) ☑️ Stock price current (not stale) ☑️ Share count reflects dilution (stock options, warrants)
+☑️ **Financial Statement Consistency:**
+- Income statement, cash flow, and balance sheet all tie together
+- Net Income on income statement matches line in cash flow statement
+- Assets = Liabilities + Shareholders' Equity (within ±2%)
+- No unexplained changes between periods
 
-**Calculation Accuracy:**
+☑️ **Data Recency:**
+- Stock price ≤ 1 day old (intraday acceptable)
+- Financial statements ≤ 1 year old for latest year
+- Market cap = Stock Price × Shares Outstanding (matches current)
+- Dividend history is complete and current
 
-☑️ FCF = Operating CF - CapEx (positive or improving) ☑️ ROE = Net Income / Avg Equity (reasonable level) ☑️ P/E = Stock Price / EPS (peer comparison makes sense) ☑️ WACC components (cost of debt, equity) reasonable ☑️ DCF terminal value <50% of total value (or flag)
+☑️ **Data Integrity:**
+- All required line items present (no blanks in key fields)
+- Year-over-year changes are reasonable (<300% variance unless explained)
+- No obvious data entry errors (e.g., units mismatch: billions vs millions)
+- Peer company data is from same reporting period
 
-**Valuation Sanity Checks:**
+#### **Financial Reasonableness Checks**
 
-☑️ Fair value in reasonable range ($100-$500 for large-cap) ☑️ Fair value > current price OR has margin of safety ☑️ Quality multiple matches business quality (not 50x for weak moat) ☑️ Growth assumptions supported by historical data ☑️ Terminal growth rate ≤ GDP growth rate (2.5% conservative) ☑️ DCF and Multiples within reasonable range of each other ☑️ Buffett and Munger recommendations make sense together
+☑️ **Earnings Quality:**
+- Net Income ≈ Operating Cash Flow (within ±20%)
+  - If gap > 20%, investigate: are earnings backed by cash?
+- Free Cash Flow = OCF - CapEx is positive (or has clear path to positive)
+- Consistent accounting (no frequent changes in depreciation methods, etc.)
+- No excessive one-time charges (if >$X/year, red flag)
 
-**Red Flags (Stop & Investigate):**
+☑️ **Balance Sheet Health:**
+- Debt-to-Equity ratio reasonable for industry (not excessive)
+- Current ratio between 1.0x and 3.0x (adequate liquidity)
+- No huge jumps in intangible assets or goodwill
+- Retained earnings trend makes sense (growing if profitable)
 
-🚩 Fair value <current price with no margin → Re-check calculations, may be overvalued
+☑️ **Cash Flow Quality:**
+- Operating cash flow positive in most years (especially last 3)
+- CapEx reasonable and sustainable (not erratic)
+- Cash flow statement reconciles to balance sheet changes
+- Working capital changes are logical
 
-🚩 DCF >> Multiples >> Buffett (wide divergence) → One method has bad assumptions → Investigate which is unreliable
+#### **Business Logic Validation**
 
-🚩 Fair value changes >30% quarter-over-quarter → Either stock price moved or assumptions changed significantly → Document what changed
+☑️ **Revenue & Growth:**
+- Revenue growth is consistent with industry (don't assume Apple-like growth for utilities)
+- Growth rate is sustainable long-term (declining growth model used)
+- No red flags: sudden revenue drops, customer concentration issues
+- Gross margin stable (indicates no loss of pricing power)
 
-🚩 Quality multiple assigned is 35x+ for weak moat company → Over-optimistic assessment → Review quality scoring
+☑️ **Profitability & Margins:**
+- Operating margin stable or improving (not deteriorating)
+- Net margin reasonable for industry type
+- EBITDA > Depreciation (company isn't hiding profitability problems)
+- Payout ratio sustainable (<70% of net income for dividends/buybacks)
 
-🚩 Terminal growth rate >3% → Unrealistic (outpacing economy forever) → Reset to 2.5%
+☑️ **Competitive Position:**
+- Market share stable or growing (not losing ground to competitors)
+- Pricing power evident (can raise prices or maintain through inflation)
+- No obvious disruption risks from new technology or competitors
+- Moat assessment consistent with financial metrics
 
-🚩 WACC is <5% or >15% → Likely wrong (too extreme) �� Review components
+#### **Valuation Sanity Checks**
+
+🔍 **Method Convergence:**
+- Standard deviation of fair values < 20% of mean (methods agree)
+- No single method is extreme outlier (>2x others)
+- If divergence > 25%, investigate why before finalizing valuation
+
+🔍 **Comparison Reasonableness:**
+- Fair value vs current price makes intuitive sense
+- P/E valuation ≈ Multiples valuation (within 15%)
+- Margin of safety is adequate (>15% for quality businesses)
+- Fair value doesn't seem absurdly high or low vs industry
+
+🔍 **Historical Validation:**
+- If company was valued similarly in past, outcomes make sense
+- Stock price changes should correlate with business changes
+- Earnings growth should drive fair value increases
+
+#### **Red Flags That Require Investigation**
+
+🚩 **Data Red Flags:**
+- Stock price hasn't updated in >5 days (stale data)
+- Financial statements are >18 months old
+- Shares outstanding changed >5% without explanation (dilution?)
+- Multiple data sources disagree significantly on key metrics
+
+🚩 **Financial Red Flags:**
+- Net Income and Operating Cash Flow diverge >20%
+- Negative operating cash flow despite positive net income (earnings quality issue)
+- Debt-to-Equity > 1.5x and rising (balance sheet stress)
+- Current ratio < 1.0x (liquidity problem)
+
+🚩 **Business Red Flags:**
+- Revenue declining for 2+ consecutive years
+- Operating margin compressed 5%+ (competitive pressure)
+- Market share lost to competitors (identifiable moat weakening)
+- One customer > 20% of sales (concentration risk)
+
+🚩 **Valuation Red Flags:**
+- Fair value estimates diverge by >50% (high uncertainty)
+- P/E multiple > 50x (unless high-growth tech)
+- PEG ratio > 2.0 (overvalued relative to growth)
+- Earnings yield < 10-year Treasury yield (worse than bonds)
 
 ---
 
 ### **12.4 Performance Optimization**
 
-**Valuation Update Frequency:**
+**For implementation of Stage 6 calculations at scale:**
 
-Daily: Stock prices (automatic via API) Weekly: Reviews/monitoring (manual) Monthly: Full revaluation if major price move (>10%) Quarterly: Full revaluation at earnings season Annual: Deep reanalysis with fresh assumptions
+#### **Batch Processing Strategies**
 
-**When to Revalue:**
+**Process companies in logical batches:**
 
-Trigger: Stock price moves >20% from fair value
+1. **By Market Cap Tier**
+   - Large cap (>$100B): 100 companies per batch
+   - Mid cap ($10B-$100B): 150 companies per batch
+   - Small cap ($300M-$10B): 200 companies per batch
+   - Reason: Data retrieval time varies; group similar sizes together
 
-Examples: Fair value: $100 Previous price: $90 (10% discount) New price: $70 (30% discount) Action: Revalue immediately (crossed threshold)
+2. **By Industry Sector**
+   - Process each sector separately
+   - Allows peer comparison data to be loaded once per sector
+   - Reduces API calls (peers needed for multiples only once)
+   - Typical batch: 20-50 companies per sector
 
-Fair value: $100 Previous price: $90 (10% discount) New price: $85 (15% discount) Action: Monitor, no urgent revaluation needed
+3. **Parallel Processing**
+   - Calculate DCF, DDM, Multiples independently (no dependencies)
+   - Buffett and Munger calculations depend on DCF/quality metrics
+   - Process order: Metrics → (DCF | DDM | Multiples) → (Buffett | Munger) → Consensus
 
-**Batch Processing:**
+#### **Data Caching Strategy**
 
-For screening 500 companies quarterly: Stage 1 (Filters): ~2-3 hours Stage 2-3 (Financial Analysis): ~4-5 hours Stage 5.4 (Valuation): ~3-4 hours Stage 6-7 (Reporting): ~2 hours
+**Cache data with different expiration windows:**
 
-Total time: ~12-14 hours per quarter Frequency: Once per quarter (every 90 days)
+| Data Type | Expiration | Reason |
+|-----------|-----------|--------|
+| Stock price | Daily (intraday refresh) | Changes hourly |
+| Treasury yield | Daily | Fed updates daily |
+| Financial statements | 90 days | Quarterly updates |
+| Peer multiples | 30 days | Market conditions change |
+| Company fundamentals | 365 days | Annual cycle |
+| Industry data | 365 days | Slow to change |
+
+**Caching reduces API calls by ~70% when processing same universe repeatedly**
+
+#### **Calculation Order Optimization**
+
+**Optimal calculation sequence:**
+
+1. **Load and validate** (parallel: fetch all data)
+2. **Calculate metrics** (10+ financial metrics needed for all methods)
+3. **Calculate DCF** (40% consensus weight, foundation for others)
+4. **Calculate DDM** (15% weight, relatively simple)
+5. **Calculate Multiples** (20% weight, depends on peer data)
+6. **Calculate Buffett** (15% weight, uses DCF + ROE metrics)
+7. **Calculate Munger** (10% weight, uses business quality metrics)
+8. **Calculate consensus** (depends on all 5 methods)
+9. **Generate output** (email, CSV, database)
+
+**Rationale:** Process heavy calculations first, then aggregate
+
+#### **Memory Management**
+
+**For processing large universes (>5,000 companies):**
+
+- **Store metrics in database, not memory** (don't hold all 40+ metrics for all companies)
+- **Stream calculations** (process X companies at a time, write to disk)
+- **Use sparse arrays** for peer multiples (many companies won't have all peers)
+- **Compress historical data** (store 10-year history as CAGR, not 120 data points)
+
+**Example memory reduction:**
+- Raw approach: 5,000 companies × 40 metrics × 10 years = 2 million data points
+- Optimized: Store 5,000 × 40 metrics (current) + 5,000 × 10 CAGR values = 250k values
+
+#### **API Rate Limiting**
+
+**Avoid hitting rate limits when fetching external data:**
+
+- **Yahoo Finance:** 1-2 requests/second (batch requests, space them out)
+- **SEC EDGAR:** 10 requests/second (but use FTP for bulk data)
+- **Federal Reserve FRED:** No rate limit but be respectful (don't hammer)
+- **Solution:** Cache aggressively, pre-fetch data in advance
+
+#### **Database Optimization**
+
+**For storing calculated results:**
+
+- **Index on ticker + date** (fastest lookup for historical comparisons)
+- **Create summary tables** (avoid recalculating aggregate statistics)
+- **Archive old results** (year-old data to separate table)
+- **Batch inserts** (don't insert company-by-company; batch 100 at a time)
+
+**Expected performance:**
+- 1,000 companies: <5 minutes to calculate + store
+- 5,000 companies: 20-30 minutes
+- 10,000 companies: 45-60 minutes
+
+#### **Performance Monitoring**
+
+**Track metrics to identify bottlenecks:**
+
+- **Data fetch time:** How long to get all financial data?
+- **Calculation time:** Which method takes longest? (Likely DCF)
+- **API call count:** Are we within rate limits?
+- **Memory usage:** Is it spiking during certain calculations?
+- **Database write time:** How long to persist results?
 
 ---
 
@@ -4495,63 +4656,234 @@ Total time: ~12-14 hours per quarter Frequency: Once per quarter (every 90 days)
 
 ### **13.1 Common Issues & Solutions**
 
-**Problem: DCF valuation is unrealistic ($500 for $50 stock)**
+#### **Existing Issues (Already Documented)**
 
-Likely causes:
+**Problem: Dividend cut scenario** ✅
+**Problem: Negative book value** ✅
+**Problem: Special dividend** ✅
+**Problem: Business model change** ✅
 
-Terminal growth rate too high (>3%)
-WACC too low (<5%)
-FCF growth assumptions too aggressive
-Terminal value >70% of total
-Solutions: ✅ Check terminal growth (reset to 2.5%) ✅ Verify WACC calculation (compare to peer WACC) ✅ Review growth assumptions (vs industry growth) ✅ If terminal value >70%, use more conservative growth
+#### **New Issues - Valuation Method Divergence**
 
-If still high: → Company may be in hyper-growth (acceptable if realistic) → Or fair value truly much higher than current price → Document assumptions clearly
+**Problem: All five methods produce wildly different valuations (divergence >50%)**
 
-**Problem: Multiples valuation much different from DCF**
+Example:
+- DCF: $500/share
+- DDM: $800/share
+- Multiples: $300/share
+- Buffett: $450/share
+- Munger: $250/share
+- Range: $250-$800 (70% spread)
 
-Example: DCF = $300, Multiples = $500
+**Why this happens:**
+- Company is in transition (changing business model mid-analysis)
+- Growth assumptions vary widely (historical growth not predictive)
+- Peer companies are not truly comparable
+- Business quality is uncertain (Munger diverges from others)
+- Cyclical business at peak/trough (multiples distorted)
 
-Possible reasons:
+**Solution:**
+1. ✅ Investigate which method is the outlier (e.g., if one is >2x others)
+2. ✅ Determine if company is in transition or disruption
+3. ✅ If in transition: Use conservative approach (Munger method preferred)
+4. ✅ If mature business: Outlier method likely has bad assumptions; skip or reweight
+5. ✅ Recalculate consensus using only trusted methods
+6. ✅ Document why divergence occurred
+7. ✅ Add extra margin of safety (may need 40-50% instead of 25-30%)
 
-Peers are also overvalued/undervalued
-Company growth different from peers
-Margins different from peers
-Quality different from peers
-Investigation: ✅ Check if peers trading at premiums (bull market) ✅ Compare growth rates (is this company faster/slower?) ✅ Compare margins (profit quality) ✅ Compare moats (competitive position)
+**Example resolution:**
+- Original consensus: $450 (weight all equally)
+- Issue: Multiples method using wrong peers
+- Revised consensus: Remove multiples, weight DCF 50%, Buffett 25%, Munger 25%
+- New fair value: $475 (less influenced by bad multiples)
 
-Resolution: → If DCF is conservative, Multiples more realistic → If Multiples inflated by market sentiment, DCF more reliable → Likely truth is between them → Use weighted average, not just one method
+#### **New Issues - Data Quality Problems**
 
-**Problem: Dividend history inconsistent (cuts, freezes)**
+**Problem: Stock price changed dramatically since last run (>20% overnight)**
 
-Company: 2021: $2.00 dividend 2022: $1.80 (cut 10%) 2023: $1.80 (frozen) 2024: $1.82 (resume 1%) 2025: $1.84 (slow growth)
+Example:
+- Last run (yesterday): Stock at $100
+- Today: Stock at $125 (+25%)
+- News: Earnings beat, raised guidance
 
-Assessment: ✅ Company had financial stress in 2022 ✅ Now recovering ✅ Dividend sustainable going forward?
+**Why this matters:**
+- Valuation is now potentially outdated
+- Fair value estimate doesn't change overnight (fundamentals don't)
+- Stock might now be overvalued vs yesterday's fair value
 
-Action: → Use most recent trend (2023-2025) → Not full historical CAGR (includes cut period) → More conservative growth assumption (2%) → Note in documentation: "Dividend cut in 2022, now stabilizing"
+**Solution:**
+1. ✅ Check if news relates to new information or analyst revision
+2. ✅ If earnings beat: Update financial projections (re-run DCF)
+3. ✅ If analyst revision: Update fair value using new assumptions
+4. ✅ Recalculate margin of safety
+5. ✅ Flag recommendation if MOS dropped below threshold
 
-**Problem: Negative book value (balance sheet distressed)**
+**Action:** 
+- If guidance improved: Re-run valuation with updated assumptions
+- If no new information: Previous fair value still valid; stock just repriced
+- Recommendation: May change from BUY to HOLD if stock caught up to fair value
 
-Company: $100B market cap, -$5B equity This means: Liabilities > Assets Company technically insolvent on balance sheet
+#### **New Issues - Financial Data Conflicts**
 
-DCF: Still valid if cash flows positive P/E: Still valid if profitable P/B: NOT valid (negative book value) P/S: Still valid
+**Problem: Conflicting financial data from different sources**
 
-Action: ✅ Skip P/B multiple ✅ Use P/S multiple as primary ✅ Investigate why book value negative ✅ Is company distressed or restructuring? ✅ If distressed, may fail (avoid) ✅ If restructuring, opportunity exists (risky)
+Example:
+- SEC EDGAR (10-K): Net Income = $100M
+- Yahoo Finance: EPS = $5.00, Shares = 22M implied
+- Company investor relations: "Net income was $105M"
+- Difference: $5M discrepancy
 
-**Problem: Company paid special dividend (skewed results)**
+**Why this happens:**
+- Company uses adjusted earnings (excludes one-time charges)
+- Different reporting periods (fiscal vs calendar year mismatch)
+- Share count differs (diluted vs basic shares)
+- Data updates not synchronized across sources
 
-Dividend history: 2022: $1.50 regular + $0.50 special = $2.00 2023: $1.55 regular 2024: $1.60 regular 2025: $1.65 regular
+**Solution:**
+1. ✅ Use SEC EDGAR as source of truth (official, audited)
+2. ✅ Adjust for known differences:
+   - Diluted vs basic shares: Use diluted (more conservative)
+   - Adjusted vs GAAP earnings: Use GAAP (more conservative)
+   - One-time charges: Verify if truly one-time
+3. ✅ If discrepancy >5%: Investigate reason before proceeding
+4. ✅ Document which source was used for each metric
+5. ✅ Flag if discrepancy suggests accounting manipulation
 
-Issue: If use $2.00 average, over-estimates regular dividend
+**Example resolution:**
+- SEC EDGAR (official): $100M
+- Company adjusted: $105M (added back stock-based compensation)
+- Use: $100M (GAAP) for valuation; note that adjusted earnings are higher
 
-Solution: ✅ Separate regular from special ✅ Use $1.50-1.65 for projections (regular only) ✅ Special dividend is one-time, not recurring ✅ Project only regular dividend growth
+#### **New Issues - Stale or Missing Financial Data**
 
-**Problem: Company just changed business model**
+**Problem: Company hasn't filed 10-K yet (fiscal year ended 90 days ago)**
 
-Scenario: Company was manufacturing, now shifting to services Historical metrics not relevant to future
+Example:
+- Company fiscal year: Dec 31, 2025
+- Today: March 15, 2026 (75 days later)
+- 10-K filing deadline: 60 days (should have been filed Feb 29)
+- Status: 10-K not yet available
 
-Example: IBM: Shifted from hardware → software/services GE: Multiple business exits/restructuring
+**Why this matters:**
+- Can't get latest financial data
+- Must use FY 2024 data (stale, now 15 months old)
+- May miss recent deterioration or improvement
 
-Solution: ✅ Use only recent years reflecting new business ✅ If transition not complete, be conservative ✅ May need to split valuation: - Old business (declining, uses FCF) - New business (growing, needs separate DCF) ✅ Document the transition ✅ Add extra margin of safety due to uncertainty
+**Solution:**
+1. ✅ Check if 10-Q (quarterly) available instead (more recent)
+2. ✅ If 10-Q available: Use Q4 + 3 quarters to approximate FY
+3. ✅ If both 10-K and 10-Q missing: Wait for filing or skip company
+4. ✅ Use latest available quarter, annualize if needed:
+   - Q4 2025 net income = $20M per quarter
+   - Annualized = $20M × 4 = $80M (rough estimate)
+5. ✅ Add note: "Based on partial year data; update when 10-K filed"
+6. ✅ Add extra margin of safety due to stale data
+
+**Example:**
+- Latest available: Q3 2025 financials
+- Annualize: Q3 net income × 4 = estimated FY earnings
+- Wait for full 10-K: Recalculate when complete data available
+
+#### **New Issues - Accounting Red Flags**
+
+**Problem: Company frequently restates earnings or changes accounting methods**
+
+Example:
+- 2023: Earnings reported as $100M, then restated to $90M (-10%)
+- 2023: Changed depreciation method (affects D&A calculation)
+- 2024: Large goodwill impairment ($50M)
+- Pattern: Multiple accounting changes in 3 years
+
+**Why this matters:**
+- Suggests poor financial controls or intentional manipulation
+- Earnings quality is questionable
+- Historical data may not be reliable
+- Red flag for Buffett/Munger quality assessment
+
+**Solution:**
+1. ✅ Exclude restated year or use restated number (more conservative)
+2. ✅ If accounting change: Adjust prior years to consistent basis
+3. ✅ If goodwill impairment: Investigate whether acquisition overpaid
+4. ✅ Count restatements:
+   - 0 restatements in 10 years: Excellent (green flag)
+   - 1 restatement: Acceptable if minor
+   - 2+ restatements: Red flag (quality issue)
+5. ✅ If red flag: May disqualify from investment (Stage 5 filter)
+
+**Example resolution:**
+- Company has 2 restatements in 10 years
+- Management quality score: Downgrade from 8 to 6
+- Overall business quality: Still acceptable but with caution
+- Recommendation: BUY becomes HOLD (require bigger margin of safety)
+
+#### **New Issues - Cyclical Business at Extremes**
+
+**Problem: Company is in cyclical industry at peak earnings**
+
+Example:
+- Commodity company (oil, copper, steel)
+- Cyclical earnings: Peak in 2022 ($500M net income)
+- Trough in 2023 ($100M net income)
+- Current 2025: $300M (somewhere in middle)
+
+**Why this matters:**
+- Using peak earnings overvalues the company
+- Using trough earnings undervalues it
+- Need normalized earnings instead
+- Multiples also distorted (P/E at peak looks cheap, at trough expensive)
+
+**Solution:**
+1. ✅ Calculate normalized earnings (average of cycle):
+   - Peak: $500M
+   - Trough: $100M
+   - Normalized: ($500+$100)/2 = $300M
+2. ✅ Use normalized earnings for valuation, not current year
+3. ✅ Use normalized earnings for multiples (P/E on normalized)
+4. ✅ Consider where in cycle company is currently:
+   - If near peak: Use conservative multiples
+   - If near trough: Use higher multiples (recovery potential)
+5. ✅ Build in extra margin of safety (cyclicals riskier)
+
+**Example:**
+- Current earnings: $300M (middle of cycle)
+- Use normalized: $300M (happens to align)
+- P/E multiples should be lower than growth companies (cyclical discount)
+- Fair value: Adjust downward 10-20% for cycle risk
+
+#### **New Issues - Negative Growth or Decline**
+
+**Problem: Company's revenue/earnings declining multiple years**
+
+Example:
+- 2021: Revenue $1,000M
+- 2022: Revenue $950M (-5%)
+- 2023: Revenue $880M (-7%)
+- 2024: Revenue $780M (-11%)
+- 2025: Revenue $700M (-10%)
+
+**Why this matters:**
+- Company is not growing; it's shrinking
+- Can't use historical growth rates (will project further decline)
+- Need to assess if decline is terminal or temporary
+- May fail financial quality filters
+
+**Solution:**
+1. ✅ Distinguish between temporary decline and structural problem:
+   - Temporary: "We're exiting unprofitable product line" (will stabilize)
+   - Structural: "Disruption from new tech" (decline continues)
+2. ✅ If temporary: Project stabilization year and use normalized earnings
+3. ✅ If structural: May need to project to break-even or exit
+4. ✅ If unable to stabilize: Likely doesn't meet Stage 5 criteria (skip valuation)
+5. ✅ For declining companies that qualify:
+   - Use 0-1% growth (not negative growth)
+   - Shorter terminal period (20 years instead of perpetual)
+   - Larger margin of safety (40-50%)
+
+**Example:**
+- Company exiting unprofitable line; revenue down 10% but margins improving
+- Normalize: 3-year forward = stabilized at $750M
+- Use: 0% growth (mature, stable, declining)
+- Fair value: Conservative DCF with lower terminal value
 
 ---
 
@@ -4573,6 +4905,7 @@ Solution: ✅ Use only recent years reflecting new business ✅ If transition no
 | 1.0 | 2026-03-15 | ThommCroft | Initial comprehensive valuation methodology document; aligned with 0-BASIC-STAGE-WORKFLOW.md as Stage 6 requirements |
 | 1.1 | 2026-03-15 | ThommCroft | Updated a few sections |
 | 1.2 | 2026-03-15 | ThommCroft | Updated section 6, 7,8 and 11 to align with the complete workflow |
+| 1.3 | 2026-03-15 | ThommCroft | Updated section 12 and 13 to align with the complete workflow |
 
 ---
 
