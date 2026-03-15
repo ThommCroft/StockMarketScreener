@@ -1,6 +1,6 @@
 # Stock Market Screener - Valuation Methodology Requirements
 
-**Version:** 1.3
+**Version:** 1.4
 **Date:** 2026-03-15  
 **Author:** ThommCroft  
 **Framework:** Warren Buffett & Charlie Munger Value Investing Principles + Multi-Method Valuation  
@@ -4893,7 +4893,7 @@ Example:
 |----------|--------|---------|
 | [0-BASIC-STAGE-WORKFLOW.md](0-BASIC-STAGE-WORKFLOW.md) | All Stages | Overall pipeline and workflow definitions |
 | [01-INVESTMENT-REQUIREMENTS.md](01-INVESTMENT-REQUIREMENTS.md) | Stages 0-5 | Financial analysis that feeds into Stage 6 |
-| [02-VALUATION-METHODOLOGY.md](02-VALUATION-METHODOLOGY.md) | Stage 6 | Intrinsic value calculation (this document) |
+| [02-VALUATION-METHODOLOGY-REQUIREMENTS.md](02-VALUATION-METHODOLOGY-REQUIREMENTS.md) | Stage 6 | Intrinsic value calculation (this document) |
 | [03-RESULTS-REPORTING-REQUIREMENTS.md](03-RESULTS-REPORTING-REQUIREMENTS.md) | Stage 7 | Results reporting and output specifications |
 
 ---
@@ -4906,6 +4906,7 @@ Example:
 | 1.1 | 2026-03-15 | ThommCroft | Updated a few sections |
 | 1.2 | 2026-03-15 | ThommCroft | Updated section 6, 7,8 and 11 to align with the complete workflow |
 | 1.3 | 2026-03-15 | ThommCroft | Updated section 12 and 13 to align with the complete workflow |
+| 1.4 | 2026-03-15 | ThommCroft | Updated Valuation Methodology Requirements reference |
 
 ---
 
