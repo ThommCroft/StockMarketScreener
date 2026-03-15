@@ -17,6 +17,7 @@
 6. [Metric Calculation & Filtering Integration](#metric-calculation--filtering-integration)
 7. [Implementation Notes](#implementation-notes)
 8. [Data Sources](#data-sources)
+9. [Related Documents](#related-documents)
 
 ---
 
@@ -28,11 +29,12 @@ This document defines **strict, quantifiable criteria** for identifying high-qua
 
 The screener evaluates companies across **all industries** using a **unified multi-stage approach**:
 
-- **Stage 0 (PRE-FILTER)**: Market Cap > $300M - Ensure institutional-quality liquidity
-- **Stage 1 (MERGED)**: Data Ingestion + ALL 40+ Metric Calculation - Complete financial analysis for every company
-- **Stage 2 (EVALUATION)**: Financial Strength Assessment - Evaluate hard filters using comprehensive metric data
-- **Stage 3 (SCORING)**: Quality Assessment - Deep analysis of business quality and earnings (0-100 points)
-- **Stage 4 (RANKING)**: Valuation & Management - Final composite scoring identifying opportunities with safety margin
+- **Stage 0**: Financial Analysis - Market Cap Pre-Filter - Ensure institutional-quality liquidity
+- **Stage 1**: Financial Analysis - Data Ingestion & Metric Calculation - Complete financial analysis for every company
+- **Stage 2**: Financial Analysis - Financial Strength Assessment - Evaluate hard filters using comprehensive metric data
+- **Stage 3**: Financial Analysis - Quality Scoring (0-100) - Comprehensive quality assessment (0-100 points)
+- **Stage 4**: Financial Analysis - Composite Scoring & Management Assessment - Final composite scoring identifying opportunities with safety margin
+- **Stage 5**: Financial Analysis - Results Processing - Determine which companies advance to Stage 6 valuation
 
 **Target Universe**: All US-listed equities with market cap > $300M
 
@@ -516,36 +518,39 @@ Rather than cascading filters that eliminate companies early, the screener emplo
 
 ### Stage-by-Stage Implementation
 
-**Stage 0: Market Cap Pre-Filter**
+For detailed stage definitions and workflow overview, see [0-BASIC-STAGE-WORKFLOW.md](0-BASIC-STAGE-WORKFLOW.md)
+
+**Stage 0: Financial Analysis - Market Cap Pre-Filter**
 - Eliminate companies < $300M market cap (saves API calls)
 - ~10-15% of universe rejected at this step
 - Focus remaining effort on institutional-quality companies
 
-**Stage 1: Data Ingestion & Metric Calculation**
+**Stage 1: Financial Analysis - Data Ingestion & Metric Calculation**
 - Fetch financial data from SEC EDGAR (authoritative)
 - Fetch market data from Yahoo Finance (with fallbacks: IEX Cloud, Alpha Vantage)
 - **Calculate ALL 40+ metrics for every company**
 - Validate data quality and completeness
 - Create year-by-year metrics and 10-year averages
 
-**Stage 2: Financial Strength Assessment**
+**Stage 2: Financial Analysis - Financial Strength Assessment**
 - Evaluate hard filters using complete metric data
 - Assess market cap trends and liquidity positions
 - Evaluate leverage and financial flexibility
 - Determine financial fortress status
 
-**Stage 3: Quality Scoring (0-100)**
+**Stage 3: Financial Analysis - Quality Scoring (0-100)**
 - Pillar 1: Return on Capital (max 30 points)
 - Pillar 2: Profitability (max 30 points)
 - Pillar 3: Cash Flow Quality (max 20 points)
 - Pillar 4: Business Quality (max 10 points)
 
-**Stage 4: Valuation & Management Ranking**
-- Pillar 5: Valuation Scoring (max 35 points)
-- Pillar 6: Management Quality (max 25 points)
+**Stage 4: Financial Analysis - Composite Scoring & Management Assessment**
+- Input: Quality Score from Stage 3 (0-100)
+- Pillar 5: Valuation Scoring (max 35 points) - Based on P/E, P/B, Earnings Yield metrics
+- Pillar 6: Management Assessment (max 25 points) - Based on insider ownership, goodwill, accounting quality
 - Composite: (Quality × 40%) + (Valuation × 35%) + (Management × 25%)
 
-**Stage 5: Results Processing**
+**Stage 5: Financial Analysis - Results Processing**
 - PASS: Composite score >= 75 (store in database)
 - FAIL: Composite score < 75 (discard)
 - Compare with previous qualified companies
@@ -634,6 +639,17 @@ Rather than cascading filters that eliminate companies early, the screener emplo
 
 ---
 
+## Related Documents
+
+| Document | Covers | Purpose |
+|----------|--------|---------|
+| [0-BASIC-STAGE-WORKFLOW.md](0-BASIC-STAGE-WORKFLOW.md) | Stages 0-5 Overview | High-level workflow and stage definitions |
+| [01-INVESTMENT-REQUIREMENTS.md](01-INVESTMENT-REQUIREMENTS.md) | Stages 0-5 Detail | Complete investment criteria and metrics (this document) |
+| [02-VALUATION-METHODOLOGY.md](02-VALUATION-METHODOLOGY.md) | Stage 6 | Intrinsic value calculation methodology |
+| [03-RESULTS-REPORTING-REQUIREMENTS.md](03-RESULTS-REPORTING-REQUIREMENTS.md) | Stage 7 | Results reporting and output specifications |
+
+---
+
 ## Document History
 
 | Version | Date | Author | Changes |
@@ -641,4 +657,5 @@ Rather than cascading filters that eliminate companies early, the screener emplo
 | 1.0 | 2026-03-13 | ThommCroft | Initial investment requirements specification |
 | 2.0 | 2026-03-13 | ThommCroft | Added comprehensive metrics reference and 8 categories |
 | 3.0 | 2026-03-13 | ThommCroft | Complete refinement with all 40+ metrics, hard filters, and scoring |
-| 3.1 | 2026-03-14 | ThommCroft | **CURRENT** - MERGED APPROACH: All 40+ metrics calculated BEFORE hard filter evaluation; unified comprehensive analysis replacing cascading filters |
+| 3.1 | 2026-03-14 | ThommCroft | MERGED APPROACH: All 40+ metrics calculated BEFORE hard filter evaluation; unified comprehensive analysis replacing cascading filters |
+| 3.2 | 2026-03-15 | ThommCroft | **CURRENT** - Aligned with 0-BASIC-STAGE-WORKFLOW.md; updated stage naming and references for consistency |
