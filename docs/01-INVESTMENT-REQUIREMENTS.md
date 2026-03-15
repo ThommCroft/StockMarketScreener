@@ -1,6 +1,6 @@
-# Investment Requirements Document - Version 3.2
+# Investment Requirements Document
 
-**Version:** 3.2 (Merged Metric Calculation & Hard Filter Evaluation)  
+**Version:** 3.3  
 **Date:** 2026-03-15 
 **Author:** ThommCroft  
 **Framework:** Warren Buffett & Charlie Munger Value Investing Principles + Complete Spreadsheet Metrics
@@ -670,7 +670,7 @@ For detailed stage definitions and workflow overview, see [0-BASIC-STAGE-WORKFLO
 |----------|--------|---------|
 | [0-BASIC-STAGE-WORKFLOW.md](0-BASIC-STAGE-WORKFLOW.md) | Stages 0-5 Overview | High-level workflow and stage definitions |
 | [01-INVESTMENT-REQUIREMENTS.md](01-INVESTMENT-REQUIREMENTS.md) | Stages 0-5 Detail | Complete investment criteria and metrics (this document) |
-| [02-VALUATION-METHODOLOGY.md](02-VALUATION-METHODOLOGY.md) | Stage 6 | Intrinsic value calculation methodology |
+| [02-VALUATION-METHODOLOGY-REQUIREMENTS.md](02-VALUATION-METHODOLOGY-REQUIREMENTS.md) | Stage 6 | Intrinsic value calculation methodology |
 | [03-RESULTS-REPORTING-REQUIREMENTS.md](03-RESULTS-REPORTING-REQUIREMENTS.md) | Stage 7 | Results reporting and output specifications |
 
 ---
@@ -683,4 +683,5 @@ For detailed stage definitions and workflow overview, see [0-BASIC-STAGE-WORKFLO
 | 2.0 | 2026-03-13 | ThommCroft | Added comprehensive metrics reference and 8 categories |
 | 3.0 | 2026-03-13 | ThommCroft | Complete refinement with all 40+ metrics, hard filters, and scoring |
 | 3.1 | 2026-03-14 | ThommCroft | MERGED APPROACH: All 40+ metrics calculated BEFORE hard filter evaluation; unified comprehensive analysis replacing cascading filters |
-| 3.2 | 2026-03-15 | ThommCroft | **CURRENT** - Aligned with 0-BASIC-STAGE-WORKFLOW.md; updated stage naming and references for consistency |
+| 3.2 | 2026-03-15 | ThommCroft | Aligned with 0-BASIC-STAGE-WORKFLOW.md; updated stage naming and references for consistency |
+| 3.3 | 2026-03-15 | ThommCroft | Updated Valuation Methodology Requirements reference |
