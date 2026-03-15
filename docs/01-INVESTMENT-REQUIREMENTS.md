@@ -1,7 +1,7 @@
-# Investment Requirements Document - Version 3.1
+# Investment Requirements Document - Version 3.2
 
-**Version:** 3.1 (Merged Metric Calculation & Hard Filter Evaluation)  
-**Date:** 2026-03-14  
+**Version:** 3.2 (Merged Metric Calculation & Hard Filter Evaluation)  
+**Date:** 2026-03-15 
 **Author:** ThommCroft  
 **Framework:** Warren Buffett & Charlie Munger Value Investing Principles + Complete Spreadsheet Metrics
 
