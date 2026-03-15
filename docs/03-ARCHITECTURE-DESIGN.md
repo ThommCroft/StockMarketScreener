@@ -1,7 +1,7 @@
 # Architecture Design Document - Stock Market Screener
 
-**Version:** 3.2 (Merged Metric Calculation + Hard Filter Evaluation)  
-**Date:** 2026-03-14  
+**Version:** 3.3 
+**Date:** 2026-03-15  
 **Author:** ThommCroft
 **Stack:** C# .NET 8.0, MySQL 8.0, GitHub Actions (Quarterly + Manual), Console Application  
 **Deployment:** Local MySQL + GitHub Actions automation  
