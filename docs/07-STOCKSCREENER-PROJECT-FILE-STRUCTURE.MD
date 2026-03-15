@@ -1,3 +1,4 @@
+```
 StockMarketScreener/
 ├── src/
 │   ├── StockMarketScreener.Console/
@@ -176,3 +177,4 @@ StockMarketScreener/
 │
 ├── StockMarketScreener.sln
 └── README.md
+```
