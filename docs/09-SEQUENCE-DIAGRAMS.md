@@ -32,7 +32,7 @@ sequenceDiagram
     participant MetricCalcService
     participant ValuationService
     participant ReportingService
-    database MySQL
+    participant MySQL
 
     User->>Program: ExecuteQuarterlyScreeningAsync()
     activate Program
