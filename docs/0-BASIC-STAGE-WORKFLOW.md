@@ -1,6 +1,6 @@
 # Stock Market Screener - Basic Stage Workflow
 
-**Version:** 1.1
+**Version:** 1.2
 **Date:** 2026-03-15  
 **Author:** ThommCroft  
 **Purpose:** Define the complete end-to-end pipeline stages for the stock screening system
@@ -155,7 +155,7 @@ All companies that have passed the above Financial Analysis (Score ≥ 75) will 
 | Document | Covers | Purpose |
 |----------|--------|---------|
 | [01-INVESTMENT-REQUIREMENTS.md](01-INVESTMENT-REQUIREMENTS.md) | Stages 0-5 | Detailed investment criteria, metrics, and quality scoring |
-| [02-VALUATION-METHODOLOGY.md](02-VALUATION-METHODOLOGY.md) | Stage 6 | Complete valuation methodology for intrinsic value calculation |
+| [02-VALUATION-METHODOLOGY-REQUIREMENTS.md](02-VALUATION-METHODOLOGY-REQUIREMENTS.md) | Stage 6 | Complete valuation methodology for intrinsic value calculation |
 | [03-RESULTS-REPORTING-REQUIREMENTS.md](03-RESULTS-REPORTING-REQUIREMENTS.md) | Stage 7 | Results reporting specifications and output formats |
 
 ---
@@ -190,4 +190,5 @@ Stage 7: Results Reporting & Report Generation
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
 | 1.0 | 2026-03-15 | ThommCroft | Initial basic workflow document |
-| 1.1 | 2026-03-15 | ThommCroft | Initial basic workflow document |
+| 1.1 | 2026-03-15 | ThommCroft | Upated content |
+| 1.2 | 2026-03-15 | ThommCroft | Fixed Valuation Methodology Requirements reference |
