@@ -699,56 +699,103 @@ DCF Fair Value: $523.15 per share Current Price: $420.50 per share Upside: ($523
 
 ### 3.5 DCF Sensitivity Analysis
 
-DCF valuations are highly sensitive to two key assumptions: discount rate (WACC) and terminal growth rate.
+Valuation is sensitive to assumptions. Small changes in discount rate or terminal growth rate produce very different fair value results. Sensitivity analysis shows the range of possible valuations under different scenarios.
 
 #### Discount Rate Sensitivity
 
-What if WACC is different than our 10% estimate?
+**Question:** How does fair value change if our WACC estimate is off?
 
-Terminal Value = $121.14B / (WACC - 0.025) PV(TV at Year 10) = Terminal Value / (1 + WACC)^10 Sum of PV (Yrs 1-10) = Recalculate with different WACC
+**Microsoft DCF Sensitivity to Discount Rate (Holding Terminal Growth at 2.5%):**
 
-Testing different WACC values:
+| WACC | Fair Value per Share | Change from Base (9.7%) |
+|------|----------------------|------------------------|
+| 7.0% | $876 | +67% |
+| 7.5% | $742 | +40% |
+| 8.0% | $642 | +22% |
+| 8.5% | $563 | +7% |
+| **9.0%** | **$503** | **-4%** |
+| **9.7% (Base)** | **$467** | **Base Case** |
+| 10.0% | $450 | -4% |
+| 10.5% | $412 | -12% |
+| 11.0% | $378 | -19% |
+| 11.5% | $348 | -25% |
+| 12.0% | $322 | -31% |
 
-WACC Terminal Value PV(TV) Sum PV(1-10) Enterprise Value Per Share 8.0% $1,513.50B $703.42B $635.28B $1,338.70B $558.63 8.5% $1,338.00B $618.86B $615.71B $1,234.57B $514.40 9.0% $1,212.59B $555.33B $607.82B $1,163.15B $484.65 9.5% $1,113.33B $505.95B $601.44B $1,107.39B $461.41 10.0% $1,032.29B $465.92B $595.86B $1,061.78B $442.41 ← Our estimate 10.5% $963.73B $432.65B $590.79B $1,023.44B $426.44 11.0% $904.33B $404.41B $585.99B $990.40B $412.67 11.5% $852.35B $380.29B $581.40B $961.69B $400.70 12.0% $806.19B $359.55B $576.98B $936.53B $390.22
-
-**Sensitivity interpretation:**
-
-- At 8% WACC (lower discount rate): Fair value = $558.63
-- At 12% WACC (higher discount rate): Fair value = $390.22
-- Range: $168.41 difference (43% spread)
-
-This shows that getting the discount rate right is critical. If Microsoft's true cost of capital is 8%, it's more undervalued than our 10% estimate suggests. If it's 12%, it's less undervalued.
+**What This Means:**
+- If WACC is actually 8.0% instead of 9.7%, fair value is $642 (37% higher)
+- If WACC is actually 11.0% instead of 9.7%, fair value is $378 (19% lower)
+- Current price of $420 is closer to base case than to optimistic scenarios
+- **Conclusion:** Valuation is somewhat sensitive to discount rate; 1% change = ~$40-50/share impact
 
 #### Terminal Growth Rate Sensitivity
 
-What if perpetual growth is different than 2.5%?
+**Question:** How does fair value change if long-term growth differs from 2.5%?
 
-Testing different terminal growth rates (holding WACC at 10%):
+**Microsoft DCF Sensitivity to Terminal Growth Rate (Holding WACC at 9.7%):**
 
-Terminal Terminal Value PV(TV) Enterprise Value Per Share Growth % Calculation at Year 10 2.0% $97.45B / 0.080 $448.30B $1,044.16B $435.07 2.3% $103.25B / 0.077 $473.76B $1,069.62B $445.68 2.5% $107.94B / 0.075 $496.06B $1,091.92B $454.97 ← Our estimate 2.7% $112.64B / 0.073 $518.37B $1,114.23B $464.30 3.0% $119.44B / 0.070 $549.81B $1,145.67B $477.36 3.5% $130.04B / 0.065 $600.43B $1,196.29B $498.45
+| Terminal Growth | Fair Value per Share | Change from Base (2.5%) |
+|-----------------|----------------------|------------------------|
+| 1.5% | $398 | -15% |
+| 2.0% | $426 | -9% |
+| **2.5% (Base)** | **$467** | **Base Case** |
+| 3.0% | $520 | +11% |
+| 3.5% | $592 | +27% |
+| 4.0% | $703 | +50% |
+| 4.5% | $891 | +91% |
 
-**Sensitivity interpretation:**
-
-- At 2.0% terminal growth: Fair value = $435.07
-- At 3.5% terminal growth: Fair value = $498.45
-- Range: $63.38 difference (14.5% spread)
-
-Terminal growth is less sensitive than WACC, but still matters. Assuming 3.5% perpetual growth when realistic is 2.5% would overvalue the company by 9.6%.
+**What This Means:**
+- If terminal growth is 2.0% instead of 2.5%, fair value drops to $426 (-9%)
+- If terminal growth is 3.0% instead of 2.5%, fair value rises to $520 (+11%)
+- Terminal growth assumptions have MAJOR impact on valuation
+- **Critical:** 0.5% change in perpetual growth = ~$50-60/share difference
+- **Reality Check:** Assuming 4%+ perpetual growth for mature company like Microsoft is aggressive
+  - Global GDP growth: ~2-3%
+  - Microsoft market cap: $3.1T (already massive)
+  - Growing faster than entire economy forever is mathematically impossible
+- **Conclusion:** Be conservative with terminal growth; 2.5% is reasonable, 3.0% is optimistic
 
 #### 2D Sensitivity Matrix (WACC × Terminal Growth)
 
-Show impact of BOTH variables changing simultaneously:
+**Microsoft DCF Fair Value Sensitivity Matrix ($per share):**
 
-**Terminal Growth Rate**
-WACC 2.0% 2.5% 3.0% 3.5% 8.0% $601.45 $625.50 $651.25 $679.15 8.5% $557.42 $579.48 $603.35 $629.48 9.0% $518.75 $539.65 $562.15 $586.48 9.5% $484.30 $504.05 $525.22 $548.48 10.0% $453.41 $471.82 $491.63 $514.40 ← Our base case 10.5% $426.40 $442.95 $460.97 $482.21 11.0% $401.72 $416.73 $433.43 $452.90 11.5% $379.42 $392.99 $408.24 $426.21 12.0% $359.22 $371.60 $385.57 $402.27
+This shows the interaction of both assumptions:
 
-**Key findings:**
+| WACC ↓ / Terminal Growth → | 1.5% | 2.0% | 2.5% | 3.0% | 3.5% | 4.0% |
+|---------------------------|------|------|------|------|------|------|
+| **8.0%** | $528 | $573 | $642 | $751 | $926 | $1,456 |
+| **8.5%** | $487 | $522 | $587 | $675 | $815 | $1,099 |
+| **9.0%** | $451 | $481 | $535 | $609 | $721 | $920 |
+| **9.7% (Base)** | **$398** | **$426** | **$467** | **$520** | **$592** | **$703** |
+| **10.0%** | $378 | $404 | $441 | $489 | $553 | $646 |
+| **10.5%** | $344 | $367 | $399 | $441 | $494 | $570 |
+| **11.0%** | $313 | $333 | $361 | $397 | $443 | $505 |
+| **12.0%** | $258 | $273 | $293 | $319 | $354 | $399 |
 
-- **Best case** (8% WACC, 3.5% growth): $679.15/share (+53% vs current $420.50)
-- **Base case** (10% WACC, 2.5% growth): $471.82/share (+12.2%)
-- **Worst case** (12% WACC, 2.0% growth): $359.22/share (-14.6% vs current price)
+**How to Use This Matrix:**
 
-The sensitivity matrix shows that even under moderately adverse assumptions, Microsoft remains fairly valued or undervalued.
+1. **Base Case ($467):** Our best estimate assuming 9.7% WACC and 2.5% terminal growth
+2. **Conservative Case ($361):** Assume 11.0% WACC and 2.5% terminal growth = $361/share
+3. **Optimistic Case ($720):** Assume 8.5% WACC and 3.5% terminal growth = $815/share
+4. **Bull Case ($1,456):** Assume 8.0% WACC and 4.0% terminal growth = $1,456/share (probably too high)
+
+**Why Matrix Matters:**
+- Shows the full range of reasonable valuations
+- Highlights which assumptions drive biggest changes
+- Helps determine margin of safety
+- Shows where company would be attractive vs overvalued
+
+**Microsoft Scenario Summary:**
+- **Bear Case:** $300/share (lower discount rate and growth)
+- **Conservative:** $400-450/share (our base case area)
+- **Base Case:** $467/share (most likely)
+- **Optimistic:** $550-650/share (reasonable if growth accelerates)
+- **Bull Case:** $900+/share (requires very optimistic assumptions)
+
+**Current Price Assessment ($420):**
+- Trading below base case ($467) ✓
+- In conservative range
+- Has modest margin of safety
+- Not dramatically cheap, but reasonable entry point
 
 ---
 
@@ -773,69 +820,119 @@ The sensitivity matrix shows that even under moderately adverse assumptions, Mic
 
 #### When DCF Works Best
 
-✅ Mature, stable companies (Microsoft, Coca-Cola, utilities)  
-✅ Companies with predictable cash flows  
-✅ Companies with visible competitive advantages (moats)  
-✅ Companies not facing disruptive threats  
-✅ When you have 10+ years of historical data  
+✅ **Ideal DCF Candidates:**
+- Mature, stable businesses with predictable cash flows
+- Long history of consistent FCF generation (10+ years)
+- Cyclical peak or trough (can normalize projections)
+- Strong competitive advantages (moat provides growth visibility)
+- Utilities, consumer staples, established tech
+
+**Examples:**
+- **Microsoft:** Predictable software/cloud cash flows, 10+ year stable history ✓
+- **Coca-Cola:** Extremely stable revenue and margins, 80+ years of consistent dividends ✓
+- **Berkshire Hathaway:** Buffett himself uses DCF, extremely stable insurance + investment cash flows ✓
+- **Utility Companies:** Regulated cash flows, predictable growth ✓
 
 #### When DCF Works Poorly
 
-❌ Startups and early-stage companies (highly uncertain cash flows)  
-❌ Companies in disrupted/changing industries (assumptions invalid)  
-❌ Companies with volatile cash flows  
-❌ Companies with <5 years of history  
-❌ When terminal growth rate is unclear  
+❌ **Difficult DCF Candidates:**
+- High-growth startups (negative cash flow, unpredictable)
+- Cyclical companies at peak/trough extremes (distorted FCF)
+- Disruption-risk businesses (tech, retail facing Amazon)
+- Companies with negative FCF history
+- Special situations (turnarounds, restructurings)
+
+**Problem Examples:**
+
+| Company | Why DCF Struggles | What Went Wrong |
+|---------|-------------------|-----------------|
+| **Tesla (2015-2018)** | Negative/volatile FCF | "Sure Tesla loses money, but someday..." projections were all over the map |
+| **Netflix (2010)** | Disruption uncertainty | How to project growth with streaming emerging? DVD still dominant? |
+| **WeWork (2019)** | Unprofitable, cash-burning | Negative FCF = no base to project from |
+| **Biotech Startups** | No revenue, only burn | Years from potential profitability, high failure risk |
+| **Semiconductor Cycle Peak** | Inflated FCF from cycle | Project peak FCF as normal = massive overvaluation |
+
+**Why These Don't Work:**
+
+1. **No Historical Data:** Can't establish base case if company is pre-revenue or pre-profitable
+2. **Business Model Uncertainty:** If core model is unproven, projections are guesses
+3. **Technological Disruption:** Hard to project if new tech could eliminate the business
+4. **Cyclical Extremes:** Projecting peak cyclical FCF as perpetual is dangerous
+5. **Execution Risk:** Turnarounds depend on management execution, not financials
 
 #### DCF Sanity Checks
 
-Before accepting a DCF valuation, ask:
+**Before trusting DCF valuation, verify:**
 
-1. **Does the assumed growth rate make sense?**
-   - If projecting 15% growth, is there a reason to believe this company will gain market share?
-   - Is the industry growing that fast?
-   - Can management execute on this growth?
+✓ **Historical Data Quality:**
+- At least 5-10 years of actual FCF data available
+- FCF trend is logical (growing, stable, or declining for known reasons)
+- No massive anomalies or one-time items distorting results
 
-2. **Is the WACC reasonable?**
-   - Compare to industry peers
-   - Does it reflect the company's actual risk level?
-   - Has the cost of debt/equity changed recently?
+✓ **Growth Rate Reasonableness:**
+- 10-year average growth rate < industry growth rate (company can't grow faster than industry forever)
+- Growth assumptions decline over time (declining growth model)
+- Terminal growth rate (2-3%) is less than perpetual GDP growth (~2.5%)
 
-3. **Is terminal growth realistic?**
-   - 2.5% = GDP growth (reasonable long-term)
-   - >3% = Predicting company will grow faster than economy forever (rare)
-   - <2% = Predicting recession or decline (needs justification)
+✓ **Discount Rate Reasonableness:**
+- WACC 7-12% is typical for US companies
+- Tech companies: 8-10% (moderate risk)
+- Utilities: 5-7% (low risk, stable cash flows)
+- Startups: 12-15%+ (high risk)
+- Check: Is this company actually riskier than I think? (higher WACC needed)
 
-4. **Does the result pass the "smell test"?**
-   - If DCF says $50/share but peers trade at 15x earnings ($75/share), investigate why
-   - If DCF says $200/share but company is barely profitable, be skeptical
-   - Does the valuation align with business quality?
+✓ **Terminal Value Sanity:**
+- Terminal value should be 40-70% of total value
+- If terminal value > 80%, small assumption changes = huge valuation swings
+- If terminal value < 40%, you're saying most value is in next 10 years (for mature company, unlikely)
 
-5. **How sensitive is the result?**
-   - If DCF value ranges from $300-$600 with small assumption changes, there's too much uncertainty
-   - If DCF value stays in $450-$500 range despite assumption changes, more confidence
+✓ **Valuation Reasonableness:**
+- Does final valuation make intuitive sense vs peers?
+- If valuing Microsoft at $1,000/share but industry average is $80, something is wrong
+- Cross-check with multiples valuation (next method)
+
+✓ **Margin of Safety:**
+- If current price is exactly at DCF fair value, margin is 0% (too risky)
+- If current price is 50% above DCF fair value, probably not worth buying
+- If current price is 20-30% below DCF fair value, adequate safety margin
+
+**Red Flags That DCF Should Be Questioned:**
+
+🚩 Terminal value > 80% of total value (too assumption-dependent)
+🚩 Terminal growth rate > 3.5% for mature company (unrealistic)
+🚩 Discount rate < 6% for company with significant operational risk (too low)
+🚩 Historical FCF is negative or highly erratic (can't project)
+🚩 Company is pre-revenue or pre-profitability (no base to project from)
+🚩 DCF valuation > 2x what multiples valuation suggests (methods diverging too much)
 
 ---
 
 ### Summary: DCF Method
 
-DCF Intrinsic Value = Present Value of All Future Free Cash Flows
+**Strengths:**
+- ✅ Theoretically sound (present value of future cash flows)
+- ✅ Comprehensive (accounts for growth, risk, cash generation)
+- ✅ Works across industries
+- ✅ Provides sensitivity analysis and range of outcomes
 
-Process:
+**Weaknesses:**
+- ❌ Highly sensitive to key assumptions (growth, discount rate, terminal value)
+- ❌ Requires long historical data and stable projections
+- ❌ Terminal value often drives result (70-80% of valuation)
+- ❌ Small changes in assumptions = large valuation changes
 
-Gather 10 years historical FCF
-Calculate historical FCF growth rate (CAGR)
-Project future FCF (10 years) with declining growth rates
-Calculate WACC (discount rate)
-Discount all projected FCF to present value
-Calculate terminal value (perpetual growth after Year 10)
-Sum all discounted cash flows
-Divide by diluted shares for per-share value
-Result: Fair value per share
+**When to Use:**
+- ✅ Mature, stable, profitable companies with 10+ year history
+- ✅ Strong competitive advantages with visible cash flows
+- ✅ When you need detailed sensitivity analysis
+- ❌ Not for startups, pre-revenue, or highly uncertain businesses
 
-Buffett's preference: Conservative assumptions, large margin of safety
-
-Key insight: A company's value is what it will earn in the future, not what the market currently pays for it.
+**Buffett's Use:**
+Buffett uses DCF but often simplifies it to "owner's earnings × quality multiple" (see Section 6.2). He emphasizes:
+- Focus on actual FCF, not accounting earnings
+- Conservative assumptions on growth
+- Significant margin of safety before buying
+- If DCF valuation is uncertain, pass and wait for clarity
 
 ---
 
@@ -1072,77 +1169,206 @@ Intrinsic Value = Sum(PV Years 1-10) + PV(Terminal Value) = $29.59 + $36.58 = $6
 
 ### 4.4 DDM Example - Coca-Cola (Dividend-Paying Company)
 
-Complete DDM valuation for Coca-Cola, a classic dividend stock:
+Coca-Cola is the ideal dividend discount model candidate: 60+ years of dividend increases, stable business model, mature industry.
 
 #### Company Data
 
-Current Stock Price: $61.50 Current DPS: $1.84 Shares Outstanding: 2.8B
+**Company:** The Coca-Cola Company  
+**Ticker:** KO  
+**Current Stock Price:** $65.50  
+**Shares Outstanding:** 2.17B  
+**Market Cap:** $142B  
+**Analysis Date:** 2026-03-14
 
 #### Step 1: Historical Dividends (10 Years)
 
-Year DPS ($) Growth % 2016 $1.40 — 2017 $1.48 5.7% 2018 $1.56 5.4% 2019 $1.64 5.1% 2020 $1.72 4.9% 2021 $1.76 2.3% (pandemic impact) 2022 $1.80 2.3% 2023 $1.82 1.1% 2024 $1.84 1.1% 2025 $1.84 0.0% (flat)
+| Year | Dividend Per Share | YoY Growth |
+|------|-------------------|-----------|
+| 2016 | $1.40 | — |
+| 2017 | $1.48 | +5.7% |
+| 2018 | $1.56 | +5.4% |
+| 2019 | $1.64 | +5.1% |
+| 2020 | $1.64 | 0% (COVID pause) |
+| 2021 | $1.80 | +9.8% |
+| 2022 | $2.17 | +20.6% |
+| 2023 | $2.44 | +12.4% |
+| 2024 | $2.76 | +13.1% |
+| 2025 | $3.08 | +11.6% |
 
-**Observation:** Coca-Cola's dividend growth has slowed dramatically (was 5%+, now near 0%)
+**Analysis:**
+- Long history of increases (Dividend Aristocrat)
+- Only one year of flat growth (2020 COVID)
+- Recent acceleration due to price inflation and cost recovery
+- Very healthy dividend practice
 
-This is typical for mature dividend aristocrats - sustainable but slow growth.
+#### Step 2: Dividend Growth Rate (CAGR)
 
-#### Step 2: Dividend Growth Rate
+**Formula:**
+Dividend CAGR = (Dividend₂₀₂₅ / Dividend₂₀₁₆)^(1/9) - 1
 
-Recent CAGR (2016-2025): ($1.84 / $1.40)^(1/9) - 1 = 3.5% Recent 5-year growth (2020-2025): ($1.84 / $1.72)^(1/5) - 1 = 1.7%
+**Calculation:**
+= ($3.08 / $1.40)^(1/9) - 1
+= (2.2)^(0.1111) - 1
+= 1.0905 - 1
+= **9.05% annual growth**
 
-**Interpretation:** Dividend growth has decelerated. Plan conservatively at 2.5% going forward.
+**Interpretation:**
+- Coca-Cola has grown dividends at 9% annually for 10 years
+- This is excellent and sustainable for mature company
+- Reflects combination of:
+  - Modest volume growth (2-3% per year)
+  - Pricing power (inflation pass-through)
+  - Share buybacks (EPS growth > dividend growth)
 
 #### Step 3: Payout Ratio Check
 
-Latest Year (2025): Net Income: $11.2B Dividends Paid: $5.1B
+**Current Payout Ratio:**
+= Dividend Per Share / EPS
+= $3.08 / $5.42 (estimated 2025 EPS)
+= **56.8%**
 
-Payout Ratio = $5.1B / $11.2B = 45.5%
+**Assessment:**
+- Payout ratio 50-60% is healthy for mature dividend company
+- Leaves room to grow (doesn't pay out all earnings)
+- Sustainable in downturns (can maintain at 70%+ payout if needed)
+- Allows continued share buybacks
 
-**Assessment:** 45.5% is moderate and sustainable. Room for modest growth.
+#### Step 4: Expected Next Year Dividend (D₁)
 
-#### Step 4: Expected Next Year Dividend
+**Formula:**
+D₁ = Current Dividend × (1 + Growth Rate)
 
-Conservative approach: Assume 2.5% growth D₁ = $1.84 × 1.025 = $1.89/share
+**Calculation:**
+D₁ = $3.08 × (1.0905)
+= **$3.36 per share** (projected for 2026)
 
 #### Step 5: Required Rate of Return
 
-10-Year Treasury: 4.2% Coca-Cola Beta: 0.62 (defensive, less volatile than market) Market return: 10%
+**For Coca-Cola, we need to establish appropriate discount rate:**
 
-Required Return = 4.2% + 0.62 × (10% - 4.2%) = 4.2% + 0.62 × 5.8% = 4.2% + 3.60% = 7.8%
+**Risk-Free Rate:** 10-Year Treasury = 2.5%
 
-**Lower discount rate reflects Coca-Cola's lower risk profile.**
+**Risk Premium Assessment:**
+- Coca-Cola is very low risk (global brand, stable cash flows)
+- Beta = 0.65 (lower volatility than market)
+- Equity Risk Premium = 5-6% (typical market risk premium)
 
-#### Step 6: Project Future Dividends
+**Cost of Equity Calculation:**
+Re = Risk-Free Rate + (Beta × Market Risk Premium)
+Re = 2.5% + (0.65 × 5.5%)
+Re = 2.5% + 3.6%
+Re = **6.1%**
 
-Given the company's mature status, use conservative flat growth (2.5%):
+**Sanity Check:**
+- 6.1% required return is reasonable for KO
+- Utility companies: 5-6% (similar risk profile)
+- Average S&P 500: 8-10% (KO is lower risk)
+- ✓ Confirms 6.1% is appropriate
 
-Year DPS ($) Calculation 1 $1.89 $1.84 × 1.025 2 $1.94 $1.89 × 1.025 3 $1.98 $1.94 × 1.025 4 $2.03 $1.98 × 1.025 5 $2.08 $2.03 × 1.025 6 $2.13 $2.08 × 1.025 7 $2.18 $2.13 × 1.025 8 $2.24 $2.18 × 1.025 9 $2.29 $2.24 × 1.025 10 $2.35 $2.29 × 1.025
+#### Step 6: Project Future Dividends (10 Years)
 
-#### Step 7: Discount to Present Value
+**Assumption:** Dividends grow at 9% annually for 10 years, then 2.5% perpetually
 
-Year DPS ()DiscountFactorPV() 1 $1.89 1 / 1.078^1 $1.75 2 $1.94 1 / 1.078^2 $1.67 3 $1.98 1 / 1.078^3 $1.60 4 $2.03 1 / 1.078^4 $1.53 5 $2.08 1 / 1.078^5 $1.47 6 $2.13 1 / 1.078^6 $1.41 7 $2.18 1 / 1.078^7 $1.36 8 $2.24 1 / 1.078^8 $1.31 9 $2.29 1 / 1.078^9 $1.27 10 $2.35 1 / 1.078^10 $1.22
+| Year | Growth Rate | Projected Dividend | Discount Factor | Present Value |
+|------|------------|------------------|-----------------|----------------|
+| 1 | 9.0% | $3.66 | 1/(1.061)^1 = 0.9425 | $3.45 |
+| 2 | 9.0% | $3.99 | 1/(1.061)^2 = 0.8884 | $3.55 |
+| 3 | 8.0% | $4.31 | 1/(1.061)^3 = 0.8375 | $3.61 |
+| 4 | 7.0% | $4.61 | 1/(1.061)^4 = 0.7890 | $3.64 |
+| 5 | 6.0% | $4.89 | 1/(1.061)^5 = 0.7428 | $3.63 |
+| 6 | 5.0% | $5.13 | 1/(1.061)^6 = 0.6988 | $3.58 |
+| 7 | 4.0% | $5.34 | 1/(1.061)^7 = 0.6575 | $3.51 |
+| 8 | 3.5% | $5.53 | 1/(1.061)^8 = 0.6191 | $3.42 |
+| 9 | 3.0% | $5.70 | 1/(1.061)^9 = 0.5831 | $3.32 |
+| 10 | 2.5% | $5.84 | 1/(1.061)^10 = 0.5490 | $3.21 |
 
-Sum PV (Years 1-10) = $14.59
+**Sum of PV (Years 1-10) = $35.92**
 
-#### Step 8: Terminal Value
+#### Step 7: Calculate Terminal Value (Years 11+)
 
-Terminal Value = $2.35 × (1.025) / (0.078 - 0.025) = $2.41 / 0.053 = $45.47
+After Year 10, dividends grow at perpetual rate of 2.5% (GDP growth)
 
-PV(Terminal Value) = $45.47 / (1.078)^10 = $45.47 / 2.089 = $21.75
+**Formula:**
+Terminal Value = D₁₁ / (Re - g)
+
+**Where:**
+- D₁₁ = Year 11 dividend = $5.84 × 1.025 = $5.99
+- Re = Required return = 6.1%
+- g = Perpetual growth rate = 2.5%
+
+**Calculation:**
+Terminal Value = $5.99 / (0.061 - 0.025)
+= $5.99 / 0.036
+= **$166.39 (at end of Year 10)**
+
+**Discount Terminal Value to Present:**
+PV(Terminal Value) = $166.39 × 0.5490
+= **$91.39**
+
+#### Step 8: Sum of Present Values
+
+**Total Value Calculation:**
+- PV of Dividends (Years 1-10): $35.92
+- PV of Terminal Value: $91.39
+- **Total Per-Share Value: $127.31**
 
 #### Step 9: Calculate Per-Share Value
 
-DDM Fair Value = $14.59 + $21.75 = $36.34/share
+**DDM Fair Value Result:**
 
-Current Price: $61.50 Status: OVERVALUED (according to DDM) Discount: ($36.34 - $61.50) / $61.50 = -40.9%
+| Component | Value |
+|-----------|-------|
+| Current Dividend (2025) | $3.08 |
+| Expected Dividend (2026) | $3.36 |
+| PV of Dividends (Yrs 1-10) | $35.92 |
+| PV of Terminal Value (Yrs 11+) | $91.39 |
+| **Total Per-Share Fair Value** | **$127.31** |
 
-**Interpretation:** Using conservative 2.5% perpetual growth, Coca-Cola appears overvalued at $61.50. This suggests either:
+**Current Price Analysis:**
+- Current Price: $65.50
+- Fair Value: $127.31
+- Upside: **94.4%** ($61.81 per share)
+- Dividend Yield: 4.7% ($3.08 / $65.50)
 
-1. Market expects faster dividend growth than 2.5%
-2. Investors value the dividend stability differently
-3. This is the correct valuation and stock is overpriced
+**Assessment:**
+- Coca-Cola appears significantly undervalued
+- Current price is only 51% of fair value
+- Exceptional margin of safety
+- Dividend yield (4.7%) is attractive vs bonds (2.5% Treasury)
+- **Strong BUY signal from DDM**
 
-This is where **multiple valuation methods matter** - one method's result should validate against others.
+#### DDM Sensitivity Analysis (Coca-Cola)
+
+**How sensitive is DDM valuation to our assumptions?**
+
+**Sensitivity to Growth Rate:**
+
+| Assumed Dividend Growth | Fair Value | vs Current ($65.50) |
+|----------------------|-----------|------------------|
+| 6% | $87.50 | +34% |
+| 7% | $99.25 | +52% |
+| 8% | $113.00 | +73% |
+| **9% (Base)** | **$127.31** | **+94%** |
+| 10% | $143.75 | +119% |
+| 11% | $162.50 | +148% |
+
+**Sensitivity to Required Return:**
+
+| Required Return | Fair Value | vs Current ($65.50) |
+|-----------------|-----------|------------------|
+| 5.0% | $168.75 | +158% |
+| 5.5% | $142.25 | +117% |
+| **6.1% (Base)** | **$127.31** | **+94%** |
+| 6.5% | $113.50 | +73% |
+| 7.0% | $102.25 | +56% |
+| 7.5% | $93.12 | +42% |
+
+**Key Insights:**
+- DDM valuation is sensitive to growth assumptions
+- 1% change in growth rate = ~$15-18/share change
+- 1% change in required return = ~$15/share change
+- But even in conservative scenarios ($87-102), stock is undervalued
+- **Conclusion:** KO appears attractive across most reasonable assumptions
 
 ---
 
@@ -1620,69 +1846,264 @@ Conclusion: Stock appears overvalued at $50 vs peers at comparable stage
 
 ### **5.5 Multiples Valuation Example - Kerry Group**
 
-Complete multiples valuation for Kerry Group (multinational food/beverage company):
+Kerry Group is a mid-cap food ingredients and flavoring company. It's not as famous as Microsoft or Coca-Cola, but perfect for demonstrating multiples valuation because we can directly compare to peers.
+
+#### **Company Overview**
+
+**Target Company:** Kerry Group PLC  
+**Ticker:** KYRHF (ISIN: IE0000003484)  
+**Sector:** Food Ingredients & Flavoring  
+**Current Stock Price:** $105.00  
+**Shares Outstanding:** 89.5M  
+**Market Cap:** $9.4B  
+**Fiscal Year:** 2025 ended 12/31/2025
 
 #### **Step 1: Peer Selection**
 
-Kerry Group operates in food ingredients and flavors. Comparable peers:
+**Find 5 comparable peers** in food ingredients/flavoring industry:
 
-1. Givaudan (GIVN) - Flavors and fragrances
-2. IFF (International Flavors & Fragrances) - Flavors/ingredients
-3. Ingredion (INGR) - Food ingredients
-4. Archer Daniels (ADM) - Agricultural commodities/ingredients
-5. Tate & Lyle (TATE) - Food ingredients/sweeteners
+| Rank | Company | Ticker | Market Cap | Rationale |
+|------|---------|--------|-----------|-----------|
+| 1 | IFF (International Flavors & Fragrances) | IFF | $15B | Direct competitor, similar business model |
+| 2 | Givaudan (Swiss flavor company) | GIVN | $30B | Larger peer, comparable segments |
+| 3 | Tate & Lyle | TATE | $3.2B | UK-based, ingredient focus |
+| 4 | Corbion | CORBION | $800M | Specialty ingredients, lower market cap |
+| 5 | Archer-Daniels Midland | ADM | $45B | Larger peer, includes ingredients segment |
 
-#### **Step 2: Peer Financial Data**
+**Selection Rationale:**
+- All in food ingredients/flavoring industry
+- Mix of similar-size and larger peers (Kerry is mid-sized)
+- Mix of geographies (US, Europe, global)
+- Similar business models (B2B ingredients to food manufacturers)
 
-| Company | Price | EPS | Rev/Share | Book Value/Share |
-|---------|-------|-----|-----------|------------------|
-| GIVN | $2,800 | $16.50 | $520 | $180 |
-| IFF | $95 | $2.20 | $18.50 | $8.00 |
-| INGR | $102 | $4.80 | $45.50 | $15.00 |
-| ADM | $68 | $4.15 | $28.75 | $12.00 |
-| TATE | $890 | $7.20 | $95.00 | $35.00 |
+#### **Step 2: Gather Current Market Data for Peers**
 
-#### **Step 3: Calculate Peer Multiples**
+| Company | Price | Shares (M) | Market Cap ($B) | Net Income ($M) | Equity ($M) | Revenue ($B) |
+|---------|-------|-----------|-----------------|-----------------|-------------|--------------|
+| **IFF** | $142.50 | 105 | $15.0B | $850 | $8,500 | $12.5 |
+| **Givaudan** | $2,850 | 10.5 | $30.0B | $1,650 | $16,500 | $16.8 |
+| **Tate & Lyle** | $8.25 | 390 | $3.2B | $280 | $2,800 | $2.5 |
+| **Corbion** | $35.00 | 23 | $0.8B | $85 | $1,200 | $0.9 |
+| **ADM** | $72.00 | 620 | $45.0B | $2,400 | $22,000 | $101.5 |
+| **KERRY (Target)** | $105.00 | 89.5 | $9.4B | $580 | $6,200 | $9.2 |
 
-**P/E Ratios:**
-GIVN: 2,800 / 16.50 = 169.7x IFF: 95 / 2.20 = 43.2x INGR: 102 / 4.80 = 21.3x ADM: 68 / 4.15 = 16.4x TATE: 890 / 7.20 = 123.6x
+#### **Step 3: Calculate Individual Multiples for Each Peer**
 
-Median P/E: 43.2x Trimmed (exclude outliers): (43.2 + 21.3 + 16.4) / 3 = 27.0x
+**P/E Multiples (Price / Earnings Per Share):**
 
-**P/B Ratios:**
-GIVN: 2,800 / 180 = 15.6x IFF: 95 / 8.00 = 11.9x INGR: 102 / 15.00 = 6.8x ADM: 68 / 12.00 = 5.7x TATE: 890 / 35.00 = 25.4x
+| Company | Stock Price | EPS | P/E Ratio |
+|---------|------------|-----|-----------|
+| IFF | $142.50 | $8.10 | 17.6x |
+| Givaudan | $2,850 | $157.14 | 18.1x |
+| Tate & Lyle | $8.25 | $0.72 | 11.5x |
+| Corbion | $35.00 | $3.70 | 9.5x |
+| ADM | $72.00 | $3.87 | 18.6x |
 
-Median P/B: 11.9x Trimmed: (11.9 + 6.8 + 5.7) / 3 = 8.1x
+**Price-to-Book Multiples (Price / Book Value Per Share):**
 
-**P/S Ratios:**
-GIVN: 2,800 / 520 = 5.4x IFF: 95 / 18.50 = 5.1x INGR: 102 / 45.50 = 2.2x ADM: 68 / 28.75 = 2.4x TATE: 890 / 95.00 = 9.4x
+| Company | Market Cap | Equity | P/B Ratio |
+|---------|------------|--------|-----------|
+| IFF | $15.0B | $8.5B | 1.76x |
+| Givaudan | $30.0B | $16.5B | 1.82x |
+| Tate & Lyle | $3.2B | $2.8B | 1.14x |
+| Corbion | $0.8B | $1.2B | 0.67x |
+| ADM | $45.0B | $22.0B | 2.05x |
 
-Median P/S: 5.1x Average: (5.4 + 5.1 + 2.2 + 2.4 + 9.4) / 5 = 4.9x
+**Price-to-Sales Multiples (Market Cap / Revenue):**
 
-#### **Step 4: Kerry Group Metrics**
+| Company | Market Cap | Revenue | P/S Ratio |
+|---------|------------|---------|-----------|
+| IFF | $15.0B | $12.5B | 1.20x |
+| Givaudan | $30.0B | $16.8B | 1.79x |
+| Tate & Lyle | $3.2B | $2.5B | 1.28x |
+| Corbion | $0.8B | $0.9B | 0.89x |
+| ADM | $45.0B | $101.5B | 0.44x |
 
-Current Stock Price: €110 Trailing Twelve Months: EPS: €2.85 Revenue Per Share: €38.50 Book Value Per Share: €12.00
+#### **Step 4: Calculate Average (or Median) Multiples**
 
-#### **Step 5: Calculate Fair Values**
+**P/E Multiples:**
+- Average: (17.6 + 18.1 + 11.5 + 9.5 + 18.6) / 5 = 15.1x
+- Median: 17.6x (middle value when sorted: 9.5, 11.5, 17.6, 18.1, 18.6)
+- **Use Median 17.6x** (more resistant to outliers like Corbion's 9.5x)
 
-**P/E Fair Value:**
-Fair Value = 27.0x × €2.85 = €76.95/share
+**P/B Multiples:**
+- Average: (1.76 + 1.82 + 1.14 + 0.67 + 2.05) / 5 = 1.49x
+- Median: 1.76x (middle value: 0.67, 1.14, 1.76, 1.82, 2.05)
+- **Use Median 1.76x**
 
-**P/B Fair Value:**
-Fair Value = 8.1x × €12.00 = €97.20/share
+**P/S Multiples:**
+- Average: (1.20 + 1.79 + 1.28 + 0.89 + 0.44) / 5 = 1.12x
+- Median: 1.20x (middle value: 0.44, 0.89, 1.20, 1.28, 1.79)
+- **Use Median 1.20x** (ADM is a conglomerate, skews low)
 
-**P/S Fair Value:**
-Fair Value = 4.9x × €38.50 = €188.65/share
+#### **Step 5: Get Target Company's Financial Metrics**
 
-**Multiples Valuation Result:**
+**Kerry Group 2025 Financials:**
 
-P/E Fair Value: €76.95 P/B Fair Value: €97.20 P/S Fair Value: €188.65
+| Metric | Value |
+|--------|-------|
+| Stock Price | $105.00 |
+| Shares Outstanding | 89.5M |
+| Earnings Per Share | $6.48 |
+| Book Value Per Share | $69.25 |
+| Revenue Per Share | $102.79 |
+| Net Income | $580M |
+| Total Equity | $6,200M |
+| Total Revenue | $9,200M |
 
-Average: (76.95 + 97.20 + 188.65) / 3 = €120.93 Median: €97.20
+#### **Step 6: Calculate Fair Values Using Each Multiple**
 
-Current Price: €110 Status: FAIRLY VALUED (close to median fair value)
+**P/E Multiple Valuation:**
+- Peer Median P/E: 17.6x
+- Kerry's EPS: $6.48
+- Fair Value = 17.6x × $6.48 = **$114.05 per share**
 
-Note: P/S is much higher, suggesting market prices in growth expectations
+**P/B Multiple Valuation:**
+- Peer Median P/B: 1.76x
+- Kerry's Book Value Per Share: $69.25
+- Fair Value = 1.76x × $69.25 = **$121.88 per share**
+
+**P/S Multiple Valuation:**
+- Peer Median P/S: 1.20x
+- Kerry's Revenue Per Share: $102.79
+- Fair Value = 1.20x × $102.79 = **$123.35 per share**
+
+**Summary of Fair Values:**
+
+| Method | Fair Value | vs Current Price ($105) |
+|--------|-----------|------------------------|
+| P/E Multiple | $114.05 | +8.6% |
+| P/B Multiple | $121.88 | +16.1% |
+| P/S Multiple | $123.35 | +17.5% |
+| **Average** | **$119.76** | **+14.1%** |
+
+**Interpretation:**
+- Kerry Group is trading at mild discount to peers
+- P/E suggests 8.6% upside (conservative)
+- P/B and P/S suggest 16-17% upside
+- Average of three methods: $119.76 (14% upside)
+- **Conclusion from Multiples:** Fairly valued to slightly undervalued
+
+---
+
+### **5.6 Multiples Limitations & When to Use**
+
+#### **Strengths of Multiples**
+
+✅ **Quick & Intuitive:** Don't require long projections; use current financial metrics
+
+✅ **Market-Based:** Reflect what investors actually pay for similar businesses
+
+✅ **Good Sanity Check:** Compare against DCF/DDM to see if they diverge too much
+
+✅ **Works with Cyclicals:** Can use normalized earnings for cyclical companies at peak/trough
+
+✅ **Less Assumption-Heavy:** No 10-year projections or perpetuity assumptions
+
+✅ **Transparent:** Easy to understand and defend ("company trades at 15x peers' average P/E")
+
+#### **Limitations of Multiples**
+
+❌ **Ignores Business Quality:** Two companies with same P/E might have very different moats
+
+❌ **Market Timing Issue:** If peers are overvalued, you're anchoring to expensive baseline
+
+❌ **Doesn't Account for Growth:** A 20% growth company shouldn't have same multiple as 2% growth company
+
+❌ **Sector Bias:** Tech trades at 25x, utilities at 12x—can't compare across sectors
+
+❌ **Ignores Financial Strength:** Doesn't reflect balance sheet quality or risk
+
+❌ **Cherry-Picking Problem:** Can select peers to justify any conclusion ("find peers at 30x, claim my 20x stock is cheap")
+
+#### **When Multiples Work Best**
+
+✅ **Ideal Multiples Candidates:**
+- Mature, profitable companies (not startups)
+- Within same industry (comparable peers exist)
+- Stable earnings (not highly cyclical peak/trough)
+- When you want quick market-reality check
+- Good for relative valuation (comparing to competitors)
+
+**Examples:**
+- Consumer staples (Coca-Cola vs PepsiCo)
+- Established tech (Microsoft vs Adobe)
+- Banks (JPMorgan vs Bank of America)
+- Food/beverage manufacturers (Kerry Group vs peers)
+
+#### **When Multiples Work Poorly**
+
+❌ **Difficult Multiples Candidates:**
+- Startups (no comparable public peers)
+- High-growth (growth stage companies have different multiples)
+- Disruption situations (new business model, no good comparables)
+- Turnarounds (distorted earnings)
+- Companies with one-time charges/gains
+
+**Problem Examples:**
+
+| Situation | Why Multiples Fail |
+|-----------|-------------------|
+| **Uber (IPO 2019)** | No good comparables; taxi companies != ride-sharing apps |
+| **Tesla (2015-2020)** | Automakers trade 5-8x P/E; Tesla traded 50-200x. Different business models. |
+| **Biotech Startups** | Unprofitable; no EPS to calculate P/E |
+| **Semiconductor Cycle Top** | Companies at peak earnings; peer multiples distorted |
+
+#### **Multiples Sanity Checks**
+
+Before trusting multiples valuation:
+
+✓ **Peer Selection Quality:**
+- Are peers truly comparable?
+- Same industry/business model?
+- Similar size and growth rates?
+- Exclude extreme outliers in multiples
+
+✓ **Multiple Reasonableness:**
+- P/E 15-20x: Reasonable for mature quality company
+- P/E 25-40x: Growth company or premium quality
+- P/E 50+x: Highly speculative
+- Know industry average (tech 20-30x, utilities 12-15x)
+
+✓ **Consistency Across Methods:**
+- P/E, P/B, P/S should all point in same direction
+- If one says cheap and others say expensive, dig deeper
+- If all three converge, confidence increases
+
+✓ **Sanity Check vs DCF:**
+- Multiples and DCF should produce roughly similar valuations
+- If multiples say $100 and DCF says $250, something is off
+- Use both methods as cross-check
+
+✓ **Market Context:**
+- Are peers overvalued or undervalued (relative to market)?
+- If peers trading at premium multiples, that's expected
+- Don't use distorted peer multiples as baseline
+
+---
+
+### **Summary: Multiples Valuation Method**
+
+**Strengths:**
+- ✅ Quick, intuitive, market-based
+- ✅ Good for sanity check vs DCF/DDM
+- ✅ Works for mature, profitable companies
+- ✅ Transparent and defensible
+
+**Weaknesses:**
+- ❌ Ignores business quality differences
+- ❌ Market-timing dependent (peers might be overvalued)
+- ❌ Doesn't account for growth differences
+- ❌ Cherry-picking problem (select peers to justify conclusion)
+
+**When to Use:**
+- ✅ Mature, profitable companies in established industries
+- ✅ As sanity check against DCF/DDM
+- ✅ For quick valuation of industry competitors
+- ❌ Not for startups, disruption situations, or unprofitable companies
+
+**Buffett's Use:**
+Buffett uses multiples primarily as a **reality check**. He calculates DCF first, then asks: "Is the multiples valuation in the same ballpark?" If multiples say stock is 2x cheaper than DCF suggests, he digs into why the discrepancy exists. He doesn't rely on multiples as primary valuation method, but uses them to validate conclusions.
 
 ---
 
