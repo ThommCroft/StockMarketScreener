@@ -3222,9 +3222,6 @@ Set realistic expectations
 
 ---
 
-
-
-
 ## Section 11: Real-World Examples
 
 **Complete walkthroughs of three company types demonstrating all valuation methods**
