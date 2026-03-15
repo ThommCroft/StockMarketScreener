@@ -1,6 +1,6 @@
 # Stock Market Screener - Basic Stage Workflow
 
-**Version:** 1.2
+**Version:** 1.3
 **Date:** 2026-03-15  
 **Author:** ThommCroft  
 **Purpose:** Define the complete end-to-end pipeline stages for the stock screening system
@@ -31,7 +31,8 @@ Each stage has a clear purpose, defined inputs, and specific outputs that feed i
 
 ### Stage 0: Financial Analysis - Market Cap Pre-Filter
 
-**Purpose:** Remove small-cap companies that lack institutional-quality liquidity
+**Purpose:** 
+Remove small-cap companies that lack institutional-quality liquidity
 
 **Actions:**
 - Eliminate companies < $300M market cap (saves API calls)
@@ -44,7 +45,8 @@ Each stage has a clear purpose, defined inputs, and specific outputs that feed i
 
 ### Stage 1: Financial Analysis - Data Ingestion & Metric Calculation
 
-**Purpose:** Gather comprehensive financial data and calculate all quantitative metrics
+**Purpose:** 
+Gather comprehensive financial data and calculate all quantitative metrics
 
 **Actions:**
 - Fetch financial data from SEC EDGAR (authoritative)
@@ -53,13 +55,15 @@ Each stage has a clear purpose, defined inputs, and specific outputs that feed i
 - Validate data quality and completeness
 - Create year-by-year metrics and 10-year averages
 
-**Output:** Complete 40+ metric dataset for each company, stored in database
+**Output:** 
+Complete 40+ metric dataset for each company, stored in database
 
 ---
 
 ### Stage 2: Financial Analysis - Financial Strength Assessment
 
-**Purpose:** Evaluate financial fortress status using hard filters on complete metric data
+**Purpose:** 
+Evaluate financial fortress status using hard filters on complete metric data
 
 **Actions:**
 - Evaluate hard filters using complete metric data
@@ -67,7 +71,11 @@ Each stage has a clear purpose, defined inputs, and specific outputs that feed i
 - Evaluate leverage and financial flexibility
 - Determine financial fortress status
 
-**Output:** Companies flagged for financial strength; exceptions documented
+**Output:** 
+Companies flagged for financial strength; exceptions documented
+
+**Scoring Calculation:** 
+(Quality Score × 40%) + (Valuation Score × 35%) + (Management Score × 25%) = Composite Score
 
 ---
 
@@ -87,20 +95,23 @@ Each stage has a clear purpose, defined inputs, and specific outputs that feed i
 
 ### Stage 4: Financial Analysis - Composite Scoring & Management Assessment
 
-**Purpose:** Evaluate management quality and calculate composite ranking score
+**Purpose:** 
+Evaluate management quality and calculate composite ranking score
 
 **Actions:**
 - Pillar 5: Composite Scoring (max 35 points)
 - Pillar 6: Management Assessment (max 25 points)
 - Composite: (Quality × 40%) + (Valuation × 35%) + (Management × 25%)
 
-**Output:** Composite Score (0-100) for each company
+**Output:** 
+Composite Score (0-100) for each company
 
 ---
 
 ### Stage 5: Financial Analysis - Results Processing
 
-**Purpose:** Determine which companies advance to intrinsic value valuation
+**Purpose:** 
+Determine which companies advance to intrinsic value valuation
 
 **Actions:**
 - PASS: Composite score >= 75 (store in database)
@@ -108,15 +119,18 @@ Each stage has a clear purpose, defined inputs, and specific outputs that feed i
 - Compare with previous qualified companies
 - Identify new, maintained, and removed companies
 
-**Output:** Qualified candidates list for Stage 6 valuation
+**Output:** 
+Qualified candidates list for Stage 6 valuation
 
-**Threshold:** Composite Score ≥ 75
+**Threshold:** 
+Composite Score ≥ 75
 
 ---
 
 ### Stage 6: Stock Price - Intrinsic Value Valuation
 
-**Purpose:** Calculate intrinsic value using five independent valuation methods
+**Purpose:** 
+Calculate intrinsic value using five independent valuation methods
 
 **Description:**
 All companies that have passed the above Financial Analysis (Score ≥ 75) will have their intrinsic value evaluated with the following methods:
@@ -128,13 +142,15 @@ All companies that have passed the above Financial Analysis (Score ≥ 75) will 
 - Warren Buffett Valuation Techniques
 - Charlie Munger Valuation Techniques
 
-**Output:** Fair value estimates, margin of safety, confidence levels, valuation grade
+**Output:** 
+Fair value estimates, margin of safety, confidence levels, valuation grade
 
 ---
 
 ### Stage 7: Results Reporting
 
-**Purpose:** Store all results and generate comprehensive reports in multiple formats
+**Purpose:** 
+Store all results and generate comprehensive reports in multiple formats
 
 **Actions:**
 - All Financial Data and Intrinsic Value Data will be stored in a MySQL Database
@@ -192,3 +208,4 @@ Stage 7: Results Reporting & Report Generation
 | 1.0 | 2026-03-15 | ThommCroft | Initial basic workflow document |
 | 1.1 | 2026-03-15 | ThommCroft | Upated content |
 | 1.2 | 2026-03-15 | ThommCroft | Fixed Valuation Methodology Requirements reference |
+| 1.3 | 2026-03-15 | ThommCroft | Formatting and added Scoring Calculation |
