@@ -11,13 +11,38 @@
 
 1. [Executive Summary](#executive-summary)
 2. [Investment Philosophy](#investment-philosophy)
+   - 1. Circle of Competence & Business Understandability
+   - 2. Durable Competitive Advantage (Economic Moat)
+   - 3. Financial Fortress (Balance Sheet Strength)
+   - 4. Consistent, Growing Earnings
+   - 5. Management Quality
+   - 6. Margin of Safety
 3. [Complete Metrics Reference](#complete-metrics-reference)
 4. [Screening Criteria by Category](#screening-criteria-by-category)
+   - Category 1: Return on Capital
+   - Category 2: Financial Strength & Balance Sheet Health
+   - Category 3: Profitability & Operational Quality
+   - Category 4: Cash Flow Quality
+   - Category 5: Growth & Capital Efficiency
+   - Category 6: Valuation & Margin of Safety
+   - Category 7: Management Quality & Capital Allocation
+   - Category 8: Business Quality & Competitive Advantage
 5. [Priority Classification](#priority-classification)
+   - MUST HAVE (Deal Breakers)
+   - Hard Filter Evaluation Using Complete Metrics
 6. [Metric Calculation & Filtering Integration](#metric-calculation--filtering-integration)
+   - Unified Analysis Approach
+   - Why This Approach Works Better
 7. [Implementation Notes](#implementation-notes)
+   - Stage-by-Stage Implementation
+   - Data Completeness Requirements
 8. [Data Sources](#data-sources)
+   - Primary Financial Data Source
+   - Market Data Sources
+   - Treasury Yield Data
+   - Reconciliation & Validation
 9. [Related Documents](#related-documents)
+10. [Document History](#document-history)
 
 ---
 
@@ -516,9 +541,9 @@ Rather than cascading filters that eliminate companies early, the screener emplo
 
 ## Implementation Notes
 
-### Stage-by-Stage Implementation
-
 For detailed stage definitions and workflow overview, see [0-BASIC-STAGE-WORKFLOW.md](0-BASIC-STAGE-WORKFLOW.md)
+
+### Stage-by-Stage Implementation
 
 **Stage 0: Financial Analysis - Market Cap Pre-Filter**
 - Eliminate companies < $300M market cap (saves API calls)
