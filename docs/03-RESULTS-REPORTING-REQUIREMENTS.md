@@ -87,11 +87,13 @@ Stage 7 (Results Reporting) is the final phase of the stock screener, following 
 
 **Complete Pipeline:**
 
-Stages 0-5: Financial Analysis 
-↓ 
-Stage 6: Intrinsic Value Valuation 
-↓ 
+\`\`\`
+Stages 0-5: Financial Analysis
+    ↓
+Stage 6: Intrinsic Value Valuation
+    ↓
 Stage 7: Results Reporting ← YOU ARE HERE (Final Stage)
+\`\`\`
 
 ### What Happens Before Stage 7
 
@@ -188,15 +190,19 @@ All input data must meet these requirements:
 
 ### Data Flow from Stage 6 to Stage 7
 
-Stage 6 Calculations 
-↓ 
-Valuation Results Database 
-↓ 
-Stage 7 Processing 
-├─→ Email Report Generation 
-├─→ GitHub Summary Creation 
-├─→ CSV Export 
-└─→ Database Storage ↓ Outputs Delivered
+\`\`\`
+Stage 6 Calculations
+    ↓
+Valuation Results Database
+    ↓
+Stage 7 Processing
+    ├─→ Email Report Generation
+    ├─→ GitHub Summary Creation
+    ├─→ CSV Export
+    └─→ Database Storage
+    ↓
+Outputs Delivered
+\`\`\`
 
 ---
 
@@ -596,7 +602,7 @@ AAPL,Apple Inc.,Technology,180.00,2850.0,85,450.25,0.00,380.50,198.40,310.00,365
 
 **SQL Table Definition**
 
-```sql
+```
 CREATE TABLE CompanyValuations (
     ValuationID INT PRIMARY KEY AUTO_INCREMENT,
     CompanyID INT NOT NULL,
@@ -717,7 +723,7 @@ CREATE TABLE CompanyValuations (
 
 **Example of how a single company's valuation is stored:**
 
-```json
+```
 {
   "ValuationID": 12547,
   "CompanyID": 145,
@@ -750,7 +756,7 @@ CREATE TABLE CompanyValuations (
 
 **Query 1: Best Opportunities Across All Runs**
 
-```sql
+```
 SELECT 
     Ticker,
     CompanyName,
@@ -769,7 +775,7 @@ ORDER BY ScreeningDate DESC, ConsensusMarginOfSafetyPercent DESC;
 
 **Query 2: Track Quality Improvement Over Time**
 
-```sql
+```
 SELECT 
     Ticker,
     CompanyName,
@@ -785,7 +791,7 @@ ORDER BY ScreeningDate DESC;
 
 **Query 3: New Qualifiers This Run**
 
-```sql
+```
 SELECT 
     c.Ticker,
     c.CompanyName,
@@ -1096,18 +1102,22 @@ Ensure grade matches recommendation
 
 ###Related Documents
 
-Document	Covers	Purpose
-0-BASIC-STAGE-WORKFLOW.md	All Stages	Overall pipeline and workflow definitions
-01-INVESTMENT-REQUIREMENTS.md	Stages 0-5	Financial analysis that feeds into Stages 6-7
-02-VALUATION-METHODOLOGY.md	Stage 6	Intrinsic value calculation that feeds into Stage 7
-03-RESULTS-REPORTING-REQUIREMENTS.md	Stage 7	Results reporting and output specifications (this document)
+| Document | Covers | Purpose|
+| 0-BASIC-STAGE-WORKFLOW.md | All Stages | Overall pipeline and workflow definitions |
+|--------|-------|
+| 01-INVESTMENT-REQUIREMENTS.md | Stages 0-5 | Financial analysis that feeds into Stages 6-7 |
+|--------|-------|
+| 02-VALUATION-METHODOLOGY.md | Stage 6 | Intrinsic value calculation that feeds into Stage 7 |
+|--------|-------|
+| 03-RESULTS-REPORTING-REQUIREMENTS.md | Stage 7 | Results reporting and output specifications (this document) |
 
 ---
 
 ###Document History
 
-Version	Date	Author	Changes
-1.0	2026-03-15	ThommCroft	CURRENT - Initial comprehensive results reporting requirements document; aligned with 0-BASIC-STAGE-WORKFLOW.md as Stage 7; reorganized and expanded from original content
+| Version | Date | Author | Changes |
+|--------|-------|
+| 1.0 | 2026-03-15 | ThommCroft | CURRENT - Initial comprehensive results reporting requirements document; aligned with 0-BASIC-STAGE-WORKFLOW.md as Stage 7; reorganized and expanded from original content |
 
 ---
 
