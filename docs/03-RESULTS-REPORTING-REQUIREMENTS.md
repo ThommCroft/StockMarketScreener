@@ -1102,13 +1102,11 @@ Ensure grade matches recommendation
 
 ###Related Documents
 
-| Document | Covers | Purpose|
+| Document | Covers | Purpose |
+|----------|--------|---------|
 | 0-BASIC-STAGE-WORKFLOW.md | All Stages | Overall pipeline and workflow definitions |
-|--------|-------|
 | 01-INVESTMENT-REQUIREMENTS.md | Stages 0-5 | Financial analysis that feeds into Stages 6-7 |
-|--------|-------|
 | 02-VALUATION-METHODOLOGY.md | Stage 6 | Intrinsic value calculation that feeds into Stage 7 |
-|--------|-------|
 | 03-RESULTS-REPORTING-REQUIREMENTS.md | Stage 7 | Results reporting and output specifications (this document) |
 
 ---
@@ -1116,7 +1114,7 @@ Ensure grade matches recommendation
 ###Document History
 
 | Version | Date | Author | Changes |
-|--------|-------|
+|---------|------|--------|---------|
 | 1.0 | 2026-03-15 | ThommCroft | CURRENT - Initial comprehensive results reporting requirements document; aligned with 0-BASIC-STAGE-WORKFLOW.md as Stage 7; reorganized and expanded from original content |
 
 ---
