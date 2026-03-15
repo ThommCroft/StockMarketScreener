@@ -1,5 +1,5 @@
 ## 1. Complete Quarterly Screening Flow (Sequence Diagram)
-
+```
 @startuml Complete_Quarterly_Screening
 
 actor User
@@ -103,8 +103,9 @@ activate Program
 deactivate Program
 
 @enduml
-
+```
 ## 2. Stage 0: Market Cap Pre-Filter
+```
 @startuml Stage0_PreFilter
 
 participant ScreeningOrchestrator
@@ -151,8 +152,9 @@ activate Stage0PreFilter
 deactivate Stage0PreFilter
 
 @enduml
-
-##3 . Stage 1: Data Ingestion & Reconciliation
+```
+## 3 . Stage 1: Data Ingestion & Reconciliation
+```
 @startuml Stage1_DataIngestion
 
 participant ScreeningOrchestrator
@@ -246,8 +248,9 @@ note over ScreeningOrchestrator
 end note
 
 @enduml
-
+```
 ## 4. Stages 2-3: Metric Calculation & Hard Filters
+```
 @startuml Stage2_3_MetricsCalculation
 
 participant ScreeningOrchestrator
@@ -390,8 +393,9 @@ activate MetricCalculationService
 deactivate MetricCalculationService
 
 @enduml
-
+```
 ## 5. Stage 4: Composite Scoring
+```
 @startuml Stage4_CompositeScoring
 
 participant ScreeningOrchestrator
@@ -494,8 +498,9 @@ note over ScreeningOrchestrator
 end note
 
 @enduml
-
+```
 ## 6. Stage 5: Pass/Fail Gate
+```
 @startuml Stage5_PassFailGate
 
 participant ScreeningOrchestrator
@@ -569,8 +574,9 @@ note over ScreeningOrchestrator
 end note
 
 @enduml
-
+```
 ## 7. Stage 6: Valuation Methods (Complete)
+```
 @startuml Stage6_Valuation_Methods
 
 participant ScreeningOrchestrator
@@ -767,8 +773,9 @@ note over ScreeningOrchestrator
 end note
 
 @enduml
-
+```
 ## 8. Stage 7: Results Reporting
+```
 @startuml Stage7_ResultsReporting
 
 participant ScreeningOrchestrator
@@ -955,8 +962,9 @@ note over ScreeningOrchestrator
 end note
 
 @enduml
-
+```
 ## 9. Utility: Individual Metric Calculation (ROE Example)
+```
 @startuml Utility_Metric_Calculation_ROE
 
 participant MetricCalculationService
@@ -1076,3 +1084,4 @@ note over MetricCalculationService
 end note
 
 @enduml
+```
