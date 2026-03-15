@@ -1,6 +1,6 @@
 # Stock Market Screener - Basic Stage Workflow
 
-**Version:** 1.0  
+**Version:** 1.1
 **Date:** 2026-03-15  
 **Author:** ThommCroft  
 **Purpose:** Define the complete end-to-end pipeline stages for the stock screening system
@@ -156,7 +156,7 @@ All companies that have passed the above Financial Analysis (Score ≥ 75) will 
 |----------|--------|---------|
 | [01-INVESTMENT-REQUIREMENTS.md](01-INVESTMENT-REQUIREMENTS.md) | Stages 0-5 | Detailed investment criteria, metrics, and quality scoring |
 | [02-VALUATION-METHODOLOGY.md](02-VALUATION-METHODOLOGY.md) | Stage 6 | Complete valuation methodology for intrinsic value calculation |
-| Stage 7 Document (TBD) | Stage 7 | Results reporting specifications and output formats |
+| [03-RESULTS-REPORTING-REQUIREMENTS.md](03-RESULTS-REPORTING-REQUIREMENTS.md) | Stage 7 | Results reporting specifications and output formats |
 
 ---
 
@@ -180,7 +180,7 @@ Stage 5: Pass/Fail Gate (≥75 threshold)
     ↓
 Stage 6: Intrinsic Value Valuation (5 methods)
     ↓
-Stage 7: Store Results & Generate Reports
+Stage 7: Results Reporting & Report Generation
 ```
 
 ---
@@ -190,3 +190,4 @@ Stage 7: Store Results & Generate Reports
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
 | 1.0 | 2026-03-15 | ThommCroft | Initial basic workflow document |
+| 1.1 | 2026-03-15 | ThommCroft | Initial basic workflow document |
