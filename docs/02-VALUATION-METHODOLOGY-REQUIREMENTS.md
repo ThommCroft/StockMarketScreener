@@ -36,20 +36,32 @@ Stage 6 (Intrinsic Value Valuation) is the final analytical stage in the Stock M
 
 ### Stage 6 in the Pipeline
 
-**Input:** Companies that passed Stage 5 (Financial Analysis Results Processing) with Composite Score ≥ 75
+**Position in Workflow:**
+Stage 6 (Stock Price - Intrinsic Value Valuation) is the 6th of 8 stages in the stock screener pipeline.
 
-**Process:** Calculate intrinsic value using five independent valuation methods:
-- Discounted Cash Flow (DCF)
-- Dividend Discount Model (DDM)
-- Multiples Valuation Model
-- Warren Buffett Valuation Techniques
-- Charlie Munger Valuation Techniques
+**Input Data (from Stage 5):**
+Companies that have passed financial analysis with Composite Score ≥ 75 provide:
+- All 40+ financial metrics (calculated in Stages 1-2)
+- Quality, Valuation, and Management scores (from Stages 3-4)
+- Composite score confirmation (from Stage 5)
+- Company identifiers (ticker, name, sector, market cap)
+- Current stock price for margin of safety calculation
 
-**Output:** Fair value estimates, margin of safety, confidence levels, valuation grade, investment recommendation
+**Output Data (to Stage 7):**
+For each qualified company:
+- Fair values from 5 valuation methods (DCF, DDM, Multiples, Buffett, Munger)
+- Consensus fair value (weighted average)
+- Margin of safety percentage
+- Valuation grade (A+ to F)
+- Investment recommendations (BUY/CONSIDER/PASS/AVOID)
+- Investment thesis and supporting analysis
 
-**Decision-Making:** Determines which companies are attractive at current prices
-
-**Next Stage:** Stage 7 - Results Reporting (store data, generate reports, send notifications)
+**Next Stage:**
+Stage 7 (Results Reporting) receives all Stage 6 valuation data and produces:
+- Email reports grouped by opportunity level
+- GitHub summary with key statistics
+- CSV export for spreadsheet analysis
+- Database records for historical tracking
 
 ### The Five Valuation Methods
 
@@ -92,7 +104,7 @@ For each company, Stage 6 produces:
 
 ---
 
-## Philosophy & Investment Framework
+## Section 2: Philosophy & Investment Framework
 
 ### Core Philosophy: Price ≠ Value
 
@@ -3913,7 +3925,10 @@ Solution: ✅ Use only recent years reflecting new business ✅ If transition no
 
 ## Section 15: Document History
 
-| 1.0 | 2026-03-15 | ThommCroft | **CURRENT** - Initial comprehensive valuation methodology document; aligned with 0-BASIC-STAGE-WORKFLOW.md as Stage 6 requirements |
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | 2026-03-15 | ThommCroft | Initial comprehensive valuation methodology document; aligned with 0-BASIC-STAGE-WORKFLOW.md as Stage 6 requirements |
+| 1.1 | 2026-03-15 | ThommCroft | Updated a few sections |
 
 ---
 
