@@ -1,51 +1,59 @@
-# Stock Price Valuation Methodology - Stage 5.4
+# Stock Market Screener - Valuation Methodology Requirements
 
-**Version:** 1.2
+**Version:** 1.0  
 **Date:** 2026-03-15  
 **Author:** ThommCroft  
-**Framework:** Warren Buffett & Charlie Munger Value Investing Principles  
-**Purpose:** Complete guide to calculating intrinsic value and margin of safety for investment decision-making
+**Framework:** Warren Buffett & Charlie Munger Value Investing Principles + Multi-Method Valuation  
+**Stage:** Stage 6 - Intrinsic Value Valuation
 
 ---
 
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)
-2. [Introduction & Philosophy](#introduction--philosophy)
-3. [Discounted Cash Flow (DCF) Method](#section-3-discounted-cash-flow-dcf-method)
-4. [Dividend Discount Model (DDM)](#section-4-dividend-discount-model-ddm)
-5. [Multiples Valuation Model](#section-5-multiples-valuation-model)
-6. [Warren Buffett Valuation Techniques](#section-6-warren-buffett-valuation-techniques)
-7. [Charlie Munger Valuation Techniques](#section-7-charlie-munger-valuation-techniques)
-8. [Consensus Valuation](#section-8-consensus-valuation)
-9. [Margin of Safety Analysis](#section-9-margin-of-safety-analysis)
-10. [Valuation Grade System](#section-10-valuation-grade-system)
-11. [Company Grouping & Display](#section-11-company-grouping--display)
-12. [Final Recommendations](#section-12-final-recommendations)
-13. [Output Formats](#section-13-output-formats)
-14. [Database Integration](#section-14-database-integration)
-15. [Data Flow Integration](#section-15-data-flow-integration)
-16. [Sensitivity Analysis](#section-16-sensitivity-analysis)
-17. [Real-World Examples](#section-17-real-world-examples)
-18. [Implementation Notes](#section-18-implementation-notes)
-19. [Troubleshooting Guide](#section-19-troubleshooting-guide)
-20. [Document History](#section-20-document-history)
+2. [Introduction & Stage Context](#introduction--stage-context)
+3. [Input Requirements](#input-requirements)
+4. [Discounted Cash Flow (DCF) Method](#section-3-discounted-cash-flow-dcf-method)
+5. [Dividend Discount Model (DDM)](#section-4-dividend-discount-model-ddm)
+6. [Multiples Valuation Model](#section-5-multiples-valuation-model)
+7. [Warren Buffett Valuation Techniques](#section-6-warren-buffett-valuation-techniques)
+8. [Charlie Munger Valuation Techniques](#section-7-charlie-munger-valuation-techniques)
+9. [Consensus Valuation & Final Assessment](#consensus-valuation--final-assessment)
+10. [Output Definitions](#output-definitions)
+11. [Real-World Examples](#real-world-examples)
+12. [Implementation Notes](#implementation-notes)
+13. [Troubleshooting Guide](#troubleshooting-guide)
+14. [Related Documents](#related-documents)
+15. [Document History](#document-history)
 
 ---
 
 ## Executive Summary
 
-### Purpose of Stage 5.4
+### Purpose of Stage 6: Intrinsic Value Valuation
 
-Stage 5.4 (Stock Price Valuation Analysis) is the final analytical stage in the Stock Market Screener system. It takes companies that have passed the rigorous financial analysis (Stage 3.3 with composite score ≥75) and calculates their intrinsic value using multiple independent methods.
+Stage 6 (Intrinsic Value Valuation) is the final analytical stage in the Stock Market Screener system. It takes companies that have passed the rigorous financial analysis and calculates their intrinsic value using multiple independent methods.
 
-**Input:** All companies with composite financial score ≥75  
-**Output:** Intrinsic values, margin of safety percentages, investment recommendations  
+### Stage 6 in the Pipeline
+
+**Input:** Companies that passed Stage 5 (Financial Analysis Results Processing) with Composite Score ≥ 75
+
+**Process:** Calculate intrinsic value using five independent valuation methods:
+- Discounted Cash Flow (DCF)
+- Dividend Discount Model (DDM)
+- Multiples Valuation Model
+- Warren Buffett Valuation Techniques
+- Charlie Munger Valuation Techniques
+
+**Output:** Fair value estimates, margin of safety, confidence levels, valuation grade, investment recommendation
+
 **Decision-Making:** Determines which companies are attractive at current prices
 
-### The Three Valuation Methods
+**Next Stage:** Stage 7 - Results Reporting (store data, generate reports, send notifications)
 
-This stage employs **three independent valuation approaches**, each with distinct philosophies:
+### The Five Valuation Methods
+
+This stage employs **five independent valuation approaches**, each with distinct philosophies:
 
 1. **Discounted Cash Flow (DCF)** - Present value of all future free cash flows
 2. **Dividend Discount Model (DDM)** - Present value of future dividends (or buybacks)
@@ -70,7 +78,7 @@ Beyond the three methods, we apply both Warren Buffett and Charlie Munger's prov
 
 ### Key Outcomes
 
-For each company, Stage 5.4 produces:
+For each company, Stage 6 produces:
 
 ✅ **Three Independent Intrinsic Values** (DCF, DDM, Multiples)  
 ✅ **Two Master Valuation Assessments** (Buffett, Munger)  
@@ -82,26 +90,102 @@ For each company, Stage 5.4 produces:
 
 ### Why This Matters
 
+---
+
+## Philosophy & Investment Framework
+
+### Core Philosophy: Price ≠ Value
+
 **Price ≠ Value**
 
-A company with exceptional fundamentals can be a terrible investment if priced too high. Conversely, a mediocre business at a steep discount might be worth buying. Stage 5.4 separates price from value and identifies true opportunities.
+A company with exceptional fundamentals can be a terrible investment if priced too high. Conversely, a mediocre business at a steep discount might be worth buying. Stage 6 separates price from value and identifies true opportunities.
 
 ---
 
-## Introduction & Philosophy
+## Introduction & Stage Context
 
-### Stage 5.4 in the Screening Pipeline
-Stage 3.3: Financial Quality Assessment ↓ (Score ≥75) Stage 5.4: Stock Price Valuation Analysis ├─ DCF Intrinsic Value Calculation ├─ DDM Intrinsic Value Calculation ├─ Multiples Fair Value Calculation ├─ Buffett Valuation Techniques ├─ Munger Valuation Techniques └─ Margin of Safety Analysis ↓ Stage 6: Results Processing ├─ Organize by opportunity group ├─ Identify new/maintained/removed └─ Generate recommendations ↓ Stage 7: Notifications & Storage ├─ Email report to investor ├─ GitHub summary page ├─ CSV export for analysis └─ Database storage
+### How Stage 6 Fits in the Overall Pipeline
 
-### Input Data
+Stage 6 (Stock Price - Intrinsic Value Valuation) is the second major phase of the stock screener, following Stage 5 (Financial Analysis - Results Processing).
 
-Stage 5.4 receives from Stage 3.3:
+**Pipeline Overview:**
 
-- **Company fundamentals:** All 40+ financial metrics calculated
-- **Composite score:** Quality assessment (0-100)
-- **Current market data:** Stock price, market cap, shares outstanding
-- **Historical data:** 10 years of financial statements (or partial)
-- **Quality scores:** Return on capital, profitability, cash flow, management quality
+Stages 0-5: Financial Analysis 
+↓ 
+Stage 5: Results Processing (Composite Score ≥ 75 threshold) 
+↓ 
+Stage 6: Intrinsic Value Valuation ← YOU ARE HERE 
+↓ 
+Stage 7: Results Reporting & Output
+
+**Key Relationship:**
+- **Input Source:** Document 01-INVESTMENT-REQUIREMENTS.md (Stages 0-5)
+- **Output Destination:** Document 03-RESULTS-REPORTING-REQUIREMENTS.md (Stage 7)
+- **Workflow Overview:** Document 0-BASIC-STAGE-WORKFLOW.md
+
+### What Happens Before Stage 6
+
+Companies reaching Stage 6 have already:
+- ✅ Passed market cap filter (> $300M)
+- ✅ Had all 40+ metrics calculated
+- ✅ Passed financial strength assessment
+- ✅ Received Quality Score (Pillars 1-4)
+- ✅ Received Composite Score (Pillars 1-6, weighted)
+- ✅ Met threshold: Composite Score ≥ 75
+
+**Only these qualified companies** proceed to Stage 6 valuation analysis.
+
+### What Happens After Stage 6
+
+Stage 6 outputs are used in Stage 7 to:
+- Store all valuation results in MySQL database
+- Generate email reports with findings
+- Create GitHub summary pages
+- Produce downloadable CSV files
+- Identify investment opportunities
+
+---
+
+## Input Requirements
+
+### Required Input Data from Stage 5
+
+For each company reaching Stage 6, the following data must be available:
+
+**Financial Metrics (from Stage 1 & onward):**
+- ✅ 10 years of historical financial statements
+- ✅ Revenue, Operating Income, Net Income
+- ✅ Free Cash Flow (OCF - CapEx)
+- ✅ Debt, Equity, Interest Expense
+- ✅ Shares Outstanding, Dividends Per Share (if applicable)
+- ✅ Return on Equity (ROE)
+- ✅ Return on Invested Capital (ROIC)
+
+**Scoring Data (from Stage 3-5):**
+- ✅ Quality Score (0-100)
+- ✅ Valuation Score (0-100)
+- ✅ Management Score (0-100)
+- ✅ Composite Score (0-100)
+- ✅ Composite Score ≥ 75 (qualification criterion)
+
+**Market Data:**
+- ✅ Current stock price
+- ✅ Shares outstanding
+- ✅ Market capitalization
+- ✅ Dividend yield (if applicable)
+
+**Risk-Free Rate:**
+- ✅ 10-year Treasury yield (for discount rate calculation)
+
+### Data Quality Assurance
+
+All input data must meet these requirements:
+- ✓ Complete (no missing critical values)
+- ✓ Validated (balance sheet balanced, ratios reasonable)
+- ✓ Recent (stock price < 1 day old, financials < 1 year old)
+- ✓ Consistent (year-over-year changes within acceptable ranges)
+
+---
 
 ### Processing Steps
 
@@ -117,6 +201,8 @@ For each company:
 8. **Assign grouping category** (5 opportunity groups)
 9. **Create investment thesis** (one-paragraph summary)
 10. **Store in database** with full audit trail
+
+---
 
 ### Output Data
 
@@ -174,6 +260,8 @@ ELSE (Current Price > Intrinsic Value) → PASS or SELL (overvalued, wait for de
 ---
 
 ## Section 3: Discounted Cash Flow (DCF) Method
+
+**Method 1 of 5 - Weight in Consensus: 40%**
 
 ### 3.1 DCF Philosophy & Foundational Concepts
 
@@ -635,6 +723,8 @@ Key insight: A company's value is what it will earn in the future, not what the 
 ---
 
 ## Section 4: Dividend Discount Model (DDM)
+
+**Method 2 of 5 - Weight in Consensus: 15%**
 
 ### 4.1 DDM Philosophy & Foundational Concepts
 
@@ -1143,7 +1233,9 @@ Step 1: Identify 5 peer companies (similar business, size, industry) Step 2: Cal
 
 ---
 
-### **5.2 Multiples Formulas**
+## Section 5: Multiples Valuation Model
+
+**Method 3 of 5 - Weight in Consensus: 20%**
 
 #### **Formula 1: P/E Multiple Valuation**
 
@@ -1578,7 +1670,9 @@ Before accepting a multiples valuation:
 
 ---
 
-## **Section 6: Warren Buffett Valuation Techniques**
+## Section 6: Warren Buffett Valuation Techniques
+
+**Method 4 of 5 - Weight in Consensus: 15%**
 
 ### **6.1 Buffett's Philosophy & Investment Approach**
 
@@ -1671,15 +1765,7 @@ For each year from SEC filings, collect:
 
 **Step 2: Calculate year-by-year Owner's Earnings**
 
-Year Net Income D&A CapEx Δ WC Owner's Earnings (
-M
-)
-(
-M) (
-M
-)
-(
-M) ($M) 2016 $8,500 $1,200 $2,100 $300 $7,300 2017 $9,200 $1,350 $2,200 $250 $8,100 2018 $10,100 $1,400 $2,300 $200 $9,000 2019 $11,200 $1,500 $2,500 $350 $9,850 2020 $12,500 $1,600 $2,700 $400 $10,700 2021 $13,800 $1,800 $2,900 $300 $11,800 2022 $14,200 $1,900 $3,100 $250 $12,250 2023 $15,500 $2,000 $3,300 $400 $13,800 2024 $16,800 $2,100 $3,500 $350 $15,050 2025 $18,200 $2,200 $3,700 $300 $16,400
+Year Net Income D&A CapEx Δ WC Owner's Earnings (M)(M) (M)(M) ($M) 2016 $8,500 $1,200 $2,100 $300 $7,300 2017 $9,200 $1,350 $2,200 $250 $8,100 2018 $10,100 $1,400 $2,300 $200 $9,000 2019 $11,200 $1,500 $2,500 $350 $9,850 2020 $12,500 $1,600 $2,700 $400 $10,700 2021 $13,800 $1,800 $2,900 $300 $11,800 2022 $14,200 $1,900 $3,100 $250 $12,250 2023 $15,500 $2,000 $3,300 $400 $13,800 2024 $16,800 $2,100 $3,500 $350 $15,050 2025 $18,200 $2,200 $3,700 $300 $16,400
 
 **Step 3: Calculate 10-year average**
 
@@ -2026,7 +2112,9 @@ ELSE (Fair Value < Current Price OR Earnings Yield weak) THEN: PASS (wait for be
 
 ---
 
-## **Section 7: Charlie Munger Valuation Techniques**
+## Section 7: Charlie Munger Valuation Techniques
+
+**Method 5 of 5 - Weight in Consensus: 10%**
 
 ### **7.1 Charlie Munger's Philosophy & Investment Approach**
 
@@ -2669,495 +2757,167 @@ Decision framework: Quality first, valuation second
 
 ---
 
-## **Section 13: Output Formats**
+## Section 8: Consensus Valuation & Final Assessment
 
-### **13.1 Email Report Format**
+### 8.1 Consensus Valuation Formula
 
-The email report is your PRIMARY output for investment decision-making.
+After calculating fair value using all five methods, combine them using weighted average:
 
-#### **Email Structure**
+**Consensus Fair Value = (DCF × 40%) + (Multiples × 20%) + (Buffett × 15%) + (DDM × 15%) + (Munger × 10%)**
 
-TO: [Your Email] SUBJECT: Stock Market Screener Results - [Date] | [# Qualified] Companies
+**Why These Weights?**
+- **DCF (40%):** Most theoretically sound, captures long-term value
+- **Multiples (20%):** Market-based reality check
+- **Buffett (15%):** Owner's earnings perspective
+- **DDM (15%):** Cash returned to shareholders
+- **Munger (10%):** Quality-based valuation as final filter
 
-📊 STOCK MARKET SCREENER RESULTS Screening Date: [Date] Analysis Period: [Quarter/Year] Status: ✅ COMPLETE
+### 8.2 Confidence Level Determination
 
-##**EXECUTIVE SUMMARY**
-####**Screening Overview:**
+**Calculate the spread of all five methods:**
 
-Companies Analyzed: 487
-Passed Market Cap Filter (>$300M): 425
-Passed Data Validation: 412
-Passed Financial Strength Filters (Stage 1): 318
-Passed Financial Analysis (Stage 3): 52 companies
-Complete Valuation Analysis: 52 companies
-Key Statistics:
+Spread % = ((Max Method Value - Min Method Value) / Min Method Value) × 100%
 
-Average Financial Quality Score: 81.3/100
-Average Margin of Safety: 18.7%
-Consensus Average Fair Value: $287.50
-Consensus Average Current Price: $235.80
-Distribution Across Groups:
+**Confidence Level Assignment:**
+- **HIGH Confidence:** Spread ≤ 20% (methods agree closely)
+- **MEDIUM Confidence:** Spread 20-50% (methods reasonably aligned)
+- **LOW Confidence:** Spread > 50% (methods diverge significantly)
 
-GROUP 1 (Slam Dunks): 3 companies
-GROUP 2 (Strong Buys): 8 companies
-GROUP 3 (Fair Value): 15 companies
-GROUP 4 (Overvalued): 18 companies
-GROUP 5 (Not Qualified): 8 companies
-Comparison with Prior Run ([Prior Date]):
+**Interpretation:**
+- High spread suggests uncertain valuation; caution warranted
+- Methods agreeing closely increases confidence in fair value estimate
+- Consider business quality and competitive position when confidence is low
 
-Newly Qualified: 5 companies
-Maintained Qualification: 45 companies
-Removed from Prior List: 7 companies
-🎯 GROUP 1: SLAM DUNK BUYS (3 Companies)
-Criteria: Quality Score 80+, Margin of Safety 30%+
+### 8.3 Valuation Grade Assignment
 
-These are the best opportunities - exceptional businesses at attractive prices.
+Assign a grade (A+ to F) based on valuation certainty and business quality:
 
-1. [TICKER] - [Company Name]
-Snapshot:
+| Grade | Criteria | Interpretation |
+|-------|----------|-----------------|
+| **A+** | Consensus high, Spread ≤ 10%, Strong moat, ROE > 20% | Exceptional clarity on valuation |
+| **A** | Consensus high, Spread ≤ 20%, Strong quality metrics | Clear valuation, high confidence |
+| **B+** | Consensus medium, Spread 20-35%, Good quality | Good confidence, minor uncertainty |
+| **B** | Consensus medium, Spread 35-50%, Adequate quality | Moderate confidence |
+| **C+** | Consensus low, Spread 50-75%, Adequate quality | Low confidence, proceed cautiously |
+| **C** | Wide divergence, Spread > 75%, Weak quality | Significant uncertainty |
+| **F** | Cannot value (negative earnings, insufficient data) | Insufficient data for valuation |
 
-Current Price: $XXX.XX
-Market Cap: $XXB
-Sector: [Sector]
-Quality Score: 87/100 ⭐⭐⭐⭐
-Financial Quality Highlights:
+### 8.4 Margin of Safety Calculation
 
-Return on Equity: 22.5%
-Net Profit Margin: 15.2%
-Operating Margin: 18.3%
-Debt-to-Equity: 0.35
-Free Cash Flow: Positive (10/10 years) ✅
-Margin Stability: 8.2% (CV < 15%) ✅
-Valuation Summary:
+**Margin of Safety % = ((Consensus Fair Value - Current Price) / Consensus Fair Value) × 100%**
 
-##**DCF Method:**
+**Buffett's Preferred Margins:**
+- **Excellent:** ≥ 50% (stock trading at ≤ 50% of fair value)
+- **Good:** 25-50% (attractive risk/reward)
+- **Acceptable:** 15-25% (reasonable cushion)
+- **Caution:** < 15% (limited margin for error)
+- **Avoid:** Negative (stock overvalued)
 
-Fair Value: $XXX per share
-Sensitivity Range: $X - $X
-Base Case Growth: 7.2% annually
-DDM Method: [or N/A if non-dividend]
+### 8.5 Investment Recommendation Assignment
 
-Fair Value: $XXX per share
-Dividend Growth: 5.8% historical
-Payout Ratio: 35% (sustainable)
-Multiples Method:
+Based on Margin of Safety and Valuation Grade:
 
-P/E Fair Value: $XXX (vs peer avg XX.X)
-P/B Fair Value: $XXX
-P/S Fair Value: $XXX
-Average Multiples Value: $XXX
-Buffett Valuation:
+| MOS | Grade A+ | Grade A | Grade B+ | Grade B | Grade C+ | Grade C |
+|-----|----------|---------|----------|---------|----------|---------|
+| **≥50%** | **BUY** | **BUY** | **BUY** | CONSIDER | CONSIDER | PASS |
+| **25-50%** | **BUY** | **BUY** | CONSIDER | CONSIDER | PASS | PASS |
+| **15-25%** | **BUY** | CONSIDER | CONSIDER | PASS | PASS | PASS |
+| **<15%** | CONSIDER | CONSIDER | PASS | PASS | PASS | AVOID |
+| **Negative** | AVOID | AVOID | AVOID | AVOID | AVOID | AVOID |
 
-Owner's Earnings: $X.XXB normalized
-Quality Multiple: 26x
-Fair Value: $XXX per share
-Earnings Yield: 4.2% (vs required 7.1%)
-Assessment: ACCEPTABLE (moderate margin)
-Munger Valuation:
+**Recommendation Definitions:**
+- **BUY:** Strong opportunity with favorable risk/reward and clear valuation
+- **CONSIDER:** Interesting opportunity worth deeper analysis; reasonable valuation
+- **PASS:** Fair price or minor concerns; wait for better entry
+- **AVOID:** Overvalued or significant concerns; do not purchase
 
-Business Quality Score: 8.5/10
-Moat Strength: 9/10 (Strong switching costs, brand)
-Management Quality: 8/10
-Fair Value: $XXX per share
-Five Stock Test: YES ✅ (would own forever)
-Consensus Fair Value: $XXX per share
+### 8.6 Output Summary Format
 
-Conservative Estimate: $XXX (Buffett)
-Base Case: $XXX (Weighted)
-Optimistic Estimate: $XXX (DCF)
-Margin of Safety Analysis:
+The consensus valuation output includes:
 
-Fair Value (Consensus): $XXX
-Current Price: $XXX
-Current Margin: +XX.X% ✅
-
-Target Buy Prices:
-├─ 20% Safety Margin: $XXX/share (BELOW current ✅)
-├─ 30% Safety Margin: $XXX/share (BELOW current ✅)
-├─ 40% Safety Margin: $XXX/share (BELOW current ✅)
-└─ 50% Safety Margin: $XXX/share (BELOW current ✅)
-Valuation Grade: A+ (Slam Dunk Buy)
-
-Buffett Assessment: 🟢 BUY
-
-Intrinsic value significantly exceeds current price
-Margin of safety adequate (>25%)
-Owner's Earnings method supports purchase
-Munger Assessment: 🟢 BUY
-
-Exceptional business quality (8.5/10)
-Would include in 5-stock permanent portfolio
-Passes all quality tests, fair valuation
-Consensus Recommendation: 🟢 STRONG BUY
-
-Both Buffett and Munger recommend purchase
-Build meaningful position at current price
-Highest priority for capital allocation
-Investment Thesis:
-
-[Company] is an exceptional business with a durable competitive advantage built through [moat type: brand/switching costs/network effects]. The company has demonstrated consistent earnings growth of [X%] annually over the past decade, with ROE of [X%] and margins stable at [X%]. Management quality is exceptional, with significant insider ownership and proven capital allocation discipline. At $XXX/share, the stock offers a [X%] margin of safety to consensus fair value of $XXX, providing excellent risk/reward. Both Buffett and Munger frameworks strongly support ownership. Recommend STRONG BUY.
-
-2. [TICKER] - [Company Name]
-[Same detailed format as above]
-
-3. [TICKER] - [Company Name]
-[Same detailed format as above]
-
-✅ GROUP 2: STRONG BUYS (8 Companies)
-Criteria: Quality Score 75-80, Margin of Safety 20-30%
-
-Good to excellent businesses with fair valuations and adequate margins.
-
-[Same detailed format for each company, but slightly condensed]
-
-🟡 GROUP 3: FAIR VALUE (15 Companies)
-Criteria: Quality Score 82+, Margin of Safety 10-20%
-
-Strong/excellent businesses at reasonable prices - good for accumulation.
-
-[Format: Brief summary with key numbers]
-
-⚠️ GROUP 4: OVERVALUED (18 Companies)
-Criteria: Quality Score 80+, Margin of Safety <0%
-
-Excellent businesses but too expensive - watch for better prices.
-
-Note: These are high-quality companies. The issue is valuation, not business quality. Add to watchlist and revisit when price declines.
-
-[Format: Brief summary focused on valuation vs quality disconnect]
-
-📊 GROUP 5: NOT QUALIFIED (8 Companies)
-Criteria: Financial Score <75, Kept for Monitoring
-
-These companies did not meet financial quality thresholds. Monitor for improvement:
-
-[Simple list with scores and reason for non-qualification]
-
-##SUMMARY STATISTICS & INSIGHTS
-Quality Score Distribution:
-
-Average Quality Score: 81.3
-Median Quality Score: 82.0
-Highest Score: 92.1 ([Company])
-Lowest Qualified Score: 75.0 ([Company])
-Valuation Status:
-
-Undervalued (MOS >20%): 26 companies
-Fairly Valued (MOS 0-20%): 19 companies
-Overvalued (MOS <0%): 7 companies
-Buffett vs Munger Agreement:
-
-Both Recommend BUY: 18 companies
-Buffett BUY, Munger WAIT: 12 companies
-Buffett WAIT, Munger BUY: 8 companies
-Both Recommend PASS: 14 companies
-Investment Opportunity Score:
-
-Slam Dunk Buys (A+): 3 companies - Highest priority
-Strong Buys (A): 8 companies - High priority
-Fair Value (B+/B): 15 companies - Medium priority
-Overvalued (C/D): 18 companies - Watchlist
-HOW TO USE THIS REPORT
-For Immediate Investment Decisions:
-Focus on Group 1 & 2 (Slam Dunks + Strong Buys)
-
-11 companies with best opportunities
-Prioritize by quality score (highest first)
-Build positions according to position sizing rules
-Monitor Group 3 (Fair Value)
-
-Watch for small price dips
-Accumulate during weakness
-Good for dollar-cost averaging
-Watchlist Group 4 (Overvalued)
-
-Set price alerts (25-30% below current)
-Review next quarter
-Buy when margin improves
-Review Group 5 (Not Qualified)
-
-Check next quarter for improvements
-Some may requalify with better fundamentals
-Don't buy yet, even if other factors attractive
-For Deeper Research:
-Compare Buffett vs Munger assessments (learn why they differ)
-Study investment theses to understand key value drivers
-Use sensitivity analysis to test valuation assumptions
-Review margin of safety calculations
-For Portfolio Management:
-Current positions: Check if still in Groups 1-3 (still buy-worthy?)
-New allocation: Focus on Group 1 first, then Group 2
-Rebalancing: Consider trimming Group 4 positions
-Tax-loss harvesting: Review Group 5 candidates
-DETAILED DATA & SUPPORTING FILES
-Complete Data Available:
-
-CSV Export: screening-results-2026-03-14.csv
-
-All 52 companies with complete metrics
-All valuations and margins of safety
-Suitable for spreadsheet analysis
-GitHub Summary: GitHub Actions Run Summary
-
-Quick statistics and charts
-Previous run comparisons
-Performance tracking
-Database Records: Stored in CompanyValuations table
-
-Full audit trail of calculations
-Historical tracking across quarters
-Sensitivity analysis details
-TECHNICAL NOTES
-Valuation Methodology:
-
-DCF: 10-year projection, 2.5% terminal growth, WACC discount rate
-DDM: Gordon Growth Model with buyback adjustment where applicable
-Multiples: 5-peer average (trimmed for outliers), P/E, P/B, P/S
-Buffett: Owner's Earnings × Quality Multiple (15-35x)
-Munger: Quality-based multiple assignment (quality score method)
-Consensus Weighting:
-
-DCF: 40% (growth projection focus)
-DDM: 15% (dividend/buyback validation, only if applicable)
-Multiples: 20% (market-based check)
-Buffett: 15% (mechanical simplicity)
-Munger: 10% (business judgment)
-Data Sources:
-
-SEC EDGAR (10-K/10-Q financial statements)
-Yahoo Finance (stock prices, dividends, shares outstanding)
-Federal Reserve FRED (Treasury yields)
-Company investor relations (dividends, buybacks)
-Screening Date: [Date] Next Screening: [Projected Date]
+| Metric | Definition |
+|--------|-----------|
+| **Consensus Fair Value** | Weighted average of all five methods |
+| **Valuation Spread** | Range from lowest to highest method |
+| **Confidence Level** | HIGH / MEDIUM / LOW |
+| **Valuation Grade** | A+ to F based on clarity and quality |
+| **Current Price** | Market price at analysis date |
+| **Margin of Safety** | % discount to fair value |
+| **Recommendation** | BUY / CONSIDER / PASS / AVOID |
 
 ---
 
-### **13.2 GitHub Summary Page Format**
+## Section 9: Output Definitions
 
-Brief summary posted to GitHub Actions run:
+### 9.1 Stage 6 Output Package
 
-# Stock Market Screener Results - [Date]
+Each company evaluated in Stage 6 produces the following outputs:
 
-✅ **Screening Complete**
+**Primary Outputs:**
+1. Consensus Fair Value (per share)
+2. Fair Value from each method (DCF, DDM, Multiples, Buffett, Munger)
+3. Margin of Safety (%)
+4. Confidence Level (HIGH/MEDIUM/LOW)
+5. Valuation Grade (A+ to F)
+6. Investment Recommendation (BUY/CONSIDER/PASS/AVOID)
+7. Valuation Spread (%)
 
-## Summary
+**Supporting Outputs:**
+- Sensitivity analysis (WACC, growth rate, multiples)
+- Calculation details for each method
+- Assumptions used in projections
+- Risk factors identified
 
-| Metric | Value |
-|--------|-------|
-| Companies Analyzed | 487 |
-| Passed Financial Filters | 52 |
-| Average Quality Score | 81.3 |
-| Average Fair Value | $287.50 |
-| Average Current Price | $235.80 |
-| Average MOS | +18.7% |
+### 9.2 Data Fields for Database Storage
 
-## Opportunities by Group
+The following fields are stored in MySQL database from Stage 6:
 
-| Group | Count | Quality | MOS | Action |
-|-------|-------|---------|-----|--------|
-| Slam Dunk Buys | 3 | 85+ | 30%+ | Buy Aggressively |
-| Strong Buys | 8 | 75-80 | 20-30% | Buy Confidently |
-| Fair Value | 15 | 82+ | 10-20% | Accumulate |
-| Overvalued | 18 | 80+ | <0% | Wait |
-| Not Qualified | 8 | <75 | — | Monitor |
+**Company Identifiers:**
+- Ticker, Company Name, Industry, Market Cap
 
-## Top 5 Best Opportunities
+**Fair Value Estimates:**
+- dcf_fair_value, ddm_fair_value, multiples_fair_value
+- buffett_fair_value, munger_fair_value
+- consensus_fair_value
 
-| Rank | Ticker | Company | Quality | MOS | Price |
-|------|--------|---------|---------|-----|-------|
-| 1 | [TICK] | [Name] | 87 | +42% | $XXX |
-| 2 | [TICK] | [Name] | 85 | +35% | $XXX |
-| 3 | [TICK] | [Name] | 84 | +31% | $XXX |
-| 4 | [TICK] | [Name] | 82 | +28% | $XXX |
-| 5 | [TICK] | [Name] | 80 | +25% | $XXX |
+**Valuation Assessment:**
+- valuation_spread_percent, confidence_level
+- valuation_grade, current_price
+- margin_of_safety_percent
 
-## Key Insights
+**Recommendation:**
+- investment_recommendation, analysis_date
+- analyst_notes, sensitivity_summary
 
-- **Best Opportunity:** [Company] with [X%] margin of safety
-- **Highest Quality:** [Company] with quality score 92.1
-- **Most Undervalued:** [Company] with [X%] margin of safety
-- **Buffett/Munger Agreement:** [X] companies both recommend buy
-- **New Qualifiers:** [X] companies newly qualified this run
+### 9.3 Output Format Notes
 
-## Comparison with Prior Run
+**Format Details:**
+- All prices in USD per share
+- Percentages shown as decimals (0.25 = 25%)
+- Dates in ISO format (YYYY-MM-DD)
+- All calculations rounded to 2 decimal places for currency
 
-- Maintained: 45 companies
-- New: 5 companies
-- Removed: 7 companies
-- Average quality improvement: +0.8 points
+### 9.4 Output Quality Checks
 
-## Files & Links
+Before data is stored, validate:
+- ✓ All five methods produced values
+- ✓ Consensus fair value is reasonable (not extreme outlier)
+- ✓ Margin of safety calculation is correct
+- ✓ Confidence level matches spread % range
+- ✓ Recommendation aligns with MOS and grade
+- ✓ No missing required fields
 
-- [View Full Report (Email Format)](link)
-- [Download CSV Data](link)
-- [View Detailed Company Analyses](link)
-- [Methodology Documentation](link)
+---
 
-**Generated:** [Date] | **Next Run:** [Date]
-13.3 CSV Export Format
-All data in spreadsheet-friendly format:
+## Section 10: Format Notes for Stage 7 Integration
 
-Ticker,Company Name,Sector,Current Price,Market Cap ($B),Quality Score,
-DCF Fair Value,DDM Fair Value,Multiples Fair Value,Buffett Fair Value,
-Munger Fair Value,Consensus Fair Value,Current MOS %,Valuation Grade,
-Buffett Recommendation,Munger Recommendation,Consensus Recommendation,
-Group,ROE %,Net Margin %,D/E Ratio,FCF Score,Margin Stability,
-Moat Strength /10,Durability /10,Management /10,Earnings Consistency /10,
-ROIC /10,Investment Thesis
+### 10.1 Note: Output Format Details
 
-MSFT,Microsoft Corporation,Technology,$420.50,$3140.0,82,
-$523.15,$0.00,$342.29,$122.00,$304.00,$345.60,-21.7%,C,PASS,WAIT,PASS,
-4,35%,33.2%,0.04,10,6.2%,9,9,9,9,8,
-"Microsoft is exceptional but expensive at $420. Quality score 82/100 excellent..."
+Email report formats, GitHub summaries, and CSV export specifications are defined in Stage 7 (Results Reporting Requirements). This document focuses on the valuation calculations for Stage 6.
 
-AAPL,Apple Inc.,Technology,$180.00,$2850.0,85,
-$450.25,$0.00,$380.50,$198.40,$310.00,$365.00,+50.7%,A,BUY,BUY,STRONG BUY,
-1,100%,29.8%,0.15,10,5.1%,10,9,9,9,9,
-"Exceptional business with unassailable moat trading at excellent value..."
+For report format specifications, see: [03-RESULTS-REPORTING-REQUIREMENTS.md](03-RESULTS-REPORTING-REQUIREMENTS.md)
 
-[... more companies ...]
-##Section 14: Database Integration
-###**14.1 CompanyValuations Table Schema**
-Store all valuation results for historical tracking and analysis:
-
-SQL
-CREATE TABLE CompanyValuations (
-    ValuationID INT PRIMARY KEY AUTO_INCREMENT,
-    CompanyID INT NOT NULL,
-    ScreeningRunID INT NOT NULL,
-    ScreeningDate DATETIME NOT NULL,
-    
-    -- Current Market Data
-    CurrentStockPrice DECIMAL(10, 2) NOT NULL,
-    MarketCapBillions DECIMAL(15, 2),
-    SharesOutstandingBillions DECIMAL(10, 2),
-    
-    -- VALUATION METHOD 1: DCF
-    DCFProjectionYears INT,
-    DCFHistoricalFCFCAGR DECIMAL(5, 2),
-    DCFProjectedGrowthRate DECIMAL(5, 2),
-    DCFTerminalGrowthRate DECIMAL(5, 2),
-    DCFDiscountRateWACC DECIMAL(5, 2),
-    DCFFairValuePerShare DECIMAL(10, 2),
-    DCFTerminalValue DECIMAL(15, 2),
-    DCFSensitivityLow DECIMAL(10, 2),
-    DCFSensitivityHigh DECIMAL(10, 2),
-    
-    -- VALUATION METHOD 2: DDM
-    DDMApplicable BOOLEAN,
-    DDMHistoricalDividendCAGR DECIMAL(5, 2),
-    DDMProjectedGrowthRate DECIMAL(5, 2),
-    DDMTerminalGrowthRate DECIMAL(5, 2),
-    DDMDiscountRate DECIMAL(5, 2),
-    DDMFairValuePerShare DECIMAL(10, 2),
-    DDMAdjustedForBuybacks BOOLEAN,
-    DDMPayoutRatioPercent DECIMAL(5, 2),
-    
-    -- VALUATION METHOD 3: MULTIPLES
-    PEMultiplesFairValue DECIMAL(10, 2),
-    PBMultiplesFairValue DECIMAL(10, 2),
-    PSMultiplesFairValue DECIMAL(10, 2),
-    MultiplesFairValueAverage DECIMAL(10, 2),
-    ComparisonCompanies VARCHAR(255),
-    PEMultiplePeerAverage DECIMAL(5, 2),
-    PBMultiplePeerAverage DECIMAL(5, 2),
-    PSMultiplePeerAverage DECIMAL(5, 2),
-    
-    -- BUFFETT VALUATION TECHNIQUE
-    BuffettOwnerEarningsBillions DECIMAL(15, 2),
-    BuffettQualityMultiple INT,
-    BuffettFairValuePerShare DECIMAL(10, 2),
-    BuffettEarningsYield DECIMAL(5, 3),
-    BuffettRequiredReturn DECIMAL(5, 2),
-    BuffettEarningsYieldAssessment VARCHAR(50),
-    
-    -- MUNGER VALUATION TECHNIQUE
-    MungerBusinessQualityScore INT,
-    MungerMoatStrength INT,
-    MungerDurabilityScore INT,
-    MungerManagementQualityScore INT,
-    MungerEarningsConsistencyScore INT,
-    MungerROCScore INT,
-    MungerQualityMultiple INT,
-    MungerFairValuePerShare DECIMAL(10, 2),
-    MungerFiveStockTestResult VARCHAR(50),
-    MungerOverallAssessment VARCHAR(255),
-    
-    -- CONSENSUS VALUATION
-    ConsensusMethod VARCHAR(50),
-    ConsensusFairValuePerShare DECIMAL(10, 2),
-    ConsensusWeightedFairValue DECIMAL(10, 2),
-    
-    -- MARGIN OF SAFETY
-    BuffettMarginOfSafetyPercent DECIMAL(5, 2),
-    BuffettMarginStatus VARCHAR(50),
-    BuffettBuyPrice20MOS DECIMAL(10, 2),
-    BuffettBuyPrice30MOS DECIMAL(10, 2),
-    BuffettBuyPrice40MOS DECIMAL(10, 2),
-    BuffettBuyPrice50MOS DECIMAL(10, 2),
-    
-    MungerMarginOfSafetyPercent DECIMAL(5, 2),
-    MungerMarginStatus VARCHAR(50),
-    MungerBuyPrice20MOS DECIMAL(10, 2),
-    MungerBuyPrice30MOS DECIMAL(10, 2),
-    MungerBuyPrice40MOS DECIMAL(10, 2),
-    MungerBuyPrice50MOS DECIMAL(10, 2),
-    
-    ConsensusMarginOfSafetyPercent DECIMAL(5, 2),
-    ConsensusMarginStatus VARCHAR(50),
-    ConsensusBuyPrice20MOS DECIMAL(10, 2),
-    ConsensusBuyPrice30MOS DECIMAL(10, 2),
-    ConsensusBuyPrice40MOS DECIMAL(10, 2),
-    ConsensusBuyPrice50MOS DECIMAL(10, 2),
-    
-    -- VALUATION GRADE
-    ValuationGrade VARCHAR(3),
-    ValuationGradeReasoning VARCHAR(500),
-    
-    -- RECOMMENDATIONS
-    BuffettRecommendation VARCHAR(50),
-    MungerRecommendation VARCHAR(50),
-    ConsensusRecommendation VARCHAR(50),
-    GroupingCategory VARCHAR(50),
-    InvestmentThesis VARCHAR(1000),
-    
-    -- AUDIT TRAIL
-    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    DataSourcesUsed VARCHAR(255),
-    CalculationNotes VARCHAR(500),
-    
-    FOREIGN KEY (CompanyID) REFERENCES Companies(CompanyID),
-    FOREIGN KEY (ScreeningRunID) REFERENCES ScreeningRuns(ScreeningRunID),
-    INDEX idx_date (ScreeningDate),
-    INDEX idx_company (CompanyID),
-    INDEX idx_grade (ValuationGrade)
-);
-###**14.2 Sample Database Record**
-
-    JSON
-{
-  "ValuationID": 12547,
-  "CompanyID": 145,
-  "ScreeningRunID": 89,
-  "ScreeningDate": "2026-03-14",
-  "CurrentStockPrice": 420.50,
-  "MarketCapBillions": 3140.0,
-  "DCFFairValuePerShare": 523.15,
-  "DDMFairValuePerShare": null,
-  "MultiplesFairValueAverage": 342.29,
-  "BuffettFairValuePerShare": 122.00,
-  "MungerFairValuePerShare": 304.00,
-  "ConsensusFairValuePerShare": 345.60,
-  "ConsensusMarginOfSafetyPercent": -21.7,
-  "ConsensusMarginStatus": "OVERVALUED",
-  "ValuationGrade": "C",
-  "BuffettRecommendation": "PASS",
-  "MungerRecommendation": "WAIT",
-  "ConsensusRecommendation": "PASS",
-  "GroupingCategory": "OVERVALUED",
-  "InvestmentThesis": "Exceptional business but too expensive..."
-}
+---
 
 ##Section 15: Data Flow Integration
 ###**15.1 Stage 5.4 in Complete Pipeline**
@@ -3401,7 +3161,6 @@ Step 5: Decide on action
 16.7 Sensitivity Analysis Output Example
 For final report, include summary:
 
-
 ###**SENSITIVITY ANALYSIS SUMMARY**
 
 BASE CASE FAIR VALUE: $304/share
@@ -3451,9 +3210,14 @@ Set realistic expectations
 
 ---
 
-## **Section 17: Real-World Examples**
 
-### **17.1 Complete Example #1: Technology Company (Microsoft - High Growth, No Dividend)**
+
+
+## Section 11: Real-World Examples
+
+**Complete walkthroughs of three company types demonstrating all valuation methods**
+
+### **11.1 Complete Example #1: Technology Company (Microsoft - High Growth, No Dividend)**
 
 #### **Company Overview**
 
@@ -3463,15 +3227,7 @@ Ticker: MSFT Company: Microsoft Corporation Sector: Technology/Software/Cloud Cu
 
 ####**10-Year Historical Financials:**
 
-Year Net Income D&A CapEx FCF EPS (
-B
-)
-(
-B) (
-B
-)
-(
-B) ($) 2016 $20.5 $5.2 $4.8 $20.9 $2.40 2017 $21.2 $5.5 $5.0 $21.7 $2.51 2018 $26.8 $5.8 $5.3 $27.3 $3.18 2019 $39.2 $6.2 $6.5 $38.9 $4.68 2020 $44.3 $6.8 $7.2 $43.9 $5.49 2021 $69.9 $7.5 $8.1 $69.3 $8.84 2022 $72.8 $8.2 $9.0 $72.0 $9.43 2023 $88.2 $8.9 $10.2 $86.9 $11.52 2024 $99.8 $9.5 $11.5 $97.8 $12.97 2025 $109.5 $10.2 $12.8 $106.9 $14.35
+Year Net Income D&A CapEx FCF EPS (B)(B) (B)(B) ($) 2016 $20.5 $5.2 $4.8 $20.9 $2.40 2017 $21.2 $5.5 $5.0 $21.7 $2.51 2018 $26.8 $5.8 $5.3 $27.3 $3.18 2019 $39.2 $6.2 $6.5 $38.9 $4.68 2020 $44.3 $6.8 $7.2 $43.9 $5.49 2021 $69.9 $7.5 $8.1 $69.3 $8.84 2022 $72.8 $8.2 $9.0 $72.0 $9.43 2023 $88.2 $8.9 $10.2 $86.9 $11.52 2024 $99.8 $9.5 $11.5 $97.8 $12.97 2025 $109.5 $10.2 $12.8 $106.9 $14.35
 
 #### **Step 2: DCF Valuation**
 
@@ -3791,7 +3547,7 @@ Conclusion: Stock within reasonable valuation range but no margin of safety.
 
 ---
 
-### **17.2 Complete Example #2: Dividend Stock (Coca-Cola - Mature, Stable)**
+### **11.2 Complete Example #2: Dividend Stock (Coca-Cola - Mature, Stable)**
 
 #### **Company Overview**
 
@@ -3905,7 +3661,7 @@ Recommendation: HOLD/ACCUMULATE on dips
 
 ---
 
-### **17.3 Complete Example #3: Unprofitable Company (Biotech with Losses)**
+### **11.3 Complete Example #3: Unprofitable Company (Biotech with Losses)**
 
 #### **Company Overview**
 
@@ -3951,9 +3707,9 @@ Potential: Could be worth much more if drugs approved But: Current price already
 
 ---
 
-## **Section 18: Implementation Notes**
+## Section 12: Implementation Notes
 
-### **18.1 Data Sources & Integration**
+### **12.1 Data Sources & Integration**
 
 **SEC EDGAR (10-K/10-Q):**
 
@@ -3987,7 +3743,7 @@ Guidance on future performance
 
 ---
 
-### **18.2 Calculation Considerations**
+### **12.2 Calculation Considerations**
 
 **Rounding & Precision:**
 
@@ -4026,7 +3782,7 @@ Zero dividends + substantial buybacks: ✅ Use buyback-adjusted dividend in DDM 
 
 ---
 
-### **18.3 Quality Checkpoints**
+### **12.3 Quality Checkpoints**
 
 **Before accepting valuation results:**
 
@@ -4056,7 +3812,9 @@ Zero dividends + substantial buybacks: ✅ Use buyback-adjusted dividend in DDM 
 
 🚩 WACC is <5% or >15% → Likely wrong (too extreme) �� Review components
 
-### **18.4 Performance Optimization**
+---
+
+### **12.4 Performance Optimization**
 
 **Valuation Update Frequency:**
 
@@ -4078,9 +3836,9 @@ Total time: ~12-14 hours per quarter Frequency: Once per quarter (every 90 days)
 
 ---
 
-## **Section 19: Troubleshooting Guide**
+## Section 13: Troubleshooting Guide
 
-### **19.1 Common Issues & Solutions**
+### **13.1 Common Issues & Solutions**
 
 **Problem: DCF valuation is unrealistic ($500 for $50 stock)**
 
@@ -4142,93 +3900,23 @@ Solution: ✅ Use only recent years reflecting new business ✅ If transition no
 
 ---
 
-## **Section 20: Document History**
+## Section 14: Related Documents
 
-### **Version Control**
-
-Version: 1.0 Date: 2026-03-14 Author: ThommCroft Status: Complete Scope: Stock Price Valuation Methodology - Stage 5.4
-
-### **Document Purpose**
-
-This document provides complete methodology for Stage 5.4 (Stock Price Valuation Analysis) in the Stock Market Screener system. It covers:
-
-- Three independent valuation methods (DCF, DDM, Multiples)
-- Two master valuation techniques (Buffett, Munger)
-- Consensus valuation combining all methods
-- Margin of Safety analysis and grading
-- Company grouping for investment decisions
-- Output formats for reporting
-- Database integration and historical tracking
-- Sensitivity analysis for confidence ranges
-- Real-world examples with complete walkthroughs
-- Implementation notes and troubleshooting
-
-### **Key Features**
-
-✅ **Comprehensive:** Covers all aspects from data gathering to final recommendation
-✅ **Practical:** Real examples show actual calculations with numbers
-✅ **Flexible:** Works for any company (profitable, unprofitable, with/without dividends)
-✅ **Buffett & Munger:** Integrates both proven investment frameworks
-✅ **Implementation-Ready:** Includes database schema,  templates, output formats
-
-### **Related Documents**
-
-- `01-INVESTMENT-REQUIREMENTS.md` - Investment philosophy and requirements
-- `02-ARCHITECTURE-DESIGN.md` - System architecture and design
-- `03-DATA-FLOW-SCREENING-LOGIC.md` - Stages 1-7 overview
-- `04-PROJECT-ROADMAP.md` - Implementation timeline and milestones
-
-### **Future Enhancements**
-
-Potential future additions:
-- Machine learning to predict WACC and growth rates
-- Real-time valuation updates with stock price movements
-- Macro economic scenario analysis
-- Peer analysis and competitive positioning
-- ESG (Environmental, Social, Governance) integration
-- Portfolio optimization using valuations
-- Tax-loss harvesting based on valuation grades
-
-### **Support & Questions**
-
-For questions about methodology or calculations:
-- Review Section 17 (Real-World Examples) for step-by-step walkthrough
-- Check Section 19 (Troubleshooting) for common issues
-- Refer to specific section (3-16) for detailed method explanation
-- Review investment theses in Section 17 for complete analysis example
-
-### **Final Notes**
-
-This valuation methodology represents synthesis of:
-- Warren Buffett's Owner's Earnings approach
-- Charlie Munger's quality-based business assessment
-- Academic DCF and dividend discount models
-- Market-based multiples validation
-- Practical implementation lessons
-
-The goal is not to calculate "the" intrinsic value (impossible), but to estimate a reasonable range and determine if current price provides adequate margin of safety for profitable investing.
-
-> **"Price is what you pay. Value is what you get."** — Warren Buffett
-
-This document exists to ensure you get more value than the price you pay.
+| Document | Covers | Purpose |
+|----------|--------|---------|
+| [0-BASIC-STAGE-WORKFLOW.md](0-BASIC-STAGE-WORKFLOW.md) | All Stages | Overall pipeline and workflow definitions |
+| [01-INVESTMENT-REQUIREMENTS.md](01-INVESTMENT-REQUIREMENTS.md) | Stages 0-5 | Financial analysis that feeds into Stage 6 |
+| [02-VALUATION-METHODOLOGY.md](02-VALUATION-METHODOLOGY.md) | Stage 6 | Intrinsic value calculation (this document) |
+| [03-RESULTS-REPORTING-REQUIREMENTS.md](03-RESULTS-REPORTING-REQUIREMENTS.md) | Stage 7 | Results reporting and output specifications |
 
 ---
 
-## **Glossary of Terms**
+## Section 15: Document History
 
-CAGR: Compound Annual Growth Rate D&A: Depreciation & Amortization DCF: Discounted Cash Flow (valuation method) DDM: Dividend Discount Model (valuation method) EBT: Earnings Before Tax EBITDA: Earnings Before Interest, Taxes, Depreciation, Amortization EPS: Earnings Per Share FCF: Free Cash Flow (Operating CF - CapEx) GAAP: Generally Accepted Accounting Principles MOS: Margin of Safety Net Income: Bottom-line earnings (after all expenses) OCF: Operating Cash Flow P/B: Price-to-Book multiple P/E: Price-to-Earnings multiple P/S: Price-to-Sales multiple ROE: Return on Equity (Net Income / Shareholders' Equity) ROIC: Return on Invested Capital WACC: Weighted Average Cost of Capital (discount rate)
-
-Valuation Grade A+: Slam Dunk Buy (exceptional quality + strong value) Valuation Grade A: Strong Buy (good quality + good value) Valuation Grade B+: Fair Value / Good Buy (strong quality, reasonable price) Valuation Grade B: Fair Value / Hold (acceptable, no urgency) Valuation Grade C: Overvalued (reasonable quality, high price) Valuation Grade D: Poor Value (weak quality, any price) Valuation Grade F: Avoid (very poor business or extreme overvaluation)
+| 1.0 | 2026-03-15 | ThommCroft | **CURRENT** - Initial comprehensive valuation methodology document; aligned with 0-BASIC-STAGE-WORKFLOW.md as Stage 6 requirements |
 
 ---
 
-### **END OF DOCUMENT**
+**End of Document**
 
-**Total Sections:** 20  
-**Total Pages:** ~200 (depending on formatting)  
-**Total Examples:** 3 complete real-world walkthroughs  
-**Formulas & Calculations:** 50+  
-**Decision Trees & Matrices:** 10+  
-**Tables & References:** 40+  
-
-This comprehensive document provides everything needed to implement Stage 5.4 Stock Price Valuation Analysis and make informed investment decisions using both Warren Buffett and Charlie Munger's proven methodologies.
+For questions or clarifications on valuation methodology, refer to the five detailed method sections (DCF, DDM, Multiples, Buffett, Munger) and the real-world examples provided in Section 11.
