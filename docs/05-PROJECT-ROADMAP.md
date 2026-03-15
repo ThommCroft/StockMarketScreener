@@ -1,7 +1,7 @@
 # Project Roadmap - Stock Market Screener
 
-**Version:** 2.0 (Merged Metric Calculation + Unified Hard Filter Evaluation)  
-**Date:** 2026-03-14  
+**Version:** 2.1 
+**Date:** 2026-03-15
 **Author:** ThommCroft  
 **Framework:** Warren Buffett Value Investing + Unified Comprehensive Analysis
 
