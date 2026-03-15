@@ -1,6 +1,6 @@
 # Architecture Design Document - Stock Market Screener
 
-**Version:** 4.0 
+**Version:** 4.1 
 **Date:** 2026-03-15  
 **Author:** ThommCroft
 **Stack:** C# .NET 8.0, MySQL 8.0, GitHub Actions (Quarterly + Manual), Console Application  
@@ -71,20 +71,90 @@ The StockMarketScreener is a **console-based financial analysis engine** that im
 
 
 ```
-┌────────────────────────��────────────────────────────────────┐
-│ GitHub Actions Trigger (Quarterly/Manual) │ │ OR Local Console Run
-│ └────────────┬──────────────────────────────────────────────┘
-│ ┌────────────▼────────────────────────────────────────────────┐
-│StockMarketScreener Console Application │
+┌─────────────────────────────────────────────────────────────┐
+│  GitHub Actions Trigger (Quarterly/Manual)                  │
+│  OR Local Console Run                                       │
+└────────────┬──────────────────────────────────────────────┘
+             │
+┌────────────▼────────────────────────────────────────────────┐
+│  StockMarketScreener Console Application                    │
 ├─────────────────────────────────────────────────────────────┤
-│ │ │ ╔═══════════════════════════════════════════════════╗
-││ ║ STAGE 0: Market Cap Pre-Filter ║
-│ │ ║ Filter: Market Cap > $300M ║
-│ │ ║ Output: Liquid, institutional-quality companies ║
-│ │ ╚═════════────┬──────────────────────────────────────╝││
-│ │ │ ┌────────────▼────────────────────────────────────────┐
-│ │ │ STAGE 1: Data Ingestion & Reconciliation
-│ │ │ │ ├─ Fetch from SEC EDGAR (10-K/10-Q) │ │ │ │ ├─ Fetch from Yahoo Finance API │ │ │ │ ├─ Fetch from IEX Cloud / Alpha Vantage │ │ │ │ └─ Reconcile & aggregate data from all sources │ │ │ └────────────┬────────────────────────────────────────┘ │ │ │ │ │ ┌────────────▼────────────────────────────────────────┐ │ │ │ STAGE 2-3: Calculate ALL 40+ Metrics │ │ │ │ ├─ Calculate ALL metrics for EVERY company │ │ │ │ ├─ 10-year analysis (prioritize, min 5 years) │ │ │ │ ├─ Year-by-year metrics & trend analysis │ │ │ │ │ │ │ │ │ └─ ⚠️ NO FILTERING - All metrics upfront │ │ │ └────────────┬────────────────────────────────────────┘ │ │ │ │ │ ┌────────────▼────────────────────────────────────────┐ │ │ │ STAGE 3: Hard Filter Evaluation (Unified) │ │ │ │ ├─ Evaluate hard filters using COMPLETE metrics │ │ │ │ ├─ Assess overall financial strength holistically │ │ │ │ └─ Companies below threshold → Skip │ │ │ └────────────┬────────────────────────────────────────┘ │ │ │ │ │ ┌────────────▼────────────────────────────────────────┐ │ │ │ STAGE 4: Quality Assessment Scoring (0-100) │ │ │ │ ├─ Score: Return on Capital (30 points max) │ │ │ │ ├─ Score: Profitability (30 points max) │ │ │ │ ├─ Score: Cash Flow (20 points max) │ │ │ │ └─ Score: Business Quality (10 points max) │ │ │ └────────────┬────────────────────────────────────────┘ │ │ │ │ │ ┌────────────▼────────────────────────────────────────┐ │ │ │ STAGE 5: Composite Scoring & Management Assessment │ │ │ │ ├─ Score: Valuation (max 35 points) │ │ │ │ ├─ Score: Management Quality (max 25 points) │ │ │ │ └─ Composite: (Qual×40% + Val×35% + Mgmt×25%) │ │ │ │ │ │ │ │ PASS: Composite >= 75 → STORE in database │ │ │ │ FAIL: Composite < 75 → SKIP (not stored) │ │ │ └────────────┬────────────────────────────────────────┘ │ │ │ │ │ ┌────────────▼────────────────────────────────────────┐ │ │ │ STAGE 6: Intrinsic Value Valuation (Per Company) │ │ │ │ ├─ Calculate DCF Fair Value │ │ │ │ ├─ Calculate DDM Fair Value (if applicable) │ │ │ │ ├─ Calculate Multiples Fair Value │ │ │ │ ├─ Calculate Buffett Fair Value │ │ │ │ ├─ Calculate Munger Fair Value │ │ │ │ ├─ Consensus Fair Value (weighted average) │ │ │ │ ├─ Margin of Safety Analysis │ │ │ │ └─ Valuation Grade (A+ to F) │ │ │ └────────────┬────────────────────────────────────────┘ │ │ │ │ │ ┌────────────▼────────────────────────────────────────┐ │ │ │ STAGE 7: Results Reporting & Storage │ │ │ │ ├─ Store all valuations in MySQL database │ │ │ │ ├─ Compare with previous results (new/maint/del) │ │ │ │ ├─ Export complete dataset to CSV │ │ │ │ ├─ Generate GitHub summary statistics │ │ │ │ └─ Create console output report │ │ │ └────────────┬────────────────────────────────────────┘ │ └─────────────────────────────────────────────────────────────┘ │ ┌────────┴─────────┬──────────────┐ │ │ │ ▼ ▼ ▼ MySQL CSV Export Console Database (Analysis) Output
+│                                                              │
+│  ╔═══════════════════════════════════════════════════╗     │
+│  ║ STAGE 0: Market Cap Pre-Filter                    ║     │
+│  ║ Filter: Market Cap > $300M                        ║     │
+│  ║ Output: Liquid, institutional-quality companies   ║     │
+│  ╚═════════────┬──────────────────────────────────────╝     │
+│               │                                              │
+│  ┌────────────▼────────────────────────────────────────┐   │
+│  │ STAGE 1: Data Ingestion & Reconciliation            │   │
+│  │ ├─ Fetch from SEC EDGAR (10-K/10-Q)               │   │
+│  │ ├─ Fetch from Yahoo Finance API                   │   │
+│  │ ├─ Fetch from IEX Cloud / Alpha Vantage          │   │
+│  │ └─ Reconcile & aggregate data from all sources    │   │
+│  └────────────┬────────────────────────────────────────┘   │
+│               │                                              │
+│  ┌────────────▼────────────────────────────────────────┐   │
+│  │ STAGE 2-3: Calculate ALL 40+ Metrics               │   │
+│  │ ├─ Calculate ALL metrics for EVERY company        │   │
+│  │ ├─ 10-year analysis (prioritize, min 5 years)    │   │
+│  │ ├─ Year-by-year metrics & trend analysis          │   │
+│  │ │                                                  │   │
+│  │ └─ ⚠️  NO FILTERING - All metrics upfront          │   │
+│  └────────────┬────────────────────────────────────────┘   │
+│               │                                              │
+│  ┌────────────▼────────────────────────────────────────┐   │
+│  │ STAGE 3: Hard Filter Evaluation (Unified)          │   │
+│  │ ├─ Evaluate hard filters using COMPLETE metrics   │   │
+│  │ ├─ Assess overall financial strength holistically │   │
+│  │ └─ Companies below threshold → Skip               │   │
+│  └────────────┬────────────────────────────────────────┘   │
+│               │                                              │
+│  ┌────────────▼────────────────────────────────────────┐   │
+│  │ STAGE 4: Quality Assessment Scoring (0-100)        │   │
+│  │ ├─ Score: Return on Capital (30 points max)       │   │
+│  │ ├─ Score: Profitability (30 points max)           │   │
+│  │ ├─ Score: Cash Flow (20 points max)               │   │
+│  │ └─ Score: Business Quality (10 points max)        │   │
+│  └────────────┬────────────────────────────────────────┘   │
+│               │                                              │
+│  ┌────────────▼────────────────────────────────────────┐   │
+│  │ STAGE 5: Composite Scoring & Management Assessment │   │
+│  │ ├─ Score: Valuation (max 35 points)               │   │
+│  │ ├─ Score: Management Quality (max 25 points)      │   │
+│  │ └─ Composite: (Quality×40% + Valuation×35% + Mgmt×25%)  │
+│  │                                                    │   │
+│  │ PASS: Composite >= 75 → STORE in database         │   │
+│  │ FAIL: Composite < 75  → SKIP (not stored)         │   │
+│  └────────────┬────────────────────────────────────────┘   │
+│               │                                              │
+│  ┌────────────▼────────────────────────────────────────┐   │
+│  │ STAGE 6: Intrinsic Value Valuation (Per Company)   │   │
+│  │ ├─ Calculate DCF Fair Value                        │   │
+│  │ ├─ Calculate DDM Fair Value (if applicable)        │   │
+│  │ ├─ Calculate Multiples Fair Value                  │   │
+│  │ ├─ Calculate Buffett Fair Value                    │   │
+│  │ ├─ Calculate Munger Fair Value                     │   │
+│  │ ├─ Consensus Fair Value (weighted average)        │   │
+│  │ ├─ Margin of Safety Analysis                       │   │
+│  │ └─ Valuation Grade (A+ to F)                       │   │
+│  └────────────┬────────────────────────────────────────┘   │
+│               │                                              │
+│  ┌────────────▼────────────────────────────────────────┐   │
+│  │ STAGE 7: Results Reporting & Storage               │   │
+│  │ ├─ Store all valuations in MySQL database         │   │
+│  │ ├─ Compare with previous results (new/maint/del)  │   │
+│  │ ├─ Export complete dataset to CSV                 │   │
+│  │ ├─ Generate GitHub summary statistics             │   │
+│  │ └─ Create console output report                   │   │
+│  └────────────┬────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+             │
+    ┌────────┴─────────┬──────────────┐
+    │                  │              │
+    ▼                  ▼              ▼
+  MySQL            CSV Export    Console
+  Database         (Analysis)     Output
 ```
 
 ### Component Architecture
@@ -4330,6 +4400,7 @@ This architecture is **complete and production-ready:**
 | 3.2 | 2026-03-14 | ThommCroft | Market cap pre-filter, FCF requirements |
 | 3.3 | 2026-03-15 | ThommCroft | GitHub Actions, stock price updates |
 | 4.0 | 2026-03-15 | ThommCroft | Complete 7-stage pipeline with Stage 6 valuation & Stage 7 reporting; comprehensive sections on GitHub Actions, testing, deployment, operations |
+| 4.1 | 2026-03-15 | ThommCroft | Fixed the broken flowchart and added an end of document section break |
 
 ---
 
