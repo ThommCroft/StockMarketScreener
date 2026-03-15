@@ -34,6 +34,16 @@
 
 Stage 6 (Intrinsic Value Valuation) is the final analytical stage in the Stock Market Screener system. It takes companies that have passed the rigorous financial analysis and calculates their intrinsic value using multiple independent methods.
 
+When a company achieves a Composite Score of 75 or above from the financial analysis stages, it advances to Stage 6 for valuation. This stage applies five distinct, independent valuation methodologies (DCF, DDM, Multiples, Buffett, and Munger approaches) to determine fair value. Each method produces its own intrinsic value estimate, and when they converge, confidence in the valuation increases significantly. When they diverge, deeper investigation is warranted.
+
+The output is a comprehensive valuation package that includes:
+- Fair value estimates from five independent methods
+- Consensus fair value (weighted average)
+- Margin of Safety analysis at multiple thresholds
+- Valuation Grade (A+ to F)
+- Investment recommendations based on Buffett and Munger frameworks
+- Investment thesis explaining the investment case
+
 ### Stage 6 in the Pipeline
 
 **Position in Workflow:**
@@ -102,6 +112,15 @@ For each company, Stage 6 produces:
 
 ### Why This Matters
 
+Valuation is where theory meets practice. A company might be wonderful but still a terrible investment if overpriced. Stage 6 answers the critical question: **At what price does this business represent good value?**
+
+Understanding intrinsic value allows investors to:
+- ✅ Make rational buy/hold/sell decisions based on fundamentals, not emotions or hype
+- ✅ Identify true margin of safety - where price significantly undervalues the business
+- ✅ Differentiate between high-quality companies (worth waiting for better prices) and true bargains
+- ✅ Track investment performance against calculated fair values over time
+- ✅ Build a defensible investment thesis backed by multiple methodologies
+
 ---
 
 ## Section 2: Philosophy & Investment Framework
@@ -111,6 +130,13 @@ For each company, Stage 6 produces:
 **Price ≠ Value**
 
 A company with exceptional fundamentals can be a terrible investment if priced too high. Conversely, a mediocre business at a steep discount might be worth buying. Stage 6 separates price from value and identifies true opportunities.
+
+**Examples of Price ≠ Value:**
+- Microsoft (high quality, high price): May be expensive if trading at $400+ when intrinsic value is $250
+- Coca-Cola (mature quality, modest price): May be fair if trading at $65 when intrinsic value is $70
+- Unknown tech startup (unclear quality, speculative price): May be overpriced at $50 when true value is $5 or may be underpriced if actual value is $200
+
+Stage 6 determines which scenario applies by calculating objective fair value across multiple frameworks.
 
 ---
 
@@ -318,7 +344,11 @@ Terminal Value = FCFn × (1 + g) / (WACC - g)
 
 Where g is the perpetual growth rate (typically 2.5% = GDP growth estimate)
 
-**Perpetuity Growth Rate:** We assume the company will grow at a steady rate forever after the projection period ends. 2.5% is conservative (roughly GDP growth) and is Buffett's typical assumption.
+**Perpetuity Growth Rate:** 
+
+We assume the company will grow at a steady rate forever after the projection period ends. 2.5% is conservative (roughly GDP growth) and is Buffett's typical assumption.
+Why 2.5%? After 10 years, it's realistic to assume a mature company grows at long-term GDP rate. Assuming higher growth rates implies the company will eventually be larger than the entire global economy (impossible). 
+Assuming lower rates implies recession or decline. 2.5% is the "goldilocks" rate: reasonable, defensible, and matches historical long-term economic growth.
 
 ---
 
@@ -327,7 +357,13 @@ Where g is the perpetual growth rate (typically 2.5% = GDP growth estimate)
 #### Main DCF Formula
 Intrinsic Value = Σ(FCFt / (1+WACC)^t) + Terminal Value / (1+WACC)^n
 
-Where: FCFt = Free Cash Flow in year t WACC = Weighted Average Cost of Capital (discount rate) t = Year (1 through 10) n = Final projection year (Year 10) Terminal Value = FCF10 × (1+g) / (WACC - g) g = Perpetual growth rate (2.5%)
+Where:
+- FCFt = Free Cash Flow in year t
+- WACC = Weighted Average Cost of Capital (discount rate)
+- t = Year (1 through 10)
+- n = Final projection year (Year 10)
+- Terminal Value = FCF10 × (1+g) / (WACC - g)
+- g = Perpetual growth rate (2.5%)
 
 #### Breaking Down the Formula
 
@@ -361,9 +397,25 @@ Subtract: FCF = OCF - CapEx
 
 Create a 10-year historical table:
 
-Year OCF (B)CapEx(B) FCF ($B) 2016 $18.5 $8.2 $10.3 2017 $20.1 $8.8 $11.3 2018 $22.3 $9.1 $13.2 2019 $24.5 $9.6 $14.9 2020 $26.8 $10.2 $16.6 2021 $28.9 $10.5 $18.4 2022 $30.1 $10.9 $19.2 2023 $31.5 $11.2 $20.3 2024 $33.2 $11.8 $21.4 2025 $35.1 $12.5 $22.6
+| Year | OCF ($B) | CapEx ($B) | FCF ($B) |
+|------|----------|-----------|----------|
+| 2016 | $18.5 | $8.2 | $10.3 |
+| 2017 | $20.1 | $8.8 | $11.3 |
+| 2018 | $22.3 | $9.1 | $13.2 |
+| 2019 | $24.5 | $9.6 | $14.9 |
+| 2020 | $26.8 | $10.2 | $16.6 |
+| 2021 | $28.9 | $10.5 | $18.4 |
+| 2022 | $30.1 | $10.9 | $19.2 |
+| 2023 | $31.5 | $11.2 | $20.3 |
+| 2024 | $33.2 | $11.8 | $21.4 |
+| 2025 | $35.1 | $12.5 | $22.6 |
 
 **Quality Check:** Do OCF and FCF both trend upward? If FCF is declining despite growing OCF, company is overspending on capital.
+
+**What We See:** Both OCF and FCF are growing steadily (OCF: +90%, FCF: +120% over 10 years). This indicates:
+- Operating efficiency improving (OCF growth)
+- Capital discipline maintained (CapEx growing slower than OCF)
+- Real cash generation, not accounting tricks
 
 #### **Step 2: Calculate Historical FCF Growth Rate (CAGR)**
 
@@ -387,9 +439,25 @@ You must make assumptions about future growth. This is where DCF becomes an art,
 
 Start with historical growth, then gradually decay toward 2.5% terminal rate:
 
-Years 1-3: Use historical growth rate or slightly conservative Years 4-7: Gradually decline growth rate Years 8-10: Approach terminal growth rate (2.5%)
+**Recommended Approach:**
+- Years 1-3: Use historical growth rate or slightly conservative
+- Years 4-7: Gradually decline growth rate
+- Years 8-10: Approach terminal growth rate (2.5%)
 
-Example for 9% historical growth: Year 1: 9.0% growth Year 2: 8.5% growth Year 3: 8.0% growth Year 4: 6.5% growth Year 5: 5.5% growth Year 6: 4.5% growth Year 7: 3.5% growth Year 8: 3.0% growth Year 9: 2.7% growth Year 10: 2.5% growth (terminal)
+**Example for 9% historical growth:**
+
+| Year | Growth Rate | Rationale |
+|------|-------------|-----------|
+| 1 | 9.0% | Historical momentum continues |
+| 2 | 8.5% | Slight deceleration as company matures |
+| 3 | 8.0% | Expected as company size increases |
+| 4 | 6.5% | Transition to slower, sustainable growth |
+| 5 | 5.5% | Moderate growth phase |
+| 6 | 4.5% | Approaching mature company growth |
+| 7 | 3.5% | Near terminal growth |
+| 8 | 3.0% | Converging to perpetual growth |
+| 9 | 2.7% | Very close to terminal |
+| 10 | 2.5% | Terminal growth rate |
 
 **Alternative approach: Conservative flat rate**
 
@@ -409,12 +477,27 @@ Year 10 FCF = $32.18B (growing at 2.5%)
 
 **Full 10-year projection:**
 
-Year Growth % FCF ($B) Notes 1 9.0% $24.63 Historical momentum 2 8.5% $26.72 Slight deceleration 3 8.0% $28.86 Expected as company matures 4 6.5% $30.73 Transition to slower growth 5 5.5% $32.41 Moderate growth phase 6 4.5% $33.86 Approaching mature rate 7 3.5% $35.02 Near terminal growth 8 3.0% $36.07 Converging to terminal 9 2.7% $37.04 Close to terminal 10 2.5% $37.96 Terminal growth rate
+| Year | Growth % | FCF ($B) | Calculation | Notes |
+|------|----------|----------|-------------|-------|
+| 1 | 9.0% | $24.63 | $22.6B × 1.090 | Historical momentum continues |
+| 2 | 8.5% | $26.72 | $24.63B × 1.085 | Slight deceleration |
+| 3 | 8.0% | $28.86 | $26.72B × 1.080 | Expected as company matures |
+| 4 | 6.5% | $30.73 | $28.86B × 1.065 | Transition to slower growth |
+| 5 | 5.5% | $32.41 | $30.73B × 1.055 | Moderate growth phase |
+| 6 | 4.5% | $33.86 | $32.41B × 1.045 | Approaching mature rate |
+| 7 | 3.5% | $35.02 | $33.86B × 1.035 | Near terminal growth |
+| 8 | 3.0% | $36.07 | $35.02B × 1.030 | Converging to terminal |
+| 9 | 2.7% | $37.04 | $36.07B × 1.027 | Close to terminal |
+| 10 | 2.5% | $37.96 | $37.04B × 1.025 | Terminal growth rate |
 
-**Critical assumption:** These projections must be defensible. 
-- If projecting 10% growth, why? Markets growing 5%, so company gaining share?
-- If industry is mature (restaurants, retail), 2-3% is more realistic than 8%
-- Beware: Most companies can't sustain above-market growth forever
+**Critical Assumptions - Must Be Defensible:**
+
+These projections are only valid if assumptions hold up to scrutiny:
+
+- **If projecting 10% growth:** Why? Markets growing 5%, so company gaining share? Is there evidence? Technology disruption? Market expansion?
+- **If industry is mature:** Restaurants, retail, utilities should project 2-3%, NOT 8%
+- **Reality check:** Most companies can't sustain above-market growth forever. Eventually they reach market maturity.
+- **Sanity test:** Would this company eventually be larger than the industry? Larger than the global economy? If yes, growth assumptions are too high.
 
 #### **Step 4: Calculate WACC (Discount Rate)**
 
@@ -422,7 +505,15 @@ WACC is the rate at which future cash flows are discounted. Higher WACC = lower 
 
 WACC = (E/V × Re) + (D/V × Rd × (1-Tc))
 
-Where: E = Market value of equity (Stock Price × Shares Outstanding) D = Market value of debt (from balance sheet) V = E + D (total firm value) Re = Cost of Equity (using CAPM) Rd = Cost of Debt Tc = Corporate tax rate
+Where:
+- E = Market value of equity (Stock Price × Shares Outstanding)
+- D = Market value of debt (from balance sheet)
+- V = E + D (total firm value)
+- Re = Cost of Equity (using CAPM)
+- Rd = Cost of Debt
+- Tc = Corporate tax rate
+
+The formula weights the cost of equity and debt proportionally to their contribution to the company's capital structure.
 
 **Calculating Cost of Equity (Re) using CAPM:**
 Re = Rf + β × (Rm - Rf)
@@ -469,7 +560,21 @@ Take each year's projected FCF and discount it back to today's value.
 
 Formula: ```PV = FCF / (1 + WACC)^Year```
 
-Year 1: $24.63B / (1.097)^1 = $24.63B / 1.097 = $22.46B Year 2: $26.72B / (1.097)^2 = $26.72B / 1.204 = $22.19B Year 3: $28.86B / (1.097)^3 = $28.86B / 1.320 = $21.86B Year 4: $30.73B / (1.097)^4 = $30.73B / 1.448 = $21.24B Year 5: $32.41B / (1.097)^5 = $32.41B / 1.588 = $20.41B Year 6: $33.86B / (1.097)^6 = $33.86B / 1.742 = $19.44B Year 7: $35.02B / (1.097)^7 = $35.02B / 1.910 = $18.33B Year 8: $36.07B / (1.097)^8 = $36.07B / 2.096 = $17.20B Year 9: $37.04B / (1.097)^9 = $37.04B / 2.299 = $16.10B Year 10: $37.96B / (1.097)^10 = $37.96B / 2.522 = $15.05B
+| Year | FCF ($B) | Discount Factor | Calculation | PV ($B) |
+|------|----------|-----------------|-------------|---------|
+| 1 | $24.63 | 1 / 1.097^1 | 24.63 / 1.097 | $22.46 |
+| 2 | $26.72 | 1 / 1.097^2 | 26.72 / 1.204 | $22.19 |
+| 3 | $28.86 | 1 / 1.097^3 | 28.86 / 1.320 | $21.86 |
+| 4 | $30.73 | 1 / 1.097^4 | 30.73 / 1.448 | $21.24 |
+| 5 | $32.41 | 1 / 1.097^5 | 32.41 / 1.588 | $20.41 |
+| 6 | $33.86 | 1 / 1.097^6 | 33.86 / 1.742 | $19.44 |
+| 7 | $35.02 | 1 / 1.097^7 | 35.02 / 1.910 | $18.33 |
+| 8 | $36.07 | 1 / 1.097^8 | 36.07 / 2.096 | $17.20 |
+| 9 | $37.04 | 1 / 1.097^9 | 37.04 / 2.299 | $16.10 |
+| 10 | $37.96 | 1 / 1.097^10 | 37.96 / 2.522 | $15.05 |
+| | | | **TOTAL PV (Years 1-10):** | **$194.28B** |
+
+**Interpretation:** All the cash flows from Years 1-10 are worth $194.28B in today's dollars. This is the present value of the near-term financial period before terminal value.
 
 **Sum of PV (Years 1-10) = $194.28B**
 
